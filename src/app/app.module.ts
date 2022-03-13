@@ -1,13 +1,13 @@
 import { NgModule } from "@angular/core"
 import { BrowserModule } from "@angular/platform-browser"
-
 import { AppComponent } from "./app.component"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
-import { MaterialModule } from "./material/material.module"
+import { MaterialModule } from "./modules/material.module"
+import { GraphqlModule } from "./modules/graphql.module"
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, MaterialModule],
+  imports: [BrowserModule, BrowserAnimationsModule, MaterialModule, GraphqlModule],
   providers: [],
   bootstrap: [AppComponent]
 })
