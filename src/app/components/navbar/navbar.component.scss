@@ -1,0 +1,19 @@
+$small-screen: 57.6rem;
+
+.list {
+  list-style: none;
+}
+
+.list-horizontal {
+  display: flex;
+}
+
+.navbar__spacer {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.selected {
+  background-color: rgba(black, 0.1);
+}
