@@ -4,20 +4,13 @@
       <mat-icon>home</mat-icon>
       Bug market
     </a>
-    <div class="if-more-than-small">
-      <ul class="list list-horizontal">
-        <li *ngFor="let location of this.leftLocations">
-          <a
-            class="navbar__item"
-            mat-button
-            [routerLink]="location.path"
-            routerLinkActive="selected"
-          >
-            {{ location.name }}
-          </a>
-        </li>
-      </ul>
-    </div>
+    <ul class="list list-horizontal">
+      <li *ngFor="let location of this.leftLocations">
+        <a class="navbar__item" mat-button [routerLink]="location.path" routerLinkActive="selected">
+          {{ location.name }}
+        </a>
+      </li>
+    </ul>
     <span class="navbar__spacer"></span>
   </mat-toolbar>
 </nav>
