@@ -1,5 +1,5 @@
 import { Component } from "@angular/core"
-import { homeRoute, productsRoute } from "src/app/modules/routing.module"
+import { AppPathsEnum } from "../app-routing.module"
 
 interface NavbarLocation {
   name: string
@@ -12,7 +12,9 @@ interface NavbarLocation {
   styleUrls: ["./navbar.component.scss"]
 })
 export class AppNavbarComponent {
-  leftLocations: NavbarLocation[] = [{ name: "Products", path: productsRoute.path }]
+  paths = AppPathsEnum
+
+  leftLocations: NavbarLocation[] = [{ name: "Products", path: AppPathsEnum.Products }]
 
   locations = [...this.leftLocations]
 }

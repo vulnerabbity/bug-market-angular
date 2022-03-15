@@ -1,0 +1,30 @@
+<mat-toolbar color="primary" class="navbar">
+  <a mat-button routerLink="/" aria-label="home">
+    <mat-icon>home</mat-icon>
+    Bug market
+  </a>
+  <nav aria-label="left navigation">
+    <ul class="list list-horizontal">
+      <li *ngFor="let location of this.leftLocations" class="link-containter">
+        <a
+          class="navbar__button"
+          mat-button
+          [routerLink]="location.path"
+          routerLinkActive="selected-button"
+        >
+          {{ location.name }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <span class="navbar__spacer" role="none"></span>
+  <nav aria-label="right navigation">
+    <ul class="list list-horesontal">
+      <li class="link-container">
+        <a class="icon-link active" [routerLink]="this.paths.Preferences" aria-label="preferences">
+          <mat-icon routerLinkActive="selected-icon" class="icon">settings</mat-icon>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</mat-toolbar>
