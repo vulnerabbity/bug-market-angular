@@ -1,21 +1,14 @@
 import { NgModule } from "@angular/core"
 import { BrowserModule } from "@angular/platform-browser"
-import { AppComponent } from "./components/app/app.component"
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
-import { MaterialModule } from "./modules/material.module"
-import { GraphqlModule } from "./modules/graphql.module"
-import { AppNavbarComponent } from "./components/navbar/navbar.component"
-import { AppRoutingModule } from "./modules/routing.module"
+import { AppCommonModule } from "../common/modules/common.module"
+import { GraphqlModule } from "../modules/graphql.module"
+import { AppRoutingModule } from "./app-routing.module"
+import { AppComponent } from "./app.component"
+import { AppNavbarComponent } from "./navbar/navbar.component"
 
 @NgModule({
   declarations: [AppComponent, AppNavbarComponent],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    MaterialModule,
-    GraphqlModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, AppCommonModule, GraphqlModule],
   providers: [],
   bootstrap: [AppComponent]
 })
