@@ -4,11 +4,11 @@ import { Component, Input } from "@angular/core"
   selector: "common-page-header",
   styleUrls: ["./page-header.component.scss"],
   template: `
-    <mat-toolbar color="primary" class="shadow-top">
+    <common-themed-div class="component-root" color="primary">
       <header class="header">
         <h1 class="header__text">{{ title }}</h1>
       </header>
-    </mat-toolbar>
+    </common-themed-div>
   `
 })
 export class CommonPageHeaderComponent {
