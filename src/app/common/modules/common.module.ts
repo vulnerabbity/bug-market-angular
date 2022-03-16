@@ -1,7 +1,8 @@
+import { CommonModule } from "@angular/common"
 import { NgModule } from "@angular/core"
 import { AppCommonComponentsModule } from "./components.module"
 
-const passThroughModules = [AppCommonComponentsModule]
+const passThroughModules = [CommonModule, AppCommonComponentsModule]
 
 @NgModule({
   imports: passThroughModules,
