@@ -28,3 +28,40 @@ $pink-blue-grey-theme: mat-dark-theme(
 .pink-blue-grey-theme {
   @include angular-material-color($pink-blue-grey-theme);
 }
+
+// converts material pixels to rems
+// https://github.com/angular/components/issues/15580
+@function define-typography-level(
+  $font-size,
+  $line-height: $font-size,
+  $font-weight: 400,
+  $font-family: null,
+  $letter-spacing: normal
+) {
+  @return (
+    font-size: $font-size,
+    line-height: $line-height,
+    font-weight: $font-weight,
+    font-family: $font-family,
+    letter-spacing: $letter-spacing
+  );
+}
+$font-family: Roboto, "Helvetica Neue", sans-serif;
+
+$custom-typography: mat-typography-config(
+  $font-family: $font-family,
+  $display-4: define-typography-level(8rem, 8rem, 300, $letter-spacing: -0.05em),
+  $display-3: define-typography-level(4rem, 4rem, 400, $letter-spacing: -0.02em),
+  $display-2: define-typography-level(3.21rem, 3.42rem, 400, $letter-spacing: -0.005em),
+  $display-1: define-typography-level(2.42rem, 2.85rem, 400),
+  $headline: define-typography-level(1.71rem, 2.28rem, 400),
+  $title: define-typography-level(1.42rem, 2.28rem, 500),
+  $subheading-2: define-typography-level(1.14rem, 2rem, 400),
+  $subheading-1: define-typography-level(1.07rem, 1.71rem, 400),
+  $body-2: define-typography-level(1rem, 1.71rem, 500),
+  $body-1: define-typography-level(1rem, 1.42rem, 400),
+  $caption: define-typography-level(0.85rem, 1.42rem, 400),
+  $button: define-typography-level(1rem, 1rem, 500),
+  $input: define-typography-level(inherit, 1.125, 400)
+);
+@include mat-core($custom-typography);
