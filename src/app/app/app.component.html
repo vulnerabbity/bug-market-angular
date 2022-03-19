@@ -1,6 +1,13 @@
-<div class="pink-blue-grey-theme">
+<div class="app-container" class="pink-blue-grey-theme">
+  <common-themed-div class="background"></common-themed-div>
+
   <header>
     <app-navbar></app-navbar>
   </header>
-  <router-outlet></router-outlet>
+
+  <common-themed-div>
+    <main class="app-content">
+      <router-outlet class="app-router"></router-outlet>
+    </main>
+  </common-themed-div>
 </div>

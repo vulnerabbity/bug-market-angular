@@ -1,4 +1,17 @@
-<common-page-header title="Products"></common-page-header>
-<main>
-  <p>products</p>
-</main>
+<div class="component-root">
+  <common-page-header title="Products"></common-page-header>
+  <mat-paginator
+    class="paginator"
+    [length]="this.totalProducts"
+    [pageSize]="this.pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="this.onPaginationUpdate($event)"
+  >
+  </mat-paginator>
+
+  <common-products-container
+    class="card-container"
+    [products]="this.products"
+  ></common-products-container>
+  <!-- TODO: Add bottom pagination -->
+</div>

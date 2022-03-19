@@ -1,9 +1,10 @@
 import { NgModule } from "@angular/core"
-import { AppCommonComponentsModule } from "src/app/common/modules/components.module"
+import { AppCommonModule } from "src/app/common/modules/common.module"
+import { ProductsModule } from "src/app/features/products/products.module"
 import { ProductsPageComponent } from "./products-page.component"
 
 @NgModule({
-  imports: [AppCommonComponentsModule],
+  imports: [AppCommonModule, ProductsModule],
   declarations: [ProductsPageComponent]
 })
 export class ProductsPageModule {}

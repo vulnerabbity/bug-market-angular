@@ -124,6 +124,11 @@ export type PaginatedProducts = {
   totalResultsCount: Scalars['Int'];
 };
 
+export type Pagination = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
 export type Product = {
   __typename?: 'Product';
   categoryId: Scalars['String'];
@@ -199,9 +204,8 @@ export type QueryLoginWithUsernameArgs = {
 
 export type QueryProductsArgs = {
   filtering?: InputMaybe<ProductFilters>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  search?: InputMaybe<Scalars['String']>;
+  fuzzySearch?: InputMaybe<Scalars['String']>;
+  pagination?: InputMaybe<Pagination>;
   sorting?: InputMaybe<ProductSorting>;
 };
 
@@ -522,17 +526,31 @@ export enum CountryCodes {
   Zw = 'ZW'
 }
 
-export type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
+export type ShortProductsQueryVariables = Exact<{
+  fuzzy?: InputMaybe<Scalars['String']>;
+  pagination?: InputMaybe<Pagination>;
+  filtering?: InputMaybe<ProductFilters>;
+  sorting?: InputMaybe<ProductSorting>;
+}>;
 
 
-export type Unnamed_1_Query = { __typename?: 'Query', products: { __typename?: 'PaginatedProducts', data: Array<{ __typename?: 'Product', id: string }> } };
+export type ShortProductsQuery = { __typename?: 'Query', products: { __typename?: 'PaginatedProducts', totalResultsCount: number, data: Array<{ __typename?: 'Product', id: string, name: string, imagesUrls: Array<string>, price: number }> } };
 
-export const Document = gql`
-    {
-  products {
+export const ShortProductsDocument = gql`
+    query ShortProducts($fuzzy: String, $pagination: Pagination, $filtering: ProductFilters, $sorting: ProductSorting) {
+  products(
+    fuzzySearch: $fuzzy
+    pagination: $pagination
+    filtering: $filtering
+    sorting: $sorting
+  ) {
     data {
       id
+      name
+      imagesUrls
+      price
     }
+    totalResultsCount
   }
 }
     `;
@@ -540,8 +558,8 @@ export const Document = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class GQL extends Apollo.Query<Query, QueryVariables> {
-    document = Document;
+  export class ShortProductsGQL extends Apollo.Query<ShortProductsQuery, ShortProductsQueryVariables> {
+    document = ShortProductsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

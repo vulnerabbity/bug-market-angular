@@ -1,0 +1,26 @@
+:host {
+  display: inline-block;
+  width: 100%;
+
+  // disabling white line after component
+  line-height: 0;
+}
+
+.div-content {
+  display: inline-block;
+  height: 100%;
+
+  // enable line styles back
+  line-height: inherit;
+
+  padding: 0;
+  margin: 0;
+}
+
+.div-container {
+  display: inline-block;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+}

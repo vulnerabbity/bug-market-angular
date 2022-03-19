@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.component-root {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+  grid-gap: 1rem;
+}
+
+.product-card {
+  width: 100%;
+}
