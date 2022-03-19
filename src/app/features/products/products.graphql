@@ -1,0 +1,16 @@
+query ShortProducts(
+  $fuzzy: String
+  $pagination: Pagination
+  $filtering: ProductFilters
+  $sorting: ProductSorting
+) {
+  products(fuzzySearch: $fuzzy, pagination: $pagination, filtering: $filtering, sorting: $sorting) {
+    data {
+      id
+      name
+      imagesUrls
+      price
+    }
+    totalResultsCount
+  }
+}
