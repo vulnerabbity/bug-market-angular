@@ -5,8 +5,9 @@ import { CommonPageHeaderComponent } from "../components/page-header/page-header
 import { CommonProductCardComponent } from "../components/product-card/product-card.component"
 import { CommonProductsContainer } from "../components/products-container/products-container.component"
 import { CommonThemedDiv } from "../components/themed-div/themed-div.component"
+import { RouterModule } from "@angular/router"
 
-const passThroughModules = [MaterialModule, CommonModule]
+const passThroughModules = [MaterialModule, CommonModule, RouterModule]
 const passThroughComponents = [
   CommonPageHeaderComponent,
   CommonProductCardComponent,
