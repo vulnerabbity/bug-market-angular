@@ -1,16 +1,12 @@
-.card {
-  min-width: 15rem;
-  margin: 1rem 2rem;
-}
-
 .card-container {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  padding: 0 min(5%, 2rem);
+  max-width: 120rem;
+  margin: 0 auto;
 }
 
-.component-content {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
+.paginator {
+  max-width: fit-content;
+  margin: 0 auto;
+
+  background-color: transparent;
 }
