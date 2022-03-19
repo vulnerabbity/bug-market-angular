@@ -14,3 +14,16 @@ query ShortProducts(
     totalResultsCount
   }
 }
+
+query FullProduct($id: String!) {
+  product(id: $id) {
+    id
+    name
+    userId
+    categoryId
+    description
+    imagesUrls
+    price
+    createdAt
+  }
+}
