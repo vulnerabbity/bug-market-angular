@@ -1,16 +1,20 @@
 import { NgModule } from "@angular/core"
 import { Route, RouterModule } from "@angular/router"
+import { PreloadModuleOnDemand } from "../common/routing/preload-on-demand.strategy"
+import { ConcreteProductPageComponent } from "../pages/concrete-product/concrete-product.component"
 import { HomePageComponent } from "../pages/home/home-page.component"
 import { PreferencesPageComponent } from "../pages/preferences/preferences-page.component"
 import { ProductsPageComponent } from "../pages/products/products-page.component"
 
 export enum AppPathsEnum {
   Products = "products",
-  Preferences = "preferences"
+  Preferences = "preferences",
+  ConcreteProduct = "product/:id"
 }
 
 const homeRoute: Route = {
   path: "",
+  loadChildren: () => import("../pages/home/home-page.module").then(m => m.HomePageModule),
   component: HomePageComponent
 }
 
@@ -18,7 +22,8 @@ const productsRoute: Route = {
   path: AppPathsEnum.Products,
   loadChildren: () =>
     import("../pages/products/products-page.module").then(m => m.ProductsPageModule),
-  component: ProductsPageComponent
+  component: ProductsPageComponent,
+  data: { preload: true }
 }
 
 const preferencesRoute: Route = {
@@ -28,10 +33,22 @@ const preferencesRoute: Route = {
   component: PreferencesPageComponent
 }
 
-const routes: Route[] = [homeRoute, productsRoute, preferencesRoute]
+const concreteProductRoute: Route = {
+  path: AppPathsEnum.ConcreteProduct,
+  loadChildren: () =>
+    import("../pages/concrete-product/concrete-product.module").then(
+      m => m.ConcreteProductPageModule
+    ),
+  component: ConcreteProductPageComponent,
+  data: { preload: true }
+}
 
+const routes: Route[] = [homeRoute, productsRoute, preferencesRoute, concreteProductRoute]
+
+const imports = [RouterModule.forRoot(routes, { preloadingStrategy: PreloadModuleOnDemand })]
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports,
+  providers: [PreloadModuleOnDemand],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
