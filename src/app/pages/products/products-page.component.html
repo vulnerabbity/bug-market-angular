@@ -11,7 +11,7 @@
 
   <common-products-container
     class="card-container"
-    [products]="this.products"
+    [products]="(this.products$ | async) ?? []"
   ></common-products-container>
   <!-- TODO: Add bottom pagination -->
 </div>

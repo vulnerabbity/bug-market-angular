@@ -1,5 +1,6 @@
-import { Component } from "@angular/core"
+import { Component, OnInit } from "@angular/core"
 import { PageEvent } from "@angular/material/paginator"
+import { BehaviorSubject } from "rxjs"
 import { ShortProduct } from "src/app/features/products/products.interface"
 import { ProductsService } from "src/app/features/products/products.service"
 
@@ -7,14 +8,17 @@ import { ProductsService } from "src/app/features/products/products.service"
   templateUrl: "./products-page.component.html",
   styleUrls: ["./product-page.component.scss"]
 })
-export class ProductsPageComponent {
-  products: ShortProduct[] = []
+export class ProductsPageComponent implements OnInit {
   pageIndex = 0
   pageSize = 25
   totalProducts = 0
   pageSizeOptions = [10, 25, 50]
 
-  constructor(private productsService: ProductsService) {
+  products$ = new BehaviorSubject<ShortProduct[]>([])
+
+  constructor(private productsService: ProductsService) {}
+
+  ngOnInit(): void {
     this.loadProducts()
   }
 
@@ -25,17 +29,19 @@ export class ProductsPageComponent {
   }
 
   private loadProducts() {
-    const offset = this.pageSize * this.pageIndex
-    this.productsService
-      .loadShortProducts({
-        pagination: {
-          offset,
-          limit: this.pageSize
-        }
-      })
-      .subscribe(paginatedProducts => {
-        this.products = paginatedProducts.data
-        this.totalProducts = paginatedProducts.totalResultsCount
-      })
+    const productsRequest = this.makeProductsRequest()
+    productsRequest.subscribe(paginatedProducts => {
+      this.products$.next(paginatedProducts.data)
+      this.totalProducts = paginatedProducts.totalResultsCount
+    })
+  }
+
+  private makeProductsRequest() {
+    return this.productsService.loadShortProducts({
+      pagination: {
+        offset: this.pageSize * this.pageIndex,
+        limit: this.pageSize
+      }
+    })
   }
 }
