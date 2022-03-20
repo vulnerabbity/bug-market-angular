@@ -1,0 +1,102 @@
+@import "~node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.carousel";
+@import "~node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default";
+
+// carousel container
+.owl-carousel {
+  position: relative;
+}
+
+// buttons container
+.owl-nav {
+  display: flex;
+
+  margin: 0 !important;
+}
+
+// previous next buttons
+.owl-prev,
+.owl-next {
+  top: calc(50% - 5rem);
+  transform: translateY(-50%);
+  position: absolute;
+
+  background-color: unset !important;
+
+  // disable built indent
+  margin: 0 !important;
+  padding: 0 !important;
+
+  width: 6rem;
+  height: 6rem;
+
+  &::before {
+    // centralizing button content
+    position: absolute;
+    display: inline;
+
+    font-size: 6.4rem;
+
+    top: calc(50% - 2px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.owl-prev {
+  left: 0;
+  font-size: 6.4rem !important;
+  &::before {
+    content: "<";
+  }
+}
+
+.owl-next {
+  right: 0;
+  font-size: 6.4rem !important;
+  &::before {
+    content: ">";
+  }
+}
+
+// previews container
+.owl-dots {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  width: 100%;
+  // horizontal scroll
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.owl-dot {
+  display: block;
+  padding: 0 5px;
+
+  height: 10rem;
+  width: 10rem;
+}
+.owl-dot img {
+  // animation for thumbnail activation
+  transition: 0.2s;
+
+  width: 10rem;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.owl-dot.active {
+  filter: brightness(60%);
+}
+
+.owl-carousel .owl-item {
+  height: 40rem;
+  display: flex;
+  align-items: center;
+}
+
+// set same size for content images
+.owl-carousel .owl-item img {
+  display: block;
+  max-height: 100%;
+  object-fit: contain;
+}
