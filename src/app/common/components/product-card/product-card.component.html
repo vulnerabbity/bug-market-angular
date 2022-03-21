@@ -1,6 +1,6 @@
 <mat-card class="card" role="region">
   <div class="card__image-container">
-    <img class="card__image-content" src="assets/pictures/no-image.webp" />
+    <img class="card__image-content" [src]="this.imageUrlOrDefault" />
   </div>
   <div class="card__text">
     <div class="card__price">
