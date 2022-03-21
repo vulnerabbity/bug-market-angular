@@ -5,7 +5,8 @@ import { ProductsService } from "src/app/features/products/products.service"
 import { Product } from "src/generated-gql-types"
 
 @Component({
-  templateUrl: "./concrete-product.component.html"
+  templateUrl: "./concrete-product.component.html",
+  styleUrls: ["./concrete-product.component.scss"]
 })
 export class ConcreteProductPageComponent implements OnInit {
   product!: Product
