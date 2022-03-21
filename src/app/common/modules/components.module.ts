@@ -6,6 +6,8 @@ import { CommonProductCardComponent } from "../components/product-card/product-c
 import { CommonProductsContainer } from "../components/products-container/products-container.component"
 import { CommonThemedDiv } from "../components/themed-div/themed-div.component"
 import { RouterModule } from "@angular/router"
+import { CarouselModule } from "ngx-owl-carousel-o"
+import { CommonCarousel } from "../components/carousel/carousel.component"
 
 const passThroughModules = [MaterialModule, CommonModule, RouterModule]
 const passThroughComponents = [
@@ -13,11 +15,12 @@ const passThroughComponents = [
   CommonProductCardComponent,
   CommonThemedDiv,
   CommonProductCardComponent,
-  CommonProductsContainer
+  CommonProductsContainer,
+  CommonCarousel
 ]
 
 @NgModule({
-  imports: passThroughModules,
+  imports: [passThroughModules, CarouselModule],
   exports: [...passThroughModules, ...passThroughComponents],
   declarations: [...passThroughComponents]
 })
