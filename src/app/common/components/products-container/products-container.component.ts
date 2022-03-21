@@ -10,9 +10,5 @@ export class CommonProductsContainer implements OnInit {
   @Input()
   products: ShortProduct[] = []
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      console.table(this.products.map(product => product.imagesUrls))
-    }, 1000)
-  }
+  ngOnInit(): void {}
 }
