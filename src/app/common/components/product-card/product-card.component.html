@@ -1,18 +1,16 @@
 <mat-card class="card" role="region">
-  <a class="card__content" href="/">
-    <div class="card__image-container">
-      <img class="card__image-content" src="assets/pictures/no-image.webp" />
+  <div class="card__image-container">
+    <img class="card__image-content" [src]="this.imageUrlOrDefault" />
+  </div>
+  <div class="card__text">
+    <div class="card__price">
+      <span *ngIf="hasPrice; else free"> {{ price }} {{ currency }} </span>
+      <ng-template #free>
+        <span>Free</span>
+      </ng-template>
     </div>
-    <div class="card__text">
-      <div class="card__price">
-        <span *ngIf="hasPrice; else free"> {{ price }} {{ currency }} </span>
-        <ng-template #free>
-          <span>Free</span>
-        </ng-template>
-      </div>
-      <mat-card-title>
-        <h2 class="card__title">{{ title }}</h2>
-      </mat-card-title>
-    </div>
-  </a>
+    <mat-card-title>
+      <h2 class="card__title">{{ title }}</h2>
+    </mat-card-title>
+  </div>
 </mat-card>

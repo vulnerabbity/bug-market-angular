@@ -16,9 +16,18 @@ export class CommonProductCardComponent {
   currency = "$"
 
   @Input()
-  imageUrl = "assets/pictures/no-image.webp"
+  imageUrl?: string
 
   get hasPrice(): boolean {
     return this.price != 0
+  }
+
+  get imageUrlOrDefault(): string {
+    if (this.imageUrl) {
+      return this.imageUrl
+    }
+
+    const defaultImage = "assets/pictures/no-image.webp"
+    return defaultImage
   }
 }

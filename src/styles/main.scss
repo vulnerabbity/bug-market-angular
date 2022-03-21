@@ -1,3 +1,4 @@
+@import "./owl-carousel.scss";
 @import "./normalize.scss";
 @import "./material.scss";
 @import "./global-classes.scss";
@@ -32,4 +33,11 @@ img {
 
 a {
   color: unset;
+  text-decoration: unset;
+}
+
+.container {
+  padding: 0 min(5%, 2rem);
+  max-width: 120rem;
+  margin: 0 auto;
 }

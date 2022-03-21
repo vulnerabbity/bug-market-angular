@@ -170,6 +170,7 @@ export type Query = {
   countries: PaginatedCountries;
   country: Country;
   loginWithUsername: LoginResponse;
+  product: Product;
   products: PaginatedProducts;
   refreshAccessToken: LoginResponse;
   user: User;
@@ -199,6 +200,11 @@ export type QueryCountryArgs = {
 export type QueryLoginWithUsernameArgs = {
   password: Scalars['String'];
   username: Scalars['String'];
+};
+
+
+export type QueryProductArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -536,6 +542,13 @@ export type ShortProductsQueryVariables = Exact<{
 
 export type ShortProductsQuery = { __typename?: 'Query', products: { __typename?: 'PaginatedProducts', totalResultsCount: number, data: Array<{ __typename?: 'Product', id: string, name: string, imagesUrls: Array<string>, price: number }> } };
 
+export type FullProductQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type FullProductQuery = { __typename?: 'Query', product: { __typename?: 'Product', id: string, name: string, userId: string, categoryId: string, description?: string | null, imagesUrls: Array<string>, price: number, createdAt: any } };
+
 export const ShortProductsDocument = gql`
     query ShortProducts($fuzzy: String, $pagination: Pagination, $filtering: ProductFilters, $sorting: ProductSorting) {
   products(
@@ -560,6 +573,31 @@ export const ShortProductsDocument = gql`
   })
   export class ShortProductsGQL extends Apollo.Query<ShortProductsQuery, ShortProductsQueryVariables> {
     document = ShortProductsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const FullProductDocument = gql`
+    query FullProduct($id: String!) {
+  product(id: $id) {
+    id
+    name
+    userId
+    categoryId
+    description
+    imagesUrls
+    price
+    createdAt
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class FullProductGQL extends Apollo.Query<FullProductQuery, FullProductQueryVariables> {
+    document = FullProductDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

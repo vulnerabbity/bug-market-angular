@@ -1,9 +1,10 @@
 <div class="component-root">
-  <common-product-card
-    class="product-card"
-    *ngFor="let product of this.products"
-    [title]="product.name"
-    [price]="product.price"
-    [imageUrl]="product.imagesUrls[0]"
-  ></common-product-card>
+  <a *ngFor="let product of this.products" [routerLink]="'/product/' + product.id">
+    <common-product-card
+      class="product-card"
+      [title]="product.name"
+      [price]="product.price"
+      [imageUrl]="product.imagesUrls[0]"
+    ></common-product-card>
+  </a>
 </div>
