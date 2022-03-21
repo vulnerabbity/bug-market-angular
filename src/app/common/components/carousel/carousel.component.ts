@@ -28,12 +28,17 @@ export class CommonCarousel implements AfterViewInit {
 
   // after slider loaded
   ngAfterViewInit(): void {
-    this.initThumbnails()
-    this.initNavigation()
+    const hasImages = this.images.length >= 1
+    if (hasImages) {
+      this.initThumbnails()
+      this.initNavigation()
+    }
   }
 
   private initThumbnails() {
+    // placing images in dots
     const dots = document.getElementsByClassName("owl-dot")
+
     for (let i = 0; i < dots.length; i++) {
       dots[i].innerHTML = `<img src="${this.images[i]}"/>`
     }
