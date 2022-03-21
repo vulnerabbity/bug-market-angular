@@ -5,6 +5,7 @@ import { MatIconModule } from "@angular/material/icon"
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 import { MatCardModule } from "@angular/material/card"
 import { MatPaginatorModule } from "@angular/material/paginator"
+import { MatTooltipModule } from "@angular/material/tooltip"
 
 const materialModules = [
   MatButtonModule,
@@ -12,7 +13,8 @@ const materialModules = [
   MatIconModule,
   MatProgressSpinnerModule,
   MatCardModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatTooltipModule
 ]
 
 @NgModule({
