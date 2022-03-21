@@ -2,8 +2,73 @@
   <!-- TODO: Place loading spinner -->
   <div *ngIf="this.loaded === false">loading</div>
   <div *ngIf="this.loaded">
+    <common-themed-div color="primary">
+      <div class="container headline">
+        <div class="name-sector">
+          <h1 class="name">{{ this.product.name | titlecase }}</h1>
+          <button
+            mat-button
+            matTooltip="Copy product URL"
+            matTooltipClass="tooltip"
+            aria-label="Copy product URL "
+            class="copy-to-clipboard"
+            (click)="this.copyUrlToClipboard()"
+          >
+            <mat-icon>content_copy</mat-icon>
+          </button>
+        </div>
+        <data class="price" [value]="this.product.price">
+          {{ this.productPriceString }}
+        </data>
+      </div>
+    </common-themed-div>
+    <br />
+    <common-themed-div>
+      <div class="container publishing-info">
+        <!-- Example -->
+        <!-- Monday, 20 March 14:23 -->
+        <p class="publishing-info__date">
+          Published: {{ product.createdAt | date: "cccc, dd MMMM HH:mm" }}
+        </p>
+        <div class="publishing-info__author">
+          <span class="publishing-info__author-description">Author: </span>
+          <a
+            class="publishing-info__author-link"
+            mat-raised-button
+            matTooltip="Go to author profile"
+            matTooltipClass="tooltip"
+            color="accent"
+            href="/users/mockid"
+            aria-label="Go to author profile"
+          >
+            Author name
+          </a>
+          <a
+            class="publishing-info__author-message"
+            mat-raised-button
+            color="accent"
+            href="/users/mockid/write"
+            aria-label="Write message to author"
+            matTooltip="Write message"
+            matTooltipClass="tooltip"
+          >
+            <mat-icon>message</mat-icon>
+          </a>
+        </div>
+      </div>
+    </common-themed-div>
     <div class="container">
       <common-carousel [images]="this.product.imagesUrls"></common-carousel>
+      <mat-card class="description">
+        <mat-card-header>
+          <mat-card-title class="description__title">Description</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="description__content">
+            {{ this.product.description }}
+          </p>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>
