@@ -1,4 +1,9 @@
-<div *ngIf="this.loaded">
-  <pre>{{ this.product | json }}</pre>
-  <p>{{ this.product.name }}</p>
+<div class="component-root">
+  <!-- TODO: Place loading spinner -->
+  <div *ngIf="this.loaded === false">loading</div>
+  <div *ngIf="this.loaded">
+    <div class="container">
+      <common-carousel [images]="this.product.imagesUrls"></common-carousel>
+    </div>
+  </div>
 </div>
