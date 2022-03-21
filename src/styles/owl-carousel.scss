@@ -60,27 +60,24 @@
 
 // previews container
 .owl-dots {
-  display: grid;
-  grid-auto-columns: 1fr;
-  grid-auto-flow: column;
+  display: flex;
   width: 100%;
+
   // horizontal scroll
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
 }
 .owl-dot {
-  display: block;
-  padding: 0 5px;
-
-  height: 10rem;
-  width: 10rem;
-}
-.owl-dot img {
-  // animation for thumbnail activation
+  // animations for thumbnail activation
   transition: 0.2s;
 
+  min-width: 10rem;
   width: 10rem;
-  aspect-ratio: 1;
+  height: 10rem;
+}
+.owl-dot img {
+  height: 100%;
+  width: 100%;
   object-fit: cover;
 }
 
