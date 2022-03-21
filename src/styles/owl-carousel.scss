@@ -16,7 +16,7 @@
 // previous next buttons
 .owl-prev,
 .owl-next {
-  top: calc(50% - 5rem);
+  top: calc(50%);
   transform: translateY(-50%);
   position: absolute;
 
@@ -61,7 +61,6 @@
 // previews container
 .owl-dots {
   display: flex;
-  width: 100%;
 
   // horizontal scroll
   overflow-x: auto;
@@ -86,14 +85,15 @@
 }
 
 .owl-carousel .owl-item {
-  height: 40rem;
-  display: flex;
-  align-items: center;
+  display: block;
+  width: 100%;
 }
 
 // set same size for content images
 .owl-carousel .owl-item img {
   display: block;
-  max-height: 100%;
+
+  width: 100%;
+  aspect-ratio: 16 / 9;
   object-fit: contain;
 }
