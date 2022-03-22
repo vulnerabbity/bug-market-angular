@@ -41,7 +41,7 @@
             [routerLink]="'/user/' + this.product.userId"
             aria-label="Go to author profile"
           >
-            Author name
+            {{ this.userNameOrDefault }}
           </a>
           <a
             class="publishing-info__author-message"
