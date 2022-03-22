@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core"
+import { Component, OnInit } from "@angular/core"
 import { MatDialog, MatDialogRef } from "@angular/material/dialog"
 import { CommonRegisterDialogComponent } from "../register/register-dialog.component"
 
@@ -6,7 +6,7 @@ import { CommonRegisterDialogComponent } from "../register/register-dialog.compo
   templateUrl: "./login-dialog.component.html",
   styleUrls: ["../login-register.shared.scss", "./login-dialog.component.scss"]
 })
-export class CommonLoginDialogComponent implements OnDestroy, OnInit {
+export class CommonLoginDialogComponent implements OnInit {
   hidePassword = true
 
   constructor(
@@ -29,9 +29,8 @@ export class CommonLoginDialogComponent implements OnDestroy, OnInit {
 
   showRegisterDialogInstead() {
     this.dialog.open(CommonRegisterDialogComponent)
-  }
-
-  ngOnDestroy(): void {
-    console.log("Login destroyed")
+    setTimeout(() => {
+      this.currentDialog.close()
+    }, 100)
   }
 }

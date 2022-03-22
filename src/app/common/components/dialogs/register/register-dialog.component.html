@@ -23,12 +23,17 @@
     </mat-form-field>
 
     <div class="bottom-actions">
-      <button (click)="this.showLoginDialogInstead()" mat-button mat-dialog-close>Login</button>
+      <button (click)="this.showLoginDialogInstead()" mat-button>Login</button>
       <button mat-raised-button color="primary">Register</button>
     </div>
   </div>
 
-  <button class="close-button close-button--top" mat-icon-button aria-label="Close dialog">
+  <button
+    class="close-button close-button--top"
+    mat-icon-button
+    mat-dialog-close
+    aria-label="Close dialog"
+  >
     <mat-icon [inline]="true" class="close-icon">close</mat-icon>
   </button>
 </div>

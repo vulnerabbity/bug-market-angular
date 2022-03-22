@@ -27,7 +27,6 @@
         class="bottom-action register-button"
         (click)="this.showRegisterDialogInstead()"
         mat-button
-        mat-dialog-close
       >
         Create account
       </button>
@@ -35,7 +34,12 @@
     </div>
   </div>
 
-  <button class="close-button close-button--top" mat-icon-button aria-label="Close dialog">
+  <button
+    class="close-button close-button--top"
+    mat-icon-button
+    mat-dialog-close
+    aria-label="Close dialog"
+  >
     <mat-icon [inline]="true" class="close-icon">close</mat-icon>
   </button>
 </div>

@@ -29,5 +29,9 @@ export class CommonRegisterDialogComponent implements OnInit {
 
   showLoginDialogInstead() {
     this.dialog.open(CommonLoginDialogComponent)
+
+    setTimeout(() => {
+      this.currentDialog.close()
+    }, 100)
   }
 }
