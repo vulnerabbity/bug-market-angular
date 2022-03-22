@@ -8,6 +8,8 @@ import { CommonThemedDiv } from "../components/themed-div/themed-div.component"
 import { RouterModule } from "@angular/router"
 import { CarouselModule } from "ngx-owl-carousel-o"
 import { CommonCarousel } from "../components/carousel/carousel.component"
+import { CommonDataFieldComponent } from "../components/data-field/data-field.component"
+import { CommonTitleTextCardComponent } from "../components/title-text-card/title-text-card.component"
 
 const passThroughModules = [MaterialModule, CommonModule, RouterModule]
 const passThroughComponents = [
@@ -16,7 +18,9 @@ const passThroughComponents = [
   CommonThemedDiv,
   CommonProductCardComponent,
   CommonProductsContainer,
-  CommonCarousel
+  CommonCarousel,
+  CommonDataFieldComponent,
+  CommonTitleTextCardComponent
 ]
 
 @NgModule({

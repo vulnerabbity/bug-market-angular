@@ -42,7 +42,7 @@ export class ProductsService {
     return parsedResponse
   }
 
-  private addImagePath<T extends { imagesUrls: string[] }>(product: T) {
+  addImagePath<T extends { imagesUrls: string[] }>(product: T) {
     product = { ...product }
     product.imagesUrls = this.filesService.addPathToPublicFiles(product.imagesUrls)
     return product

@@ -38,10 +38,10 @@
             matTooltip="Go to author profile"
             matTooltipClass="tooltip"
             color="accent"
-            href="/users/mockid"
+            [routerLink]="'/user/' + this.product.userId"
             aria-label="Go to author profile"
           >
-            Author name
+            {{ this.userNameOrDefault }}
           </a>
           <a
             class="publishing-info__author-message"
@@ -59,16 +59,11 @@
     </common-themed-div>
     <div class="container">
       <common-carousel [images]="this.product.imagesUrls"></common-carousel>
-      <mat-card class="description">
-        <mat-card-header>
-          <mat-card-title class="description__title">Description</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p class="description__content">
-            {{ this.product.description }}
-          </p>
-        </mat-card-content>
-      </mat-card>
+      <common-title-text-card
+        class="description"
+        title="Description: "
+        [text]="this.product.description ?? ''"
+      ></common-title-text-card>
     </div>
   </div>
 </div>

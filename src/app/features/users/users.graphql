@@ -1,0 +1,29 @@
+query User($id: String!) {
+  user(userId: $id) {
+    id
+    name
+    avatarUrl
+    about
+    roles
+    cityId
+    countryCode
+  }
+}
+
+query UserWithShortProducts($id: String!) {
+  user(userId: $id) {
+    id
+    name
+    avatarUrl
+    about
+    roles
+    cityId
+    countryCode
+    products {
+      id
+      name
+      imagesUrls
+      price
+    }
+  }
+}

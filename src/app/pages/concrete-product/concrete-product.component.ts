@@ -1,7 +1,10 @@
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
-import { map, Observable, take } from "rxjs"
+import { firstValueFrom, map, Observable } from "rxjs"
 import { ProductsService } from "src/app/features/products/products.service"
+import { userDefaults } from "src/app/features/users/user.defaults"
+import { User } from "src/app/features/users/users.interface"
+import { UsersService } from "src/app/features/users/users.service"
 import { Product } from "src/generated-gql-types"
 
 @Component({
@@ -10,6 +13,7 @@ import { Product } from "src/generated-gql-types"
 })
 export class ConcreteProductPageComponent implements OnInit {
   product!: Product
+  user!: User
   loaded = false
 
   get productPriceString(): string {
@@ -20,10 +24,22 @@ export class ConcreteProductPageComponent implements OnInit {
     return "Free"
   }
 
-  constructor(private productsService: ProductsService, private currentRoute: ActivatedRoute) {}
+  get userNameOrDefault(): string {
+    if (this.user.name) {
+      return this.user.name
+    }
+    return userDefaults.name
+  }
 
-  ngOnInit(): void {
-    this.parseProductIdFromUrl.subscribe(id => this.loadProduct(id))
+  constructor(
+    private productsService: ProductsService,
+    private usersService: UsersService,
+    private currentRoute: ActivatedRoute
+  ) {}
+
+  async ngOnInit() {
+    await this.loadAll()
+    this.loaded = true
   }
 
   copyUrlToClipboard() {
@@ -35,19 +51,34 @@ export class ConcreteProductPageComponent implements OnInit {
     return window.location.href
   }
 
+  private async loadAll(): Promise<void> {
+    const productId = await firstValueFrom(this.parseProductIdFromUrl)
+    const product = await firstValueFrom(this.loadProduct(productId))
+    const user = await firstValueFrom(this.loadUser(product.userId))
+
+    this.product = product
+    this.user = user
+  }
+
   private parseProductIdFromUrl: Observable<string> = this.currentRoute.params.pipe(
-    map(params => params["id"]),
-    take(1)
+    map(params => params["id"])
   )
 
-  private loadProduct(id: string): void {
-    this.productsService.loadFullProduct(id).subscribe(loadedProduct => {
-      const productHasNoImages = loadedProduct.imagesUrls.length === 0
-      if (productHasNoImages) {
-        loadedProduct.imagesUrls.push("assets/pictures/no-image.webp")
-      }
-      this.product = loadedProduct
-      this.loaded = true
-    })
+  private loadUser(id: string): Observable<User> {
+    return this.usersService.loadUser({ id })
+  }
+
+  private loadProduct(id: string): Observable<Product> {
+    return this.productsService
+      .loadFullProduct(id)
+      .pipe(map(product => this.addDefaultImageToProduct(product)))
+  }
+
+  private addDefaultImageToProduct(product: Product): Product {
+    const productHasNoImages = product.imagesUrls.length === 0
+    if (productHasNoImages) {
+      product.imagesUrls.push("assets/pictures/no-image.webp")
+    }
+    return product
   }
 }

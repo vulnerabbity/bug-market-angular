@@ -549,6 +549,20 @@ export type FullProductQueryVariables = Exact<{
 
 export type FullProductQuery = { __typename?: 'Query', product: { __typename?: 'Product', id: string, name: string, userId: string, categoryId: string, description?: string | null, imagesUrls: Array<string>, price: number, createdAt: any } };
 
+export type UserQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', id: string, name?: string | null, avatarUrl?: string | null, about?: string | null, roles: Array<UserRolesEnum>, cityId?: number | null, countryCode?: CountryCodes | null } };
+
+export type UserWithShortProductsQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type UserWithShortProductsQuery = { __typename?: 'Query', user: { __typename?: 'User', id: string, name?: string | null, avatarUrl?: string | null, about?: string | null, roles: Array<UserRolesEnum>, cityId?: number | null, countryCode?: CountryCodes | null, products: Array<{ __typename?: 'Product', id: string, name: string, imagesUrls: Array<string>, price: number }> } };
+
 export const ShortProductsDocument = gql`
     query ShortProducts($fuzzy: String, $pagination: Pagination, $filtering: ProductFilters, $sorting: ProductSorting) {
   products(
@@ -598,6 +612,60 @@ export const FullProductDocument = gql`
   })
   export class FullProductGQL extends Apollo.Query<FullProductQuery, FullProductQueryVariables> {
     document = FullProductDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UserDocument = gql`
+    query User($id: String!) {
+  user(userId: $id) {
+    id
+    name
+    avatarUrl
+    about
+    roles
+    cityId
+    countryCode
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UserGQL extends Apollo.Query<UserQuery, UserQueryVariables> {
+    document = UserDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UserWithShortProductsDocument = gql`
+    query UserWithShortProducts($id: String!) {
+  user(userId: $id) {
+    id
+    name
+    avatarUrl
+    about
+    roles
+    cityId
+    countryCode
+    products {
+      id
+      name
+      imagesUrls
+      price
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UserWithShortProductsGQL extends Apollo.Query<UserWithShortProductsQuery, UserWithShortProductsQueryVariables> {
+    document = UserWithShortProductsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
