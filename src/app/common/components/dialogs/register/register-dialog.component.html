@@ -1,0 +1,34 @@
+<div class="component-root">
+  <h2 class="dialog-title" mat-dialog-title>Register</h2>
+  <div class="forms-container">
+    <mat-dialog-content> </mat-dialog-content>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput />
+      <mat-hint [hidden]="true">Hint</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Enter your password</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="togglePasswordState()"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hidePassword"
+      >
+        <mat-icon>{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <div class="bottom-actions">
+      <button (click)="this.showLoginDialogInstead()" mat-button mat-dialog-close>Login</button>
+      <button mat-raised-button color="primary">Register</button>
+    </div>
+  </div>
+
+  <button class="close-button close-button--top" mat-icon-button aria-label="Close dialog">
+    <mat-icon [inline]="true" class="close-icon">close</mat-icon>
+  </button>
+</div>
