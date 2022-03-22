@@ -1,0 +1,47 @@
+<div class="component-root">
+  <ng-container *ngIf="this.isLoaded === false; else headerDataLoaded">
+    <common-page-header title="Loading name ..."></common-page-header>
+  </ng-container>
+  <ng-template #headerDataLoaded>
+    <common-page-header [title]="'Profile of ' + this.userNameOrDefault"></common-page-header>
+  </ng-template>
+
+  <div class="container">
+    <ng-container *ngIf="this.isLoaded === false; else mainLoaded">
+      <mat-spinner [diameter]="this.loaderSpinnerSize" class="main-spinner"></mat-spinner>
+    </ng-container>
+    <ng-template #mainLoaded>
+      <main>
+        <section class="user-profile">
+          <h2 class="visually-hidden">Profile data</h2>
+          <div class="avatar-wrapper">
+            <img class="avatar" [src]="this.avatarUrlOrDefault" />
+          </div>
+          <div class="user-specs">
+            <common-data-field
+              class="data-item"
+              *ngFor="let property of this.keyValueProperties"
+              [key]="property.key"
+              [value]="property.value"
+            ></common-data-field>
+          </div>
+        </section>
+        <section>
+          <h2 class="visually-hidden">Description</h2>
+          <ng-template [ngIf]="this.user.about">
+            <common-title-text-card
+              class="about"
+              [title]="'About ' + this.userNameOrDefault + ':'"
+              [text]="this.user.about"
+            >
+            </common-title-text-card>
+          </ng-template>
+        </section>
+        <section>
+          <h2 class="products-header">Products of {{ this.userNameOrDefault }}:</h2>
+          <common-products-container [products]="this.user.products"></common-products-container>
+        </section>
+      </main>
+    </ng-template>
+  </div>
+</div>

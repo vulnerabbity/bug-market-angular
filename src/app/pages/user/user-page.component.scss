@@ -1,0 +1,41 @@
+.products-header {
+  display: flex;
+  align-items: center;
+  height: 6rem;
+
+  margin-left: 1rem;
+
+  font-size: 2.4rem;
+}
+
+.avatar {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  height: auto;
+  border-radius: 50%;
+}
+
+.avatar-wrapper {
+  padding: 1rem;
+  margin: 0 auto;
+  max-height: 50rem;
+}
+
+.user-profile {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 60rem) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.main-spinner {
+  margin: 0 auto;
+}
+
+.about {
+  margin-top: 1rem;
+}
