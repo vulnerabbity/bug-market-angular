@@ -12,7 +12,19 @@ const apolloOptionsProvider: Provider = {
       link: httpLink.create({
         // TODO: get from env
         uri: "http://localhost:3000/graphql"
-      })
+      }),
+
+      // disabling caching
+      defaultOptions: {
+        watchQuery: {
+          fetchPolicy: "no-cache",
+          errorPolicy: "ignore"
+        },
+        query: {
+          fetchPolicy: "no-cache",
+          errorPolicy: "all"
+        }
+      }
     }
   },
   deps: [HttpLink]
