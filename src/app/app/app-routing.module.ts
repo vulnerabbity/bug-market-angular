@@ -5,11 +5,13 @@ import { ConcreteProductPageComponent } from "../pages/concrete-product/concrete
 import { HomePageComponent } from "../pages/home/home-page.component"
 import { PreferencesPageComponent } from "../pages/preferences/preferences-page.component"
 import { ProductsPageComponent } from "../pages/products/products-page.component"
+import { UserPageComponent } from "../pages/user/user-page.component"
 
 export enum AppPathsEnum {
   Products = "products",
   Preferences = "preferences",
-  ConcreteProduct = "product/:id"
+  ConcreteProduct = "product/:id",
+  UserPage = "user/:id"
 }
 
 const homeRoute: Route = {
@@ -43,7 +45,19 @@ const concreteProductRoute: Route = {
   data: { preload: true }
 }
 
-const routes: Route[] = [homeRoute, productsRoute, preferencesRoute, concreteProductRoute]
+const userPageRoute: Route = {
+  path: AppPathsEnum.UserPage,
+  loadChildren: () => import("../pages/user/user-page.module").then(m => m.UserPageModule),
+  component: UserPageComponent
+}
+
+const routes: Route[] = [
+  homeRoute,
+  productsRoute,
+  preferencesRoute,
+  concreteProductRoute,
+  userPageRoute
+]
 
 const imports = [RouterModule.forRoot(routes, { preloadingStrategy: PreloadModuleOnDemand })]
 @NgModule({
