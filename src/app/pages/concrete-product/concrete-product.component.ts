@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
-import { map, Observable, take } from "rxjs"
+import { map, Observable } from "rxjs"
 import { ProductsService } from "src/app/features/products/products.service"
 import { Product } from "src/generated-gql-types"
 
@@ -36,8 +36,7 @@ export class ConcreteProductPageComponent implements OnInit {
   }
 
   private parseProductIdFromUrl: Observable<string> = this.currentRoute.params.pipe(
-    map(params => params["id"]),
-    take(1)
+    map(params => params["id"])
   )
 
   private loadProduct(id: string): void {
