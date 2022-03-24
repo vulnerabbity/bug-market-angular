@@ -2,25 +2,10 @@
   <h2 class="dialog-title" mat-dialog-title>Login</h2>
   <div class="forms-container">
     <mat-dialog-content> </mat-dialog-content>
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Username</mat-label>
-      <input matInput />
-      <mat-hint [hidden]="true">Hint</mat-hint>
-    </mat-form-field>
-
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Enter your password</mat-label>
-      <input matInput [type]="hidePassword ? 'password' : 'text'" />
-      <button
-        mat-icon-button
-        matSuffix
-        (click)="togglePasswordState()"
-        [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hidePassword"
-      >
-        <mat-icon>{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
-      </button>
-    </mat-form-field>
+    <form>
+      <common-username-form-field [(model)]="this.usernameField"></common-username-form-field>
+      <common-password-form-field [(model)]="this.passwordField"></common-password-form-field>
+    </form>
 
     <div class="bottom-actions">
       <button
@@ -30,7 +15,15 @@
       >
         Create account
       </button>
-      <button class="bottom-action" mat-raised-button color="primary">Login</button>
+      <button
+        class="bottom-action"
+        (click)="onLogin()"
+        [disabled]="this.isFormValid() === false"
+        mat-raised-button
+        color="primary"
+      >
+        Login
+      </button>
     </div>
   </div>
 
