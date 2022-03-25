@@ -1,25 +1,35 @@
 <div class="component-root">
   <mat-icon class="big-icon">account_box</mat-icon>
   <h2 class="dialog-title" mat-dialog-title>Create account</h2>
-  <form class="forms-container">
-    <common-username-form-field [(model)]="this.usernameField"></common-username-form-field>
+  <form class="forms-container" (submit)="this.onRegister()">
+    <mat-error *ngIf="this.requestError">{{ requestError }}</mat-error>
+
+    <common-username-form-field [(model)]="usernameField"></common-username-form-field>
 
     <mat-error *ngIf="this.isPasswordsMatch() === false">Passwords don't match</mat-error>
 
-    <common-password-form-field [(model)]="this.passwordField"></common-password-form-field>
+    <common-password-form-field [(model)]="passwordField"></common-password-form-field>
 
     <common-password-form-field
       [(model)]="this.repeatPasswordField"
       label="Repeat your password"
     ></common-password-form-field>
-  </form>
-  <div class="bottom-actions">
-    <button (click)="this.showLoginDialogInstead()" mat-button>Login instead</button>
 
-    <button [disabled]="this.isFormValid() === false" mat-raised-button color="primary">
-      Register
-    </button>
-  </div>
+    <div class="bottom-actions">
+      <button
+        (click)="showLoginDialogInstead()"
+        [disabled]="this.isLoading"
+        mat-button
+        type="button"
+      >
+        Login instead
+      </button>
+
+      <button [disabled]="shouldDisableSubmit()" mat-raised-button color="primary" type="submit">
+        Register
+      </button>
+    </div>
+  </form>
 
   <button
     class="close-button close-button--top"
