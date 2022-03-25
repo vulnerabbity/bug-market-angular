@@ -1,31 +1,23 @@
 <div class="component-root">
-  <h2 class="dialog-title" mat-dialog-title>Register</h2>
-  <div class="forms-container">
-    <mat-dialog-content> </mat-dialog-content>
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Username</mat-label>
-      <input matInput />
-      <mat-hint [hidden]="true">Hint</mat-hint>
-    </mat-form-field>
+  <h2 class="dialog-title" mat-dialog-title>Create account</h2>
+  <form class="forms-container">
+    <common-username-form-field [(model)]="this.usernameField"></common-username-form-field>
 
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Enter your password</mat-label>
-      <input matInput [type]="hidePassword ? 'password' : 'text'" />
-      <button
-        mat-icon-button
-        matSuffix
-        (click)="togglePasswordState()"
-        [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hidePassword"
-      >
-        <mat-icon>{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
-      </button>
-    </mat-form-field>
+    <mat-error *ngIf="this.isPasswordsMatch() === false">Passwords don't match</mat-error>
 
-    <div class="bottom-actions">
-      <button (click)="this.showLoginDialogInstead()" mat-button>Login</button>
-      <button mat-raised-button color="primary">Register</button>
-    </div>
+    <common-password-form-field [(model)]="this.passwordField"></common-password-form-field>
+
+    <common-password-form-field
+      [(model)]="this.repeatPasswordField"
+      label="Repeat your password"
+    ></common-password-form-field>
+  </form>
+  <div class="bottom-actions">
+    <button (click)="this.showLoginDialogInstead()" mat-button>Login instead</button>
+
+    <button [disabled]="this.isFormValid() === false" mat-raised-button color="primary">
+      Register
+    </button>
   </div>
 
   <button
