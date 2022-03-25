@@ -14,10 +14,9 @@ export abstract class AbstractCommonFormField implements OnInit {
   abstract label: string
 
   @Input()
-  controlName: string = "controlName"
-
-  @Input()
   appearance: "standard" | "legacy" | "fill" | "outline" = "standard"
+
+  controlName = "control"
 
   get formControl(): AbstractControl {
     return this.localFormGroup.get(this.controlName)!
