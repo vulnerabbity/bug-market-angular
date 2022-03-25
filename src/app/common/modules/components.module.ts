@@ -10,8 +10,19 @@ import { CarouselModule } from "ngx-owl-carousel-o"
 import { CommonCarousel } from "../components/carousel/carousel.component"
 import { CommonDataFieldComponent } from "../components/data-field/data-field.component"
 import { CommonTitleTextCardComponent } from "../components/title-text-card/title-text-card.component"
+import { CommonLoginDialogComponent } from "../components/dialogs/login/login-dialog.component"
+import { CommonRegisterDialogComponent } from "../components/dialogs/register/register-dialog.component"
+import { FormsModule, ReactiveFormsModule } from "@angular/forms"
+import { commonAppFormFieldsComponents } from "../components/form-fields/form-fields.declarations"
 
-const passThroughModules = [MaterialModule, CommonModule, RouterModule]
+const passThroughModules = [
+  MaterialModule,
+  CommonModule,
+  RouterModule,
+  FormsModule,
+  ReactiveFormsModule
+]
+
 const passThroughComponents = [
   CommonPageHeaderComponent,
   CommonProductCardComponent,
@@ -20,7 +31,10 @@ const passThroughComponents = [
   CommonProductsContainer,
   CommonCarousel,
   CommonDataFieldComponent,
-  CommonTitleTextCardComponent
+  CommonTitleTextCardComponent,
+  CommonLoginDialogComponent,
+  CommonRegisterDialogComponent,
+  commonAppFormFieldsComponents
 ]
 
 @NgModule({
