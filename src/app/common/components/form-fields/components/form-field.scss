@@ -1,0 +1,23 @@
+.form-field {
+  display: block;
+  width: 100%;
+}
+
+// add multiline error support
+// from https://github.com/angular/components/issues/4580
+::ng-deep mat-form-field .mat-form-field {
+  &-underline {
+    position: relative;
+    bottom: auto;
+  }
+  &-subscript-wrapper {
+    overflow: visible;
+    position: static;
+  }
+}
+
+// disable default error container which is always same hight
+::ng-deep .mat-form-field-wrapper {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}

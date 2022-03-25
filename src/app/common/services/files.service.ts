@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core"
+import { environment } from "src/environments/environment"
 
 @Injectable()
 export class FilesService {
   getPublicFileFullPath(publicFilesId: string) {
-    return "http://localhost:3000/public-files/" + publicFilesId
+    return `${environment.publicFilesUrl}/${publicFilesId}`
   }
 
   addPathToPublicFiles(publicFilesIds: string[]) {

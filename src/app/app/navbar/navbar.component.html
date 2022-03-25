@@ -19,11 +19,31 @@
   </nav>
   <span class="navbar__spacer" role="none"></span>
   <nav aria-label="right navigation">
-    <ul class="list list-horesontal">
+    <ul class="list list-horizontal">
       <li class="link-container">
-        <a class="icon-link active" [routerLink]="this.paths.Preferences" aria-label="preferences">
+        <a
+          class="icon-link"
+          [routerLink]="this.paths.Preferences"
+          matTooltip="Preferences"
+          matTooltipClass="tooltip"
+          aria-label="Preferences"
+        >
           <mat-icon routerLinkActive="selected-icon" class="icon">settings</mat-icon>
         </a>
+      </li>
+
+      <li class="link-container">
+        <button
+          class="icon-link"
+          mat-button
+          matTooltip="Login"
+          matTooltipClass="tooltip"
+          aria-label="Login"
+          (click)="onLoginClick()"
+        >
+          <!-- TODO: Place avatar if logged in -->
+          <mat-icon class="icon">account_circle</mat-icon>
+        </button>
       </li>
     </ul>
   </nav>

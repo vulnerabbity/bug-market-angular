@@ -532,6 +532,14 @@ export enum CountryCodes {
   Zw = 'ZW'
 }
 
+export type LoginWithUsernameQueryVariables = Exact<{
+  username: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type LoginWithUsernameQuery = { __typename?: 'Query', loginWithUsername: { __typename?: 'LoginResponse', access_token: string, refresh_token: string } };
+
 export type ShortProductsQueryVariables = Exact<{
   fuzzy?: InputMaybe<Scalars['String']>;
   pagination?: InputMaybe<Pagination>;
@@ -563,6 +571,25 @@ export type UserWithShortProductsQueryVariables = Exact<{
 
 export type UserWithShortProductsQuery = { __typename?: 'Query', user: { __typename?: 'User', id: string, name?: string | null, avatarUrl?: string | null, about?: string | null, roles: Array<UserRolesEnum>, cityId?: number | null, countryCode?: CountryCodes | null, products: Array<{ __typename?: 'Product', id: string, name: string, imagesUrls: Array<string>, price: number }> } };
 
+export const LoginWithUsernameDocument = gql`
+    query LoginWithUsername($username: String!, $password: String!) {
+  loginWithUsername(username: $username, password: $password) {
+    access_token
+    refresh_token
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class LoginWithUsernameGQL extends Apollo.Query<LoginWithUsernameQuery, LoginWithUsernameQueryVariables> {
+    document = LoginWithUsernameDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const ShortProductsDocument = gql`
     query ShortProducts($fuzzy: String, $pagination: Pagination, $filtering: ProductFilters, $sorting: ProductSorting) {
   products(

@@ -1,0 +1,31 @@
+<div class="component-root">
+  <h2 class="dialog-title" mat-dialog-title>Create account</h2>
+  <form class="forms-container">
+    <common-username-form-field [(model)]="this.usernameField"></common-username-form-field>
+
+    <mat-error *ngIf="this.isPasswordsMatch() === false">Passwords don't match</mat-error>
+
+    <common-password-form-field [(model)]="this.passwordField"></common-password-form-field>
+
+    <common-password-form-field
+      [(model)]="this.repeatPasswordField"
+      label="Repeat your password"
+    ></common-password-form-field>
+  </form>
+  <div class="bottom-actions">
+    <button (click)="this.showLoginDialogInstead()" mat-button>Login instead</button>
+
+    <button [disabled]="this.isFormValid() === false" mat-raised-button color="primary">
+      Register
+    </button>
+  </div>
+
+  <button
+    class="close-button close-button--top"
+    mat-icon-button
+    mat-dialog-close
+    aria-label="Close dialog"
+  >
+    <mat-icon [inline]="true" class="close-icon">close</mat-icon>
+  </button>
+</div>
