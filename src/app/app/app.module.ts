@@ -6,6 +6,7 @@ import { AppRoutingModule } from "./app-routing.module"
 import { AppComponent } from "./app.component"
 import { AppNavbarComponent } from "./navbar/navbar.component"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
+import { AuthenticationInterceptorProvider } from "../common/interceptors/authentication.interceptor"
 
 const imports = [
   BrowserModule,
@@ -18,7 +19,7 @@ const imports = [
 @NgModule({
   declarations: [AppComponent, AppNavbarComponent],
   imports,
-  providers: [],
+  providers: [AuthenticationInterceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
