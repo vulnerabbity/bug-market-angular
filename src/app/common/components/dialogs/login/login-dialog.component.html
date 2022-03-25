@@ -1,7 +1,7 @@
 <div class="component-root">
   <h2 class="dialog-title" mat-dialog-title>Login</h2>
   <div class="forms-container">
-    <mat-dialog-content> </mat-dialog-content>
+    <mat-error *ngIf="requestError">{{ requestError }}</mat-error>
     <form>
       <common-username-form-field [(model)]="this.usernameField"></common-username-form-field>
       <common-password-form-field [(model)]="this.passwordField"></common-password-form-field>
@@ -18,7 +18,7 @@
       <button
         class="bottom-action"
         (click)="onLogin()"
-        [disabled]="this.isFormValid() === false"
+        [disabled]="this.isFormValid() === false && this.loading === false"
         mat-raised-button
         color="primary"
       >
