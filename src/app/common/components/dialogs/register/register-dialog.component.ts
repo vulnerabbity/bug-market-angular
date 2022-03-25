@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core"
 import { MatDialog, MatDialogRef } from "@angular/material/dialog"
+import { FormFieldModel } from "../../form-fields/components/abstract-form-field"
 import { CommonLoginDialogComponent } from "../login/login-dialog.component"
 
 @Component({
@@ -7,7 +8,9 @@ import { CommonLoginDialogComponent } from "../login/login-dialog.component"
   styleUrls: ["../login-register.shared.scss", "./register-dialog.component.scss"]
 })
 export class CommonRegisterDialogComponent implements OnInit {
-  hidePassword = true
+  usernameField: FormFieldModel = { value: "", isValid: false }
+  passwordField: FormFieldModel = { value: "", isValid: false }
+  repeatPasswordField: FormFieldModel = { value: "", isValid: false }
 
   constructor(
     private dialog: MatDialog,
@@ -18,13 +21,8 @@ export class CommonRegisterDialogComponent implements OnInit {
     this.initDialogSize()
   }
 
-  initDialogSize() {
-    const width = "60rem"
-    this.currentDialog.updateSize(width)
-  }
-
-  togglePasswordState() {
-    this.hidePassword = !this.hidePassword
+  isFormValid() {
+    return this.isFormFieldsValid() && this.isPasswordsMatch()
   }
 
   showLoginDialogInstead() {
@@ -33,5 +31,24 @@ export class CommonRegisterDialogComponent implements OnInit {
     setTimeout(() => {
       this.currentDialog.close()
     }, 100)
+  }
+
+  isFormFieldsValid(): boolean {
+    const usernameValid = this.usernameField.isValid
+    const passwordValid = this.passwordField.isValid
+    const repeatPasswordValid = this.usernameField.isValid
+    if (usernameValid && passwordValid && repeatPasswordValid) {
+      return true
+    }
+    return false
+  }
+
+  isPasswordsMatch() {
+    return this.passwordField.value === this.repeatPasswordField.value
+  }
+
+  private initDialogSize() {
+    const width = "60rem"
+    this.currentDialog.updateSize(width)
   }
 }
