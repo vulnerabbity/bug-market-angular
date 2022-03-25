@@ -6,15 +6,13 @@ import { AppRoutingModule } from "./app-routing.module"
 import { AppComponent } from "./app.component"
 import { AppNavbarComponent } from "./navbar/navbar.component"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
-import { ReactiveFormsModule } from "@angular/forms"
 
 const imports = [
   BrowserModule,
   AppRoutingModule,
   AppCommonModule,
   BrowserAnimationsModule,
-  GraphqlModule,
-  ReactiveFormsModule
+  GraphqlModule
 ]
 
 @NgModule({
