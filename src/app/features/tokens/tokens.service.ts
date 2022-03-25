@@ -1,4 +1,3 @@
-import { Injectable } from "@angular/core"
 import { AppDecodedTokenPayload } from "./tokens.interface"
 
 export class TokensService {
@@ -17,7 +16,7 @@ export class TokensService {
     if (tokenParts.length !== 3) {
       throw new Error("Invalid token shape")
     }
-
+    // 0 - head. 1 - payload. 2 - signature
     const payloadTokenPart = tokenParts[1]
 
     const jsonPayload = this.base64ToAscii(payloadTokenPart)
@@ -25,7 +24,7 @@ export class TokensService {
     return parsedTokenPayload
   }
 
-  base64ToAscii(base64String: string): string {
+  private base64ToAscii(base64String: string): string {
     return atob(base64String)
   }
 

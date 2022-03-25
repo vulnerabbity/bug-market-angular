@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core"
 import { MatDialog, MatDialogRef } from "@angular/material/dialog"
+import { AuthenticationService } from "src/app/features/authentication/authentication.service"
+import { CreateSellerStatus, UsersService } from "src/app/features/users/users.service"
 import { FormFieldModel } from "../../form-fields/components/abstract-form-field"
 import { CommonLoginDialogComponent } from "../login/login-dialog.component"
 
@@ -8,17 +10,55 @@ import { CommonLoginDialogComponent } from "../login/login-dialog.component"
   styleUrls: ["../login-register.shared.scss", "./register-dialog.component.scss"]
 })
 export class CommonRegisterDialogComponent implements OnInit {
+  isLoading = false
+  requestError = ""
+
   usernameField: FormFieldModel = { value: "", isValid: false }
   passwordField: FormFieldModel = { value: "", isValid: false }
   repeatPasswordField: FormFieldModel = { value: "", isValid: false }
 
+  get username(): string {
+    return this.usernameField.value
+  }
+  get password(): string {
+    return this.passwordField.value
+  }
+
+  get credentials(): { username: string; password: string } {
+    return { username: this.username, password: this.password }
+  }
+
   constructor(
+    private usersService: UsersService,
+    private authenticationService: AuthenticationService,
     private dialog: MatDialog,
     private currentDialog: MatDialogRef<CommonRegisterDialogComponent>
   ) {}
 
   ngOnInit(): void {
     this.initDialogSize()
+  }
+
+  async onRegister() {
+    this.isLoading = true
+    const createUserStatus = await this.usersService.createSellerAsync(this.credentials)
+    if (createUserStatus === "success") {
+      await this.login()
+      this.currentDialog.close()
+    } else {
+      this.displayRequestError(createUserStatus)
+    }
+    this.isLoading = false
+  }
+
+  private async login() {
+    return await this.authenticationService.loginWithUsername(this.credentials)
+  }
+
+  shouldDisableSubmit(): boolean {
+    const formInValid = !this.isFormValid()
+    const loading = this.isLoading
+    return formInValid || loading
   }
 
   isFormValid() {
@@ -45,6 +85,14 @@ export class CommonRegisterDialogComponent implements OnInit {
 
   isPasswordsMatch() {
     return this.passwordField.value === this.repeatPasswordField.value
+  }
+
+  private displayRequestError(status: CreateSellerStatus): void {
+    if (status === "duplicate") {
+      this.requestError = "This user already exists"
+    } else if (status === "unknown") {
+      this.requestError = "Some unexpected error happened. Sorry"
+    }
   }
 
   private initDialogSize() {

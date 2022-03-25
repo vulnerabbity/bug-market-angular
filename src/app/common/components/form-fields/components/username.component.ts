@@ -10,7 +10,7 @@ import { AbstractCommonFormField } from "./abstract-form-field"
     <mat-form-field [formGroup]="this.localFormGroup" class="form-field" appearance="outline">
       <mat-label>{{ label }}</mat-label>
       <input (ngModelChange)="this.OnInputChange()" [formControlName]="this.controlName" matInput />
-      <mat-error *ngIf="this.formControl.invalid">err</mat-error>
+      <mat-error *ngIf="this.formControl.invalid">Invalid nickname</mat-error>
     </mat-form-field>
   `
 })

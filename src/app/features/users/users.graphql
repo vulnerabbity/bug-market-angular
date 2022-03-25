@@ -27,3 +27,9 @@ query UserWithShortProducts($id: String!) {
     }
   }
 }
+
+mutation CreateSeller($username: String!, $password: String!) {
+  createSeller(input: { username: $username, password: $password }) {
+    id
+  }
+}

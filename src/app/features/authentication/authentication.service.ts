@@ -6,29 +6,47 @@ import {
   LoginWithUsernameQueryVariables
 } from "src/generated-gql-types"
 import { AccessTokenLocalStorageService } from "../local-storage/access-token.services"
+import { RefreshTokenLocalStorageService } from "../local-storage/refresh-token.service"
 
 export type LoginStatus = "success" | "not-found" | "invalid-password" | "misc"
+
+enum BackendAuthenticationErrors {
+  NotFound = "User not found",
+  InvalidPassword = "Invalid password"
+}
+
+interface TokenPair {
+  access_token: string
+  refresh_token: string
+}
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthenticationService {
-  private accessTokenStorage = new AccessTokenLocalStorageService()
   constructor(private loginWithUsernameQuery: LoginWithUsernameGQL) {}
 
   async loginWithUsername(variables: LoginWithUsernameQueryVariables): Promise<LoginStatus> {
     try {
       const tokens = await firstValueFrom(this.sendCredentials$(variables))
+      this.saveTokensLocally(tokens)
       return "success"
     } catch (err: any) {
-      if (err.message === "User not found") {
+      if (err.message === BackendAuthenticationErrors.NotFound) {
         return "not-found"
       }
-      if (err.message === "Invalid password") {
+      if (err.message === BackendAuthenticationErrors.InvalidPassword) {
         return "invalid-password"
       }
       return "misc"
     }
+  }
+
+  private saveTokensLocally(tokens: TokenPair) {
+    const accessTokenStorage = new AccessTokenLocalStorageService()
+    const refreshTokenStorage = new RefreshTokenLocalStorageService()
+    accessTokenStorage.saveRecord(tokens.access_token)
+    refreshTokenStorage.saveRecord(tokens.refresh_token)
   }
 
   private sendCredentials$(variables: LoginWithUsernameQueryVariables): Observable<LoginResponse> {
@@ -40,12 +58,12 @@ export class AuthenticationService {
         const error = response.errors[0]
         const errorMessage = error.message
 
-        if (errorMessage === "User not found") {
-          throw new Error("User not found")
+        if (errorMessage === BackendAuthenticationErrors.NotFound) {
+          throw new Error(BackendAuthenticationErrors.NotFound)
         }
 
-        if (errorMessage === "Invalid password") {
-          throw new Error("Invalid password")
+        if (errorMessage === BackendAuthenticationErrors.InvalidPassword) {
+          throw new Error(BackendAuthenticationErrors.InvalidPassword)
         }
 
         throw new Error("UnknownError")
