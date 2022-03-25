@@ -571,6 +571,14 @@ export type UserWithShortProductsQueryVariables = Exact<{
 
 export type UserWithShortProductsQuery = { __typename?: 'Query', user: { __typename?: 'User', id: string, name?: string | null, avatarUrl?: string | null, about?: string | null, roles: Array<UserRolesEnum>, cityId?: number | null, countryCode?: CountryCodes | null, products: Array<{ __typename?: 'Product', id: string, name: string, imagesUrls: Array<string>, price: number }> } };
 
+export type CreateSellerMutationVariables = Exact<{
+  username: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type CreateSellerMutation = { __typename?: 'Mutation', createSeller: { __typename?: 'User', id: string, name?: string | null, avatarUrl?: string | null, about?: string | null, roles: Array<UserRolesEnum>, cityId?: number | null, countryCode?: CountryCodes | null } };
+
 export const LoginWithUsernameDocument = gql`
     query LoginWithUsername($username: String!, $password: String!) {
   loginWithUsername(username: $username, password: $password) {
@@ -693,6 +701,30 @@ export const UserWithShortProductsDocument = gql`
   })
   export class UserWithShortProductsGQL extends Apollo.Query<UserWithShortProductsQuery, UserWithShortProductsQueryVariables> {
     document = UserWithShortProductsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateSellerDocument = gql`
+    mutation CreateSeller($username: String!, $password: String!) {
+  createSeller(input: {username: $username, password: $password}) {
+    id
+    name
+    avatarUrl
+    about
+    roles
+    cityId
+    countryCode
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateSellerGQL extends Apollo.Mutation<CreateSellerMutation, CreateSellerMutationVariables> {
+    document = CreateSellerDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
