@@ -9,7 +9,7 @@ import { AbstractCommonFormField } from "./abstract-form-field"
   styleUrls: ["./form-field.scss"],
   template: `
     <mat-form-field [formGroup]="this.localFormGroup" class="form-field" appearance="outline">
-      <mat-label>Enter your password</mat-label>
+      <mat-label>{{ label }}</mat-label>
       <input
         (ngModelChange)="this.OnInputChange()"
         [formControlName]="this.controlName"
@@ -25,6 +25,7 @@ import { AbstractCommonFormField } from "./abstract-form-field"
       >
         <mat-icon>{{ isPasswordHidden ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
+
       <mat-error *ngIf="this.errorChecker.hasValidationErrors()">
         <span *ngIf="this.errorChecker.isRequiredError()">This field is required</span>
         <span *ngIf="this.errorChecker.isMinLengthError()">
