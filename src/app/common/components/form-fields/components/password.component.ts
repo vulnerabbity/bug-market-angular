@@ -19,6 +19,7 @@ import { AbstractCommonFormField } from "./abstract-form-field"
       <button
         mat-icon-button
         matSuffix
+        type="button"
         (click)="togglePasswordState()"
         [attr.aria-label]="'Hide password'"
         [attr.aria-pressed]="isPasswordHidden"
