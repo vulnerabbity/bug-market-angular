@@ -13,11 +13,6 @@
   margin: 0 auto;
 }
 
-.form-field {
-  display: block;
-  width: 100%;
-}
-
 .close-button {
   &--top {
     position: absolute;
@@ -35,5 +30,6 @@
 
 .bottom-actions {
   display: flex;
+  margin-top: 2rem;
   justify-content: space-between;
 }
