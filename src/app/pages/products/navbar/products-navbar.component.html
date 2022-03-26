@@ -1,9 +1,15 @@
 <common-themed-div color="primary" class="component-root">
   <common-titled-page-header title="Products">
     <span class="spacer" role="none"></span>
-    <a [routerLink]="'/' + this.createProductPath" mat-button>
+    <a
+      [routerLink]="getCreateProductPathIfAllowed()"
+      [disabled]="canCreateProduct() === false"
+      mat-button
+      [matTooltip]="createProductTooltipText"
+      matTooltipClass="tooltip"
+    >
       <mat-icon>add_box</mat-icon>
-      Add new Product
+      Add new product
     </a>
   </common-titled-page-header>
 </common-themed-div>
