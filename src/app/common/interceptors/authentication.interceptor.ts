@@ -14,8 +14,8 @@ export class AuthenticationInterceptor implements HttpInterceptor {
   private accessTokenStorage = new AccessTokenLocalStorageService()
   constructor() {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const isUrlForAddToken = this.isUrlForIncludeToken(req.url)
-    if (isUrlForAddToken === false) {
+    const needAddToken = this.needAddAccessToken(req)
+    if (needAddToken === false) {
       return next.handle(req)
     }
 
@@ -31,7 +31,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     }
 
     const accessToken = this.accessTokenStorage.tryToGetRecord()
-    const bearerToken = `bearer ${accessToken}`
+    const bearerToken = this.makeBearerToken(accessToken)
     // TODO: remove later
     console.log(`patched ${req.url} with access token`)
 
@@ -40,7 +40,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     })
   }
 
-  private isUrlForIncludeToken(url: string) {
+  private needAddAccessToken({ url }: HttpRequest<any>) {
     const trustedHosts = this.getTrustedHosts()
     let result = false
 
@@ -54,6 +54,10 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
   private getTrustedHosts(): string[] {
     return environment.hostsForTokenUsage
+  }
+
+  private makeBearerToken(jwt: string): string {
+    return `bearer ${jwt}`
   }
 }
 
