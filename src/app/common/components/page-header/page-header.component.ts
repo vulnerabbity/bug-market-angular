@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core"
+import { Component } from "@angular/core"
 
 @Component({
   selector: "common-page-header",
@@ -6,12 +6,9 @@ import { Component, Input } from "@angular/core"
   template: `
     <common-themed-div class="component-root" color="primary">
       <header class="header">
-        <h1 class="header__text">{{ title }}</h1>
+        <ng-content class="div-content"></ng-content>
       </header>
     </common-themed-div>
   `
 })
-export class CommonPageHeaderComponent {
-  @Input()
-  title: string = "header"
-}
+export class CommonPageHeaderComponent {}
