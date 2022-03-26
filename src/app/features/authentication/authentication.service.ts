@@ -5,7 +5,7 @@ import {
   LoginWithUsernameGQL,
   LoginWithUsernameQueryVariables
 } from "src/generated-gql-types"
-import { AccessTokenLocalStorageService } from "../local-storage/access-token.services"
+import { AccessTokenLocalStorageService } from "../local-storage/access-token.service"
 import { RefreshTokenLocalStorageService } from "../local-storage/refresh-token.service"
 
 export type LoginStatus = "success" | "not-found" | "invalid-password" | "misc"

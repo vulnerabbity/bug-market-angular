@@ -7,7 +7,7 @@ import {
 } from "@angular/common/http"
 import { Provider } from "@angular/core"
 import { Observable } from "rxjs"
-import { AccessTokenLocalStorageService } from "src/app/features/local-storage/access-token.services"
+import { AccessTokenLocalStorageService } from "src/app/features/local-storage/access-token.service"
 import { environment } from "src/environments/environment"
 
 export class AuthenticationInterceptor implements HttpInterceptor {
