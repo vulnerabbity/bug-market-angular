@@ -20,7 +20,7 @@ query FullProduct($id: String!) {
     id
     name
     userId
-    categoryId
+    categoryName
     description
     imagesUrls
     price
