@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core"
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn } from "@angular/forms"
+import { FormsErrorDetector } from "src/app/common/forms/forms.error-detector"
 
 export interface FormFieldModel {
   value: string
@@ -36,6 +37,12 @@ export abstract class AbstractCommonFormField implements OnInit {
     return this.localFormGroup.value[this.controlName]
   }
 
+  set inputText(value: string) {
+    this.localFormGroup.setValue({ [this.controlName]: value })
+  }
+
+  errorDetector!: FormsErrorDetector
+
   protected validators: ValidatorFn[] = []
 
   constructor(private fb: FormBuilder) {}
@@ -50,6 +57,8 @@ export abstract class AbstractCommonFormField implements OnInit {
     this.localFormGroup = this.fb.group({
       [this.controlName]: [this.model.value, this.validators]
     })
+
+    this.errorDetector = new FormsErrorDetector(this.formControl)
   }
 
   OnInputChange(): void {
