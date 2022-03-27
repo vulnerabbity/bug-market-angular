@@ -15,6 +15,7 @@ import { CommonRegisterDialogComponent } from "../components/dialogs/register/re
 import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { commonAppFormFieldsComponents } from "../components/form-fields/form-fields.declarations"
 import { CommonPageHeaderWithTitleComponent } from "../components/page-header/page-header-with-title.component"
+import { commonAutocompleteComponents } from "../components/autocomplete/autocomplete.declaration"
 
 const passThroughModules = [
   MaterialModule,
@@ -36,7 +37,8 @@ const passThroughComponents = [
   CommonTitleTextCardComponent,
   CommonLoginDialogComponent,
   CommonRegisterDialogComponent,
-  commonAppFormFieldsComponents
+  commonAppFormFieldsComponents,
+  commonAutocompleteComponents
 ]
 
 @NgModule({
