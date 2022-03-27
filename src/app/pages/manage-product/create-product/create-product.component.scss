@@ -1,0 +1,41 @@
+.price-category-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  // display one item per line at small screen
+  @media (max-width: 48rem) {
+    height: 16rem;
+    grid-template-columns: 1fr;
+  }
+
+  height: 8rem;
+  align-items: center;
+  grid-gap: 4%;
+}
+
+.category-field {
+  margin-top: 4px;
+}
+
+.form-container {
+  margin-top: 4rem;
+}
+
+.create-product-button {
+  display: block;
+  margin: 0 auto;
+  margin-top: 4rem;
+  width: 65%;
+  height: 8rem;
+  &__text {
+    font-size: min(8vw, 4.5rem);
+  }
+}
+
+.section-logo {
+  display: block;
+  margin: 1rem auto;
+  height: min(30vw, 25rem);
+  width: min(30vw, 25rem);
+  font-size: min(30vw, 25rem);
+}

@@ -1,0 +1,28 @@
+<div class="component-root">
+  <common-titled-page-header title="Create product"></common-titled-page-header>
+  <div class="container">
+    <mat-icon class="section-logo">rocket_launch</mat-icon>
+    <form class="form-container">
+      <common-product-name-form-field [(model)]="productNameField"></common-product-name-form-field>
+      <div class="price-category-container">
+        <common-product-price-form-field
+          class="price-field"
+          [(model)]="productPriceField"
+        ></common-product-price-form-field>
+        <common-product-category-autocomplete
+          class="category-field"
+          [(model)]="productCategoryField"
+        ></common-product-category-autocomplete>
+      </div>
+      <button
+        class="create-product-button"
+        [disabled]="this.isFromValid === false"
+        type="submit"
+        mat-raised-button
+        color="primary"
+      >
+        <span class="create-product-button__text"> Create product </span>
+      </button>
+    </form>
+  </div>
+</div>
