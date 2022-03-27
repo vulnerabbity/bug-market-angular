@@ -29,6 +29,7 @@
     "@graphql-codegen/typescript-apollo-angular": "^3.4.5",
     "@graphql-codegen/typescript-operations": "^2.3.4",
     "apollo-angular": "^3.0.0",
+    "fuse.js": "^6.5.3",
     "graphql": "15.8.0",
     "ngx-owl-carousel-o": "^7.0.2",
     "rxjs": "~7.4.0",
