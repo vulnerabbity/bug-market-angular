@@ -16,6 +16,9 @@ export abstract class AbstractCommonFormField implements OnInit {
   @Input()
   appearance: "standard" | "legacy" | "fill" | "outline" = "standard"
 
+  @Input()
+  defaultText: string = ""
+
   controlName = "control"
 
   get formControl(): AbstractControl {
@@ -48,7 +51,7 @@ export abstract class AbstractCommonFormField implements OnInit {
 
   ngOnInit(): void {
     this.localFormGroup = this.fb.group({
-      [this.controlName]: ["", this.validators]
+      [this.controlName]: [this.defaultText, this.validators]
     })
 
     this.model = this.getActualModel()
@@ -57,4 +60,8 @@ export abstract class AbstractCommonFormField implements OnInit {
   OnInputChange(): void {
     this.modelChange.emit(this.getActualModel())
   }
+}
+
+export function initFromFieldModel(): FormFieldModel {
+  return { value: "", isValid: false }
 }
