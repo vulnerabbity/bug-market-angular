@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core"
 import { Route, RouterModule } from "@angular/router"
 import { PreloadModuleOnDemand } from "../common/routing/preload-on-demand.strategy"
 import { ConcreteProductPageComponent } from "../pages/concrete-product/concrete-product.component"
-import { CreateProductPageComponent } from "../pages/create-product/create-product.component"
+import { CreateProductPageComponent } from "../pages/manage-product/create-product/create-product.component"
 import { HomePageComponent } from "../pages/home/home-page.component"
 import { PreferencesPageComponent } from "../pages/preferences/preferences-page.component"
 import { ProductsPageComponent } from "../pages/products/products-page.component"
@@ -56,7 +56,9 @@ const userPageRoute: Route = {
 const createProductRoute: Route = {
   path: AppPathsEnum.CreateProduct,
   loadChildren: () =>
-    import("../pages/create-product/create-product.module").then(m => m.CreateProductPageModule),
+    import("../pages/manage-product/create-product/create-product.module").then(
+      m => m.CreateProductPageModule
+    ),
   component: CreateProductPageComponent
 }
 
