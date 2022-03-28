@@ -20,10 +20,16 @@ query FullProduct($id: String!) {
     id
     name
     userId
-    categoryId
+    categoryName
     description
     imagesUrls
     price
     createdAt
+  }
+}
+
+mutation CreateProduct($input: CreateProductInput!) {
+  createProduct(createProductInput: $input) {
+    id
   }
 }

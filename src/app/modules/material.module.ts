@@ -9,6 +9,8 @@ import { MatTooltipModule } from "@angular/material/tooltip"
 import { MatDialogModule } from "@angular/material/dialog"
 import { MatInputModule } from "@angular/material/input"
 import { MatFormFieldModule } from "@angular/material/form-field"
+import { MatSliderModule } from "@angular/material/slider"
+import { MatAutocompleteModule } from "@angular/material/autocomplete"
 
 const materialModules = [
   MatButtonModule,
@@ -20,7 +22,9 @@ const materialModules = [
   MatTooltipModule,
   MatDialogModule,
   MatInputModule,
-  MatFormFieldModule
+  MatFormFieldModule,
+  MatSliderModule,
+  MatAutocompleteModule
 ]
 
 @NgModule({

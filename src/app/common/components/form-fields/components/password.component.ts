@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core"
 import { Validators } from "@angular/forms"
-import { FormsErrorMessenger } from "src/app/common/forms/forms-error-messenger"
 import { FormsErrorDetector } from "src/app/common/forms/forms.error-detector"
 import { AbstractCommonFormField } from "./abstract-form-field"
 
@@ -29,9 +28,7 @@ import { AbstractCommonFormField } from "./abstract-form-field"
 
       <mat-error *ngIf="this.errorChecker.hasValidationErrors()">
         <span *ngIf="this.errorChecker.isRequiredError()">This field is required</span>
-        <span *ngIf="this.errorChecker.isMinLengthError()">
-          {{ this.errorMessenger.getMinLengthMessage() }}
-        </span>
+        <span *ngIf="this.errorChecker.isMinLengthError()"> Length should 8+ </span>
       </mat-error>
     </mat-form-field>
   `
@@ -39,19 +36,15 @@ import { AbstractCommonFormField } from "./abstract-form-field"
 export class CommonPasswordFieldComponent extends AbstractCommonFormField implements OnInit {
   label = "Enter your password"
 
-  controlName: string = "password"
-
   isPasswordHidden = true
 
   validators = [Validators.minLength(8), Validators.required]
 
   errorChecker!: FormsErrorDetector
-  errorMessenger!: FormsErrorMessenger
 
   ngOnInit(): void {
     super.ngOnInit()
     this.errorChecker = new FormsErrorDetector(this.formControl)
-    this.errorMessenger = new FormsErrorMessenger(this.formControl, "Password")
   }
 
   togglePasswordState() {

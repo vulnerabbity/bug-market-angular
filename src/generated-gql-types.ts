@@ -17,10 +17,9 @@ export type Scalars = {
   DateTime: any;
 };
 
-export type Category = {
-  __typename?: 'Category';
-  id: Scalars['String'];
-  name: Scalars['String'];
+export type Categories = {
+  __typename?: 'Categories';
+  data: Array<Scalars['String']>;
 };
 
 export type City = {
@@ -39,12 +38,8 @@ export type Country = {
   translatedName: Scalars['String'];
 };
 
-export type CreateCategoryInput = {
-  name: Scalars['String'];
-};
-
 export type CreateProductInput = {
-  categoryId: Scalars['String'];
+  categoryName: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   price?: InputMaybe<Scalars['Int']>;
@@ -66,17 +61,11 @@ export type LoginResponse = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createCategory: Category;
   createProduct: Product;
   createSeller: User;
   deleteProduct: Product;
   updateProduct: Product;
   updateUser: User;
-};
-
-
-export type MutationCreateCategoryArgs = {
-  createCategoryInput: CreateCategoryInput;
 };
 
 
@@ -131,7 +120,7 @@ export type Pagination = {
 
 export type Product = {
   __typename?: 'Product';
-  categoryId: Scalars['String'];
+  categoryName: Scalars['String'];
   createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   id: Scalars['String'];
@@ -146,7 +135,7 @@ export type ProductFilters = {
 };
 
 export type ProductInput = {
-  categoryId: Scalars['String'];
+  categoryName: Scalars['String'];
   createdAt: Scalars['DateTime'];
   description?: InputMaybe<Scalars['String']>;
   id: Scalars['String'];
@@ -164,7 +153,7 @@ export type ProductSorting = {
 
 export type Query = {
   __typename?: 'Query';
-  categories: Array<Category>;
+  categories: Categories;
   cities: PaginatedCities;
   city: City;
   countries: PaginatedCountries;
@@ -249,7 +238,7 @@ export enum SortingOrder {
 }
 
 export type UpdateProductInput = {
-  categoryId?: InputMaybe<Scalars['String']>;
+  categoryName?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   price?: InputMaybe<Scalars['Int']>;
@@ -555,7 +544,14 @@ export type FullProductQueryVariables = Exact<{
 }>;
 
 
-export type FullProductQuery = { __typename?: 'Query', product: { __typename?: 'Product', id: string, name: string, userId: string, categoryId: string, description?: string | null, imagesUrls: Array<string>, price: number, createdAt: any } };
+export type FullProductQuery = { __typename?: 'Query', product: { __typename?: 'Product', id: string, name: string, userId: string, categoryName: string, description?: string | null, imagesUrls: Array<string>, price: number, createdAt: any } };
+
+export type CreateProductMutationVariables = Exact<{
+  input: CreateProductInput;
+}>;
+
+
+export type CreateProductMutation = { __typename?: 'Mutation', createProduct: { __typename?: 'Product', id: string } };
 
 export type UserQueryVariables = Exact<{
   id: Scalars['String'];
@@ -633,7 +629,7 @@ export const FullProductDocument = gql`
     id
     name
     userId
-    categoryId
+    categoryName
     description
     imagesUrls
     price
@@ -647,6 +643,24 @@ export const FullProductDocument = gql`
   })
   export class FullProductGQL extends Apollo.Query<FullProductQuery, FullProductQueryVariables> {
     document = FullProductDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateProductDocument = gql`
+    mutation CreateProduct($input: CreateProductInput!) {
+  createProduct(createProductInput: $input) {
+    id
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateProductGQL extends Apollo.Mutation<CreateProductMutation, CreateProductMutationVariables> {
+    document = CreateProductDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

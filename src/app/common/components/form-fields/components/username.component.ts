@@ -15,8 +15,6 @@ import { AbstractCommonFormField } from "./abstract-form-field"
   `
 })
 export class CommonUsernameFieldComponent extends AbstractCommonFormField {
-  controlName = "username"
-
   label = "Username"
 
   validators = [Validators.required, AppFormValidators.usernameWithLength]

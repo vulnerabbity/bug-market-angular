@@ -1,9 +1,11 @@
 <div class="component-root">
   <ng-container *ngIf="this.isLoaded === false; else headerDataLoaded">
-    <common-page-header title="Loading name ..."></common-page-header>
+    <common-titled-page-header title="Loading name ..."></common-titled-page-header>
   </ng-container>
   <ng-template #headerDataLoaded>
-    <common-page-header [title]="'Profile of ' + this.userNameOrDefault"></common-page-header>
+    <common-titled-page-header
+      [title]="'Profile of ' + this.userNameOrDefault"
+    ></common-titled-page-header>
   </ng-template>
 
   <div class="container">
