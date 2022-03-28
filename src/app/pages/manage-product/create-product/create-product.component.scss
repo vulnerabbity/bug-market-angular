@@ -4,12 +4,11 @@
 
   // display one item per line at small screen
   @media (max-width: 48rem) {
-    height: 16rem;
+    min-height: 16rem;
     grid-template-columns: 1fr;
   }
 
-  height: 8rem;
-  align-items: center;
+  min-height: 8rem;
   grid-gap: 4%;
 }
 
@@ -38,4 +37,8 @@
   height: min(30vw, 25rem);
   width: min(30vw, 25rem);
   font-size: min(30vw, 25rem);
+}
+
+.description-field {
+  margin-top: 1rem;
 }

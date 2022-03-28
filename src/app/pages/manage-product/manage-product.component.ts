@@ -21,6 +21,7 @@ export abstract class ManageProductComponent {
   productNameField = initFromFieldModel()
   productPriceField: FormFieldModel = { isValid: true, value: "0" }
   productCategoryField = initProductCategoryAutocompleteModel()
+  productDescriptionField = initFromFieldModel()
 
   get productName(): string {
     return this.productNameField.value
@@ -39,7 +40,17 @@ export abstract class ManageProductComponent {
   }
 
   get productDescription(): string {
-    return "mock description"
+    return this.productDescriptionField.value
+  }
+  get productDescriptionOrUndefined(): string | undefined {
+    const description = this.productDescription
+    const isDescriptionEmpty = description === ""
+
+    if (isDescriptionEmpty) {
+      return undefined
+    }
+
+    return description
   }
 
   get productCategoryDatabaseNameOrNull(): string | null {
@@ -59,7 +70,8 @@ export abstract class ManageProductComponent {
     const nameValid = this.productNameField.isValid
     const priceValid = this.productPriceField.isValid
     const categoryValid = this.productCategoryField.isValid
-    return nameValid && priceValid && categoryValid
+    const descriptionValid = this.productDescriptionField.isValid
+    return nameValid && priceValid && categoryValid && descriptionValid
   }
 
   constructor(protected productsService: ProductsService) {}
@@ -73,7 +85,8 @@ export abstract class ManageProductComponent {
     const dataToUpload: CreateProductInput = {
       name: formData.name,
       categoryName: formData.categoryDatabaseName!,
-      price: formData.price
+      price: formData.price,
+      description: this.productDescriptionOrUndefined
     }
 
     return dataToUpload

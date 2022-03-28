@@ -14,6 +14,10 @@
           [(model)]="productCategoryField"
         ></common-product-category-autocomplete>
       </div>
+      <common-product-description-field
+        class="description-field"
+        [(model)]="productDescriptionField"
+      ></common-product-description-field>
       <button
         class="create-product-button"
         [disabled]="this.isSubmitButtonLocked"
