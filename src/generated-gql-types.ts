@@ -546,6 +546,13 @@ export type FullProductQueryVariables = Exact<{
 
 export type FullProductQuery = { __typename?: 'Query', product: { __typename?: 'Product', id: string, name: string, userId: string, categoryName: string, description?: string | null, imagesUrls: Array<string>, price: number, createdAt: any } };
 
+export type CreateProductMutationVariables = Exact<{
+  input: CreateProductInput;
+}>;
+
+
+export type CreateProductMutation = { __typename?: 'Mutation', createProduct: { __typename?: 'Product', id: string } };
+
 export type UserQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -628,6 +635,24 @@ export const FullProductDocument = gql`
   })
   export class FullProductGQL extends Apollo.Query<FullProductQuery, FullProductQueryVariables> {
     document = FullProductDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateProductDocument = gql`
+    mutation CreateProduct($input: CreateProductInput!) {
+  createProduct(createProductInput: $input) {
+    id
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateProductGQL extends Apollo.Mutation<CreateProductMutation, CreateProductMutationVariables> {
+    document = CreateProductDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

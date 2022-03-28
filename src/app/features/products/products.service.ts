@@ -1,12 +1,14 @@
 import { Injectable } from "@angular/core"
 import {
+  CreateProductGQL,
+  CreateProductInput,
   FullProductGQL,
   Product,
   ShortProductsGQL,
   ShortProductsQueryVariables
 } from "src/generated-gql-types"
-import { map, Observable, pluck } from "rxjs"
-import { PaginatedShortProducts } from "./products.interface"
+import { firstValueFrom, map, Observable, pluck } from "rxjs"
+import { UploadProductResponse, PaginatedShortProducts } from "./products.interface"
 import { FilesService } from "src/app/common/services/files.service"
 
 @Injectable({
@@ -16,8 +18,10 @@ export class ProductsService {
   constructor(
     private shortProductsQuery: ShortProductsGQL,
     private fullProductQuery: FullProductGQL,
+    private createProductMutation: CreateProductGQL,
     private filesService: FilesService
   ) {}
+
   loadShortProducts(options?: ShortProductsQueryVariables): Observable<PaginatedShortProducts> {
     const response = this.shortProductsQuery.fetch(options)
     const parsedResponse = response.pipe(pluck("data", "products"))
@@ -40,6 +44,25 @@ export class ProductsService {
     )
 
     return parsedResponse
+  }
+
+  /**
+   * Requires authorization
+   */
+  uploadProduct$(input: CreateProductInput): Observable<UploadProductResponse> {
+    const response = this.createProductMutation.mutate({ input })
+    return response.pipe(
+      map(response => {
+        if (response.data) {
+          return { status: "success", data: response.data.createProduct.id }
+        }
+        return { status: "error", error: "unknownError" }
+      })
+    )
+  }
+
+  uploadProductAsync(input: CreateProductInput): Promise<UploadProductResponse> {
+    return firstValueFrom(this.uploadProduct$(input))
   }
 
   addImagePath<T extends { imagesUrls: string[] }>(product: T) {
