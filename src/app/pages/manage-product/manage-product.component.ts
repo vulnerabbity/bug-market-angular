@@ -4,6 +4,8 @@ import {
   FormFieldModel,
   initFromFieldModel
 } from "src/app/common/components/form-fields/components/abstract-form-field"
+import { ProductsService } from "src/app/features/products/products.service"
+import { CreateProductInput } from "src/generated-gql-types"
 
 export interface ManageProductFormValues {
   name: string
@@ -58,5 +60,22 @@ export abstract class ManageProductComponent {
     const priceValid = this.productPriceField.isValid
     const categoryValid = this.productCategoryField.isValid
     return nameValid && priceValid && categoryValid
+  }
+
+  constructor(protected productsService: ProductsService) {}
+
+  getDataToUpload(): CreateProductInput {
+    if (this.isFromValid === false) {
+      throw new Error("Cant get data to upload: Form data invalid")
+    }
+
+    const formData = this.formValues
+    const dataToUpload: CreateProductInput = {
+      name: formData.name,
+      categoryName: formData.categoryDatabaseName!,
+      price: formData.price
+    }
+
+    return dataToUpload
   }
 }

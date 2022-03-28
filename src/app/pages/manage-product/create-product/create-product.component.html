@@ -16,7 +16,8 @@
       </div>
       <button
         class="create-product-button"
-        [disabled]="this.isFromValid === false"
+        [disabled]="this.isSubmitButtonLocked"
+        (click)="this.uploadProduct()"
         type="submit"
         mat-raised-button
         color="primary"
