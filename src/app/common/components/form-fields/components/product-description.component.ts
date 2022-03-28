@@ -6,7 +6,6 @@ import { AbstractCommonFormField } from "./abstract-form-field"
   selector: `common-product-description-field`,
   template: `
     <mat-form-field
-      class="component-root"
       [formGroup]="this.localFormGroup"
       [appearance]="appearance"
       style="overflow: visible; display: block"
@@ -21,6 +20,11 @@ import { AbstractCommonFormField } from "./abstract-form-field"
       ></textarea>
       <mat-hint align="end"> {{ currentLength }} / {{ maxLength }} </mat-hint>
     </mat-form-field>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
   `
 })
 export class CommonProductDescriptionFieldComponent
