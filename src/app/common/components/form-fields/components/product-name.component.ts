@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core"
+import { Component, Input, OnInit } from "@angular/core"
 import { Validators } from "@angular/forms"
 import { FormsErrorDetector } from "src/app/common/forms/forms.error-detector"
 import { AbstractCommonFormField } from "./abstract-form-field"
@@ -31,8 +31,12 @@ const apiProductNameMinLenth = 2
     </mat-form-field>
   `
 })
-export class CommonProductNameFieldComponent extends AbstractCommonFormField {
+export class CommonProductNameFieldComponent extends AbstractCommonFormField implements OnInit {
+  @Input()
   label = "Product name"
+
+  @Input()
+  isRequired = true
 
   get currentName(): string {
     return this.inputText
@@ -45,12 +49,11 @@ export class CommonProductNameFieldComponent extends AbstractCommonFormField {
   maxNameLength = apiProductNameLengthLimit
   minNameLength = apiProductNameMinLenth
 
-  validators = [Validators.required, Validators.minLength(this.minNameLength)]
-
   errorDetector!: FormsErrorDetector
 
   ngOnInit(): void {
     super.ngOnInit()
+    this.initValidators()
     this.errorDetector = new FormsErrorDetector(this.formControl)
   }
 
@@ -70,5 +73,12 @@ export class CommonProductNameFieldComponent extends AbstractCommonFormField {
       return "Product name is required"
     }
     return "Unknown error"
+  }
+
+  private initValidators() {
+    if (this.isRequired) {
+      this.validators.push(Validators.required)
+    }
+    this.validators.push(Validators.minLength(this.minNameLength))
   }
 }
