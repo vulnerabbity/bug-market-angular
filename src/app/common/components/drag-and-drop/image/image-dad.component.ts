@@ -30,8 +30,8 @@ export class CommonImageDragAndDrop {
 
   constructor() {}
 
-  getFiles() {
-    const files = this.pond.getFiles()
+  getFiles(): Blob[] {
+    const files = this.pond.getFiles().map(file => file.file)
 
     return files
   }
