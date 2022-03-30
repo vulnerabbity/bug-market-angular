@@ -8,14 +8,22 @@ import {
   ShortProductsQueryVariables
 } from "src/generated-gql-types"
 import { firstValueFrom, map, Observable, pluck } from "rxjs"
-import { UploadProductResponse, PaginatedShortProducts } from "./products.interface"
+import {
+  UploadProductResponse,
+  PaginatedShortProducts,
+  UploadManyProductImagesInput,
+  UploadSingleProductImageInput
+} from "./products.interface"
 import { FilesService } from "src/app/common/services/files.service"
+import { HttpClient } from "@angular/common/http"
+import { environment } from "src/environments/environment"
 
 @Injectable({
   providedIn: "root"
 })
 export class ProductsService {
   constructor(
+    private http: HttpClient,
     private shortProductsQuery: ShortProductsGQL,
     private fullProductQuery: FullProductGQL,
     private createProductMutation: CreateProductGQL,
@@ -54,7 +62,7 @@ export class ProductsService {
     return response.pipe(
       map(response => {
         if (response.data) {
-          return { status: "success", data: response.data.createProduct.id }
+          return { status: "success", productId: response.data.createProduct.id }
         }
         return { status: "error", error: "unknownError" }
       })
@@ -63,6 +71,40 @@ export class ProductsService {
 
   uploadProductAsync(input: CreateProductInput): Promise<UploadProductResponse> {
     return firstValueFrom(this.uploadProduct$(input))
+  }
+
+  /**
+   * Api supports up to 10 images
+   */
+  async uploadImages({ images, productId }: UploadManyProductImagesInput) {
+    const apiImagesLimit = 10
+    const reachedUploadLimit = images.length > apiImagesLimit
+    if (reachedUploadLimit) {
+      throw new Error(`Products service cant upload more than ${apiImagesLimit} images`)
+    }
+
+    for (let imageIndex = 0; imageIndex < images.length; imageIndex++) {
+      try {
+        await this.uploadImageAsync({ image: images[imageIndex], imageIndex, productId })
+      } catch (err) {
+        console.log("Image upload error", err)
+      }
+    }
+  }
+
+  uploadImage$({ productId, imageIndex, image }: UploadSingleProductImageInput) {
+    const productImagesUrl = `${environment.backendUrl}/products/images/${productId}`
+    const concreteImageUploadEndpoint = `${productImagesUrl}/${imageIndex}`
+
+    // api accepts image with field name "image"
+    const formWithImage = new FormData()
+    formWithImage.append("image", image)
+
+    return this.http.post(concreteImageUploadEndpoint, formWithImage).pipe(map((resp: any) => resp))
+  }
+
+  uploadImageAsync(input: UploadSingleProductImageInput) {
+    return firstValueFrom(this.uploadImage$(input))
   }
 
   addImagePath<T extends { imagesUrls: string[] }>(product: T) {
