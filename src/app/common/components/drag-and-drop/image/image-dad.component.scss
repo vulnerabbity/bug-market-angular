@@ -1,0 +1,62 @@
+:host {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+
+// increase default 1 rem size
+::ng-deep .filepond--root {
+  font-size: 2rem;
+}
+
+::ng-deep .filepond--item {
+  // 4 columns
+  // if set (25% - 0.5em)
+  // - may display 3 columns at some width
+  width: calc(25% - 0.6em);
+  margin: 0 0.25em !important;
+
+  // 2 columns on small screen
+  @media (max-width: 50rem) {
+    width: calc(50% - 1em);
+    margin: 0 0.5em !important;
+  }
+
+  margin-bottom: 1% !important;
+}
+
+::ng-deep {
+  .filepond--root {
+    border-radius: 1rem;
+    outline: 2px solid gray;
+    overflow: hidden;
+  }
+
+  .filepond--panel-root,
+  .filepond--image-preview {
+    // makes pond component transparent instead white to fit theme
+    background-color: transparent;
+  }
+
+  // gets color from outside instead default gray
+  .filepond--drop-label {
+    color: unset;
+
+    // add pointer to drop title
+    label {
+      cursor: pointer;
+    }
+  }
+
+  .filepond--item {
+    cursor: default;
+  }
+  .filepond--list {
+    cursor: default;
+  }
+}
+
+// disable plugin advertisement
+::ng-deep .filepond--credits {
+  display: none;
+}
