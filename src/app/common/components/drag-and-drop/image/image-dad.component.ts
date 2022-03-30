@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from "@angular/core"
-import { FilePond, FilePondOptions } from "filepond"
+import { FilePond, FilePondFile, FilePondOptions } from "filepond"
 
 @Component({
   selector: "common-image-drag-and-drop",
@@ -16,6 +16,9 @@ export class CommonImageDragAndDrop {
   @Input()
   maxFileSize: string | null = null
 
+  @Input()
+  initialFiles: FilePondOptions["files"] = []
+
   @ViewChild("pondRef")
   protected pond!: FilePond
 
@@ -23,6 +26,10 @@ export class CommonImageDragAndDrop {
     const files = this.pond.getFiles().map(file => file.file)
 
     return files
+  }
+
+  getFilePondFiles(): FilePondFile[] {
+    return this.pond.getFiles()
   }
 
   // should be getter otherwise input values will not be applied
