@@ -33,3 +33,9 @@ mutation CreateProduct($input: CreateProductInput!) {
     id
   }
 }
+
+mutation DeleteProduct($id: String!) {
+  deleteProduct(id: $id) {
+    id
+  }
+}
