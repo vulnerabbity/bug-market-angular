@@ -8,10 +8,22 @@ import { Product } from "./products.interface"
 export class ProductAbilities {
   constructor(private authorizationService: AuthorizationService) {}
 
-  canDeleteProduct(product: Product): boolean {
-    product = this.covertToCaslCompatible(product)
+  canDeleteProduct(product?: Product): boolean {
+    if (!product) {
+      return this.authorizationService.isAllowed("delete", Product)
+    }
+    product = this.convertToCaslCompatible(product)
 
     return this.authorizationService.isAllowed("delete", product)
+  }
+
+  canUpdateProduct(product?: Product): boolean {
+    if (!product) {
+      return this.authorizationService.isAllowed("update", Product)
+    }
+    product = this.convertToCaslCompatible(product)
+
+    return this.authorizationService.isAllowed("update", product)
   }
 
   canCreateProduct(): boolean {
@@ -21,7 +33,7 @@ export class ProductAbilities {
   /**
    * Casl will ignore product instance without converting
    */
-  covertToCaslCompatible(product: Product): Product {
+  convertToCaslCompatible(product: Product): Product {
     const caslProduct = new Product()
     Object.assign(caslProduct, product)
     return caslProduct
