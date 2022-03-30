@@ -30,11 +30,13 @@ export class ProductCategoriesService {
 
   getCategoryByDatabaseName(databaseName: string): ProductCategory | null {
     const categories = this.getCategoriesLocal()
-    const foundedCategory = categories.find(category => category.databaseName === databaseName)
-    if (foundedCategory === undefined) {
+    const foundedCategoryOrUndefined = categories.find(
+      category => category.databaseName === databaseName
+    )
+    if (foundedCategoryOrUndefined === undefined) {
       return null
     }
-    return foundedCategory
+    return foundedCategoryOrUndefined
   }
 
   private searchWitFuse(search: string): ProductCategory[] {
