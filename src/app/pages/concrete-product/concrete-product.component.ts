@@ -17,6 +17,10 @@ export class ConcreteProductPageComponent implements OnInit {
   user!: User
   loaded = false
 
+  get updateProductUrl(): string {
+    return "/update-product/" + this.product.id
+  }
+
   get productPriceString(): string {
     const hasPrice = this.product.price !== 0
     if (hasPrice) {
@@ -63,6 +67,10 @@ export class ConcreteProductPageComponent implements OnInit {
     return this.productAbilities.canDeleteProduct(this.product)
   }
 
+  canUpdateProduct(): boolean {
+    return this.productAbilities.canUpdateProduct(this.product)
+  }
+
   private deleteProduct() {
     return this.productsService.deleteProduct$(this.product.id).subscribe()
   }
@@ -90,7 +98,7 @@ export class ConcreteProductPageComponent implements OnInit {
 
   private loadProduct(id: string): Observable<Product> {
     return this.productsService
-      .loadFullProduct(id)
+      .loadFullProduct$(id)
       .pipe(map(product => this.addDefaultImageToProduct(product)))
   }
 

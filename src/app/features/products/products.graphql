@@ -39,3 +39,9 @@ mutation DeleteProduct($id: String!) {
     id
   }
 }
+
+mutation UpdateProduct($id: String!, $update: UpdateProductInput!) {
+  updateProduct(id: $id, updateProductInput: $update) {
+    id
+  }
+}

@@ -26,15 +26,27 @@ export interface UploadProductImageResponse {
   status: "success" | "error"
 }
 
+export type DeleteProductImageStatus = "success" | "error"
+
 export type DeleteProductStatus = "success" | "unknown-error"
+
+export enum UpdateProductStatusesEnum {
+  Success = "success",
+  Error = "error"
+}
+// convert to union
+export type UpdateProductStatus = `${UpdateProductStatusesEnum}`
 
 export interface UploadManyProductImagesInput {
   images: Blob[]
   productId: string
 }
 
-export interface UploadSingleProductImageInput {
+export interface DeleteSingleProductImageInput {
   productId: string
   imageIndex: number
+}
+
+export interface UploadSingleProductImageInput extends DeleteSingleProductImageInput {
   image: Blob
 }

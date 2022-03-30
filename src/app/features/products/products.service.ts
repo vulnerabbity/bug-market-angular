@@ -5,16 +5,22 @@ import {
   DeleteProductGQL,
   FullProductGQL,
   ShortProductsGQL,
-  ShortProductsQueryVariables
+  ShortProductsQueryVariables,
+  UpdateProductGQL,
+  UpdateProductMutationVariables
 } from "src/generated-gql-types"
-import { firstValueFrom, map, Observable, pluck } from "rxjs"
+import { catchError, firstValueFrom, map, Observable, of, pluck } from "rxjs"
 import {
   UploadProductResponse,
   PaginatedShortProducts,
   UploadManyProductImagesInput,
   UploadSingleProductImageInput,
   DeleteProductStatus,
-  Product
+  Product,
+  DeleteSingleProductImageInput,
+  DeleteProductImageStatus,
+  UpdateProductStatus,
+  UpdateProductStatusesEnum
 } from "./products.interface"
 import { FilesService } from "src/app/common/services/files.service"
 import { HttpClient } from "@angular/common/http"
@@ -30,10 +36,11 @@ export class ProductsService {
     private fullProductQuery: FullProductGQL,
     private createProductMutation: CreateProductGQL,
     private deleteProductMutation: DeleteProductGQL,
+    private updateProductMutation: UpdateProductGQL,
     private filesService: FilesService
   ) {}
 
-  loadShortProducts(options?: ShortProductsQueryVariables): Observable<PaginatedShortProducts> {
+  loadShortProducts$(options?: ShortProductsQueryVariables): Observable<PaginatedShortProducts> {
     const response = this.shortProductsQuery.fetch(options)
     const parsedResponse = response.pipe(pluck("data", "products"))
     const responseWithPaths = parsedResponse.pipe(
@@ -47,7 +54,7 @@ export class ProductsService {
     return responseWithPaths
   }
 
-  loadFullProduct(id: string): Observable<Product> {
+  loadFullProduct$(id: string): Observable<Product> {
     const response = this.fullProductQuery.fetch({ id })
     let parsedResponse = response.pipe(
       pluck("data", "product"),
@@ -55,6 +62,10 @@ export class ProductsService {
     )
 
     return parsedResponse
+  }
+
+  async loadFullProductAsync(id: string): Promise<Product> {
+    return await firstValueFrom(this.loadFullProduct$(id))
   }
 
   /**
@@ -87,6 +98,7 @@ export class ProductsService {
     }
 
     for (let imageIndex = 0; imageIndex < images.length; imageIndex++) {
+      console.log(imageIndex)
       try {
         await this.uploadImageAsync({ image: images[imageIndex], imageIndex, productId })
       } catch (err) {
@@ -95,15 +107,14 @@ export class ProductsService {
     }
   }
 
-  uploadImage$({ productId, imageIndex, image }: UploadSingleProductImageInput) {
-    const productImagesUrl = `${environment.backendUrl}/products/images/${productId}`
-    const concreteImageUploadEndpoint = `${productImagesUrl}/${imageIndex}`
+  uploadImage$(input: UploadSingleProductImageInput) {
+    const imageUploadEndpoint = this.getImageEndpoint(input)
 
     // api accepts image with field name "image"
     const formWithImage = new FormData()
-    formWithImage.append("image", image)
+    formWithImage.append("image", input.image)
 
-    return this.http.post(concreteImageUploadEndpoint, formWithImage).pipe(map((resp: any) => resp))
+    return this.http.post(imageUploadEndpoint, formWithImage).pipe(map((resp: any) => resp))
   }
 
   uploadImageAsync(input: UploadSingleProductImageInput) {
@@ -122,9 +133,52 @@ export class ProductsService {
     )
   }
 
+  deleteImage$(input: DeleteSingleProductImageInput): Observable<DeleteProductImageStatus> {
+    const deleteImageEndpoint = this.getImageEndpoint(input)
+    const query = this.http.delete(deleteImageEndpoint)
+
+    const successStatus: DeleteProductImageStatus = "success"
+    const errorStatus: DeleteProductImageStatus = "error"
+
+    return query.pipe(
+      map(() => successStatus),
+      catchError(() => of(errorStatus))
+    )
+  }
+
+  updateProduct$(variables: UpdateProductMutationVariables): Observable<UpdateProductStatus> {
+    const query = this.updateProductMutation.mutate(variables)
+    return query.pipe(
+      map(() => UpdateProductStatusesEnum.Success),
+      catchError(() => of(UpdateProductStatusesEnum.Error))
+    )
+  }
+
+  async updateProductAsync(
+    variables: UpdateProductMutationVariables
+  ): Promise<UpdateProductStatus> {
+    return firstValueFrom(this.updateProduct$(variables))
+  }
+
+  async deleteImageAsync(input: DeleteSingleProductImageInput): Promise<DeleteProductImageStatus> {
+    return await firstValueFrom(this.deleteImage$(input))
+  }
+
   addImagePath<T extends { imagesUrls: string[] }>(product: T) {
     product = { ...product }
     product.imagesUrls = this.filesService.addPathToPublicFiles(product.imagesUrls)
     return product
+  }
+
+  private getImageEndpoint({
+    imageIndex,
+    productId
+  }: {
+    imageIndex: number
+    productId: string
+  }): string {
+    const productImagesUrl = `${environment.backendUrl}/products/images/${productId}`
+    const concreteImageUploadEndpoint = `${productImagesUrl}/${imageIndex}`
+    return concreteImageUploadEndpoint
   }
 }

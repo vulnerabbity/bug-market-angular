@@ -560,6 +560,14 @@ export type DeleteProductMutationVariables = Exact<{
 
 export type DeleteProductMutation = { __typename?: 'Mutation', deleteProduct: { __typename?: 'Product', id: string } };
 
+export type UpdateProductMutationVariables = Exact<{
+  id: Scalars['String'];
+  update: UpdateProductInput;
+}>;
+
+
+export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct: { __typename?: 'Product', id: string } };
+
 export type UserQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -686,6 +694,24 @@ export const DeleteProductDocument = gql`
   })
   export class DeleteProductGQL extends Apollo.Mutation<DeleteProductMutation, DeleteProductMutationVariables> {
     document = DeleteProductDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateProductDocument = gql`
+    mutation UpdateProduct($id: String!, $update: UpdateProductInput!) {
+  updateProduct(id: $id, updateProductInput: $update) {
+    id
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateProductGQL extends Apollo.Mutation<UpdateProductMutation, UpdateProductMutationVariables> {
+    document = UpdateProductDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

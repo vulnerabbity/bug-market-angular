@@ -27,6 +27,15 @@
       >
         <mat-icon>delete_forever</mat-icon>
       </button>
+      <a
+        *ngIf="this.canUpdateProduct()"
+        mat-icon-button
+        matTooltip="Edit product"
+        matTooltipClass="tooltip"
+        [routerLink]="this.updateProductUrl"
+      >
+        <mat-icon>edit_note</mat-icon>
+      </a>
       <span class="spacer" role="none"></span>
       <data class="price" [value]="this.product.price">
         {{ this.productPriceString }}

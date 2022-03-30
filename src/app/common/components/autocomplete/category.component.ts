@@ -36,6 +36,11 @@ interface ProductCategoryAutocompleteModel {
   `
 })
 export class CommonProductCategoryAutocomplete {
+  @Input()
+  set defaultCategory(value: ProductCategory) {
+    this.searchControl.setValue(value)
+  }
+
   // Name model is reserved for two way binding in angular
   @Input()
   model = initProductCategoryAutocompleteModel()

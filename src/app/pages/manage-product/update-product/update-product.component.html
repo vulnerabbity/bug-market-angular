@@ -1,0 +1,37 @@
+<common-titled-page-header title="Update product"></common-titled-page-header>
+
+<mat-spinner
+  *ngIf="!product"
+  class="loader"
+  [diameter]="this.getLoaderSpinnerDiameter()"
+></mat-spinner>
+
+<div *ngIf="product" class="container">
+  <form (submit)="onUpdate()">
+    <common-product-name-form-field
+      [(model)]="this.productNameField"
+    ></common-product-name-form-field>
+
+    <common-product-price-form-field
+      [(model)]="this.productPriceField"
+    ></common-product-price-form-field>
+
+    <common-product-category-autocomplete
+      [(model)]="this.productCategoryField"
+      [defaultCategory]="this.loadedCategory"
+    ></common-product-category-autocomplete>
+
+    <common-product-description-field
+      [(model)]="this.productDescriptionField"
+    ></common-product-description-field>
+
+    <common-image-drag-and-drop
+      #imagesDragAndDrop
+      [initialFiles]="this.imagesSnapshot"
+      maxFileSize="5MB"
+    ></common-image-drag-and-drop>
+    <button [disabled]="this.isUpdateLocked()" mat-raised-button color="primary" type="submit">
+      Save
+    </button>
+  </form>
+</div>
