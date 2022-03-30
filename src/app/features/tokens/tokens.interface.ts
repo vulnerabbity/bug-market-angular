@@ -1,4 +1,4 @@
-type UserRole = "seller" | "admin" | "super admin"
+import { UserRole } from "../authorization/authorization.interface"
 
 type AccessTokenType = "access"
 type RefreshTokenType = "refresh"
