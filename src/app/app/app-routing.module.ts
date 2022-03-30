@@ -7,13 +7,15 @@ import { HomePageComponent } from "../pages/home/home-page.component"
 import { PreferencesPageComponent } from "../pages/preferences/preferences-page.component"
 import { ProductsPageComponent } from "../pages/products/products-page.component"
 import { UserPageComponent } from "../pages/user/user-page.component"
+import { UpdateProductPageComponent } from "../pages/manage-product/update-product/update-product.component"
 
 export enum AppPathsEnum {
   Products = "products",
   Preferences = "preferences",
   ConcreteProduct = "product/:id",
   UserPage = "user/:id",
-  CreateProduct = "create-product"
+  CreateProduct = "create-product",
+  UpdateProduct = "update-product/:id"
 }
 
 const homeRoute: Route = {
@@ -62,13 +64,23 @@ const createProductRoute: Route = {
   component: CreateProductPageComponent
 }
 
+const updateProductRoute: Route = {
+  path: AppPathsEnum.UpdateProduct,
+  loadChildren: () =>
+    import("../pages/manage-product/update-product/update-product.module").then(
+      m => m.UpdateProductPageModule
+    ),
+  component: UpdateProductPageComponent
+}
+
 const routes: Route[] = [
   homeRoute,
   productsRoute,
   preferencesRoute,
   concreteProductRoute,
   userPageRoute,
-  createProductRoute
+  createProductRoute,
+  updateProductRoute
 ]
 
 const imports = [RouterModule.forRoot(routes, { preloadingStrategy: PreloadModuleOnDemand })]
