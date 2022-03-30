@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from "@angular/core"
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from "@angular/core"
 import { FilePond, FilePondOptions } from "filepond"
 
 @Component({
@@ -19,28 +19,27 @@ export class CommonImageDragAndDrop {
   @ViewChild("pondRef")
   protected pond!: FilePond
 
-  readonly filePondConfig: FilePondOptions = {
-    // hide wrong type message
-    dropValidation: true,
-    acceptedFileTypes: ["image/png", "image/jpg", "image/jpeg", "image/webp"],
-
-    // set files limits
-    maxFiles: this.maxImages,
-    allowMultiple: true,
-    maxFileSize: this.maxFileSize,
-
-    // style
-    stylePanelLayout: "compact",
-    imagePreviewHeight: 300,
-    allowImagePreview: true,
-    labelIdle: this.dropLabel
-  }
-
-  constructor() {}
-
   getFiles(): Blob[] {
     const files = this.pond.getFiles().map(file => file.file)
 
     return files
+  }
+
+  // should be getter otherwise input values will not be applied
+  getFilepondConfig(): FilePondOptions {
+    return {
+      acceptedFileTypes: ["image/png", "image/jpg", "image/jpeg", "image/webp"],
+
+      // set files limits
+      maxFiles: this.maxImages,
+      allowMultiple: true,
+      maxFileSize: this.maxFileSize,
+
+      // style
+      stylePanelLayout: "compact",
+      imagePreviewHeight: 300,
+      allowImagePreview: true,
+      labelIdle: this.dropLabel
+    }
   }
 }
