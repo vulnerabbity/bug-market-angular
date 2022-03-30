@@ -19,7 +19,7 @@
         [(model)]="productDescriptionField"
       ></common-product-description-field>
 
-      <common-image-drag-and-drop #imagesDragAndDrop></common-image-drag-and-drop>
+      <common-image-drag-and-drop #imagesDragAndDrop maxFileSize="5MB"></common-image-drag-and-drop>
       <button
         class="create-product-button"
         [disabled]="this.isSubmitButtonLocked"
