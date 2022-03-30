@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core"
 import {
   CreateProductGQL,
   CreateProductInput,
+  DeleteProductGQL,
   FullProductGQL,
-  Product,
   ShortProductsGQL,
   ShortProductsQueryVariables
 } from "src/generated-gql-types"
@@ -12,7 +12,9 @@ import {
   UploadProductResponse,
   PaginatedShortProducts,
   UploadManyProductImagesInput,
-  UploadSingleProductImageInput
+  UploadSingleProductImageInput,
+  DeleteProductStatus,
+  Product
 } from "./products.interface"
 import { FilesService } from "src/app/common/services/files.service"
 import { HttpClient } from "@angular/common/http"
@@ -27,6 +29,7 @@ export class ProductsService {
     private shortProductsQuery: ShortProductsGQL,
     private fullProductQuery: FullProductGQL,
     private createProductMutation: CreateProductGQL,
+    private deleteProductMutation: DeleteProductGQL,
     private filesService: FilesService
   ) {}
 
@@ -105,6 +108,18 @@ export class ProductsService {
 
   uploadImageAsync(input: UploadSingleProductImageInput) {
     return firstValueFrom(this.uploadImage$(input))
+  }
+
+  deleteProduct$(id: string): Observable<DeleteProductStatus> {
+    const query$ = this.deleteProductMutation.mutate({ id })
+    return query$.pipe(
+      map(response => {
+        if (response.data) {
+          return "success"
+        }
+        return "unknown-error"
+      })
+    )
   }
 
   addImagePath<T extends { imagesUrls: string[] }>(product: T) {

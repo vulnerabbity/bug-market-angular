@@ -553,6 +553,13 @@ export type CreateProductMutationVariables = Exact<{
 
 export type CreateProductMutation = { __typename?: 'Mutation', createProduct: { __typename?: 'Product', id: string } };
 
+export type DeleteProductMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteProductMutation = { __typename?: 'Mutation', deleteProduct: { __typename?: 'Product', id: string } };
+
 export type UserQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -573,7 +580,7 @@ export type CreateSellerMutationVariables = Exact<{
 }>;
 
 
-export type CreateSellerMutation = { __typename?: 'Mutation', createSeller: { __typename?: 'User', id: string, name?: string | null, avatarUrl?: string | null, about?: string | null, roles: Array<UserRolesEnum>, cityId?: number | null, countryCode?: CountryCodes | null } };
+export type CreateSellerMutation = { __typename?: 'Mutation', createSeller: { __typename?: 'User', id: string } };
 
 export const LoginWithUsernameDocument = gql`
     query LoginWithUsername($username: String!, $password: String!) {
@@ -666,6 +673,24 @@ export const CreateProductDocument = gql`
       super(apollo);
     }
   }
+export const DeleteProductDocument = gql`
+    mutation DeleteProduct($id: String!) {
+  deleteProduct(id: $id) {
+    id
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteProductGQL extends Apollo.Mutation<DeleteProductMutation, DeleteProductMutationVariables> {
+    document = DeleteProductDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const UserDocument = gql`
     query User($id: String!) {
   user(userId: $id) {
@@ -724,12 +749,6 @@ export const CreateSellerDocument = gql`
     mutation CreateSeller($username: String!, $password: String!) {
   createSeller(input: {username: $username, password: $password}) {
     id
-    name
-    avatarUrl
-    about
-    roles
-    cityId
-    countryCode
   }
 }
     `;

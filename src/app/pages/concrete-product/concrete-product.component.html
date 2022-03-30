@@ -1,27 +1,37 @@
 <div class="component-root">
   <!-- TODO: Place loading spinner -->
-  <div *ngIf="this.loaded === false">loading</div>
+  <div *ngIf="this.loaded === false">
+    <common-titled-page-header title="Loading product ..."></common-titled-page-header>
+    <mat-spinner class="loader" [diameter]="getLoaderSpinnerDiameter()"></mat-spinner>
+  </div>
+
   <div *ngIf="this.loaded">
-    <common-themed-div color="primary">
-      <div class="container headline">
-        <div class="name-sector">
-          <h1 class="name">{{ this.product.name | titlecase }}</h1>
-          <button
-            mat-button
-            matTooltip="Copy product URL"
-            matTooltipClass="tooltip"
-            aria-label="Copy product URL "
-            class="copy-to-clipboard"
-            (click)="this.copyUrlToClipboard()"
-          >
-            <mat-icon>content_copy</mat-icon>
-          </button>
-        </div>
-        <data class="price" [value]="this.product.price">
-          {{ this.productPriceString }}
-        </data>
-      </div>
-    </common-themed-div>
+    <common-titled-page-header [title]="this.product.name | titlecase">
+      <button
+        class="copy-to-clipboard"
+        mat-icon-button
+        matTooltip="Copy product URL"
+        matTooltipClass="tooltip"
+        aria-label="Copy product URL"
+        (click)="this.copyUrlToClipboard()"
+      >
+        <mat-icon>content_copy</mat-icon>
+      </button>
+      <button
+        *ngIf="this.canDeleteProduct()"
+        (click)="onDelete()"
+        mat-icon-button
+        matTooltip="Delete product"
+        matTooltipClass="tooltip"
+        aria-label="Delete product"
+      >
+        <mat-icon>delete_forever</mat-icon>
+      </button>
+      <span class="spacer" role="none"></span>
+      <data class="price" [value]="this.product.price">
+        {{ this.productPriceString }}
+      </data>
+    </common-titled-page-header>
     <br />
     <common-themed-div>
       <div class="container publishing-info">
