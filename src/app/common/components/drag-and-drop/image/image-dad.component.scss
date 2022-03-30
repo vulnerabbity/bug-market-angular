@@ -10,15 +10,13 @@
 }
 
 ::ng-deep .filepond--item {
-  // 4 columns
-  // if set (25% - 0.5em)
-  // - may display 3 columns at some width
-  width: calc(25% - 0.6em);
+  // 2 columns
+  width: calc(50% - 0.6em);
   margin: 0 0.25em !important;
 
-  // 2 columns on small screen
+  // 1 columns on small screen
   @media (max-width: 50rem) {
-    width: calc(50% - 1em);
+    width: calc(100% - 2em);
     margin: 0 0.5em !important;
   }
 
