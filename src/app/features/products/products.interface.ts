@@ -26,6 +26,8 @@ export interface UploadProductImageResponse {
   status: "success" | "error"
 }
 
+export type DeleteProductImageStatus = "success" | "error"
+
 export type DeleteProductStatus = "success" | "unknown-error"
 
 export interface UploadManyProductImagesInput {
@@ -33,8 +35,11 @@ export interface UploadManyProductImagesInput {
   productId: string
 }
 
-export interface UploadSingleProductImageInput {
+export interface DeleteSingleProductImageInput {
   productId: string
   imageIndex: number
+}
+
+export interface UploadSingleProductImageInput extends DeleteSingleProductImageInput {
   image: Blob
 }
