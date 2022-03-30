@@ -1,4 +1,5 @@
 import { Component } from "@angular/core"
+import { Router } from "@angular/router"
 import { initProductCategoryAutocompleteModel } from "src/app/common/components/autocomplete/category.component"
 import {
   FormFieldModel,
@@ -21,7 +22,7 @@ export abstract class ManageProductComponent {
   productNameField = initFromFieldModel()
   productPriceField: FormFieldModel = { isValid: true, value: "0" }
   productCategoryField = initProductCategoryAutocompleteModel()
-  productDescriptionField = initFromFieldModel()
+  productDescriptionField: FormFieldModel = { isValid: true, value: "" }
 
   get productName(): string {
     return this.productNameField.value
@@ -74,7 +75,7 @@ export abstract class ManageProductComponent {
     return nameValid && priceValid && categoryValid && descriptionValid
   }
 
-  constructor(protected productsService: ProductsService) {}
+  constructor(protected productsService: ProductsService, protected router: Router) {}
 
   getDataToUpload(): CreateProductInput {
     if (this.isFromValid === false) {
