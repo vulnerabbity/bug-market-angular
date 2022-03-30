@@ -16,6 +16,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { commonAppFormFieldsComponents } from "../components/form-fields/form-fields.declarations"
 import { CommonPageHeaderWithTitleComponent } from "../components/page-header/page-header-with-title.component"
 import { commonAutocompleteComponents } from "../components/autocomplete/autocomplete.declaration"
+import { commonDragAndDropComponents } from "../components/drag-and-drop/drag-and-drop.declarations"
+import { AppFilepondModule } from "src/app/modules/filepond-module"
 
 const passThroughModules = [
   MaterialModule,
@@ -38,11 +40,12 @@ const passThroughComponents = [
   CommonLoginDialogComponent,
   CommonRegisterDialogComponent,
   commonAppFormFieldsComponents,
-  commonAutocompleteComponents
+  commonAutocompleteComponents,
+  commonDragAndDropComponents
 ]
 
 @NgModule({
-  imports: [passThroughModules, CarouselModule],
+  imports: [passThroughModules, CarouselModule, AppFilepondModule],
   exports: [...passThroughModules, ...passThroughComponents],
   declarations: [...passThroughComponents]
 })
