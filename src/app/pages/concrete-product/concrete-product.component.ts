@@ -1,11 +1,12 @@
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { firstValueFrom, map, Observable } from "rxjs"
+import { ProductAbilities } from "src/app/features/products/product.abilities"
+import { Product } from "src/app/features/products/products.interface"
 import { ProductsService } from "src/app/features/products/products.service"
 import { userDefaults } from "src/app/features/users/user.defaults"
 import { User } from "src/app/features/users/users.interface"
 import { UsersService } from "src/app/features/users/users.service"
-import { Product } from "src/generated-gql-types"
 
 @Component({
   templateUrl: "./concrete-product.component.html",
@@ -34,7 +35,8 @@ export class ConcreteProductPageComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
     private usersService: UsersService,
-    private currentRoute: ActivatedRoute
+    private currentRoute: ActivatedRoute,
+    private productAbilities: ProductAbilities
   ) {}
 
   async ngOnInit() {
@@ -42,9 +44,27 @@ export class ConcreteProductPageComponent implements OnInit {
     this.loaded = true
   }
 
+  onDelete() {
+    // TODO: Show confirmation
+    this.deleteProduct()
+  }
+
   copyUrlToClipboard() {
     const currentUrl = this.getCurrentUrl()
     navigator.clipboard.writeText(currentUrl)
+  }
+
+  getLoaderSpinnerDiameter(): number {
+    const halfOfWindowWidth = window.innerWidth / 2
+    return Math.min(600, halfOfWindowWidth)
+  }
+
+  canDeleteProduct(): boolean {
+    return this.productAbilities.canDeleteProduct(this.product)
+  }
+
+  private deleteProduct() {
+    return this.productsService.deleteProduct$(this.product.id).subscribe()
   }
 
   private getCurrentUrl() {

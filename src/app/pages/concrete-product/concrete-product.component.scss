@@ -2,21 +2,6 @@
   width: 100%;
 }
 
-.headline {
-  height: 6rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.name {
-  font-size: 3.6rem;
-}
-
-.name-sector {
-  display: flex;
-  align-items: center;
-}
-
 .price {
   font-size: 2.4rem;
 }
@@ -54,4 +39,17 @@ p {
 // for some reason tooltip not accessible without ::ng-deep
 ::ng-deep .tooltip {
   font-size: 1.6rem !important;
+}
+
+.spacer {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.loader {
+  display: block;
+
+  margin: 0 auto;
+  margin-top: 5rem;
 }
