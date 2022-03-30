@@ -1,5 +1,6 @@
 import { Component } from "@angular/core"
 import { AppPathsEnum } from "src/app/app/app-routing.module"
+import { ProductAbilities } from "src/app/features/products/product.abilities"
 import { UserStatusService } from "src/app/features/users/user-status.service"
 
 @Component({
@@ -19,7 +20,7 @@ export class ProductsNavbarComponent {
     return "Login required"
   }
 
-  constructor(private userStatus: UserStatusService) {}
+  constructor(private productAbilities: ProductAbilities) {}
 
   getCreateProductPathIfAllowed(): string | null {
     const isAllowed = this.canCreateProduct()
@@ -30,6 +31,6 @@ export class ProductsNavbarComponent {
   }
 
   canCreateProduct(): boolean {
-    return this.userStatus.isAuthenticated()
+    return this.productAbilities.canCreateProduct()
   }
 }
