@@ -1,8 +1,10 @@
 import { AppEnvironment } from "./environment.interface"
 
+const backendUrl = "http://localhost:3000"
+
 export const environment: AppEnvironment = {
-  production: true,
-  graphqlBackendUrl: "http://localhost:3000/graphql",
+  production: false,
   publicFilesUrl: "http://localhost:3000/public-files",
-  hostsForTokenUsage: ["http://localhost:3000"]
+  backendUrl,
+  hostsForTokenUsage: [backendUrl]
 }
