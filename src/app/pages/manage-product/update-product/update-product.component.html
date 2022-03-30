@@ -2,6 +2,7 @@
   <common-image-drag-and-drop
     #imagesDragAndDrop
     [initialFiles]="this.imagesSnapshot"
+    maxFileSize="5MB"
   ></common-image-drag-and-drop>
   <button (click)="onUpdate()" mat-raised-button color="primary">Save</button>
 </div>
