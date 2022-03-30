@@ -28,6 +28,15 @@ export class ProductCategoriesService {
     return this.searchWitFuse(search)
   }
 
+  getCategoryByDatabaseName(databaseName: string): ProductCategory | null {
+    const categories = this.getCategoriesLocal()
+    const foundedCategory = categories.find(category => category.databaseName === databaseName)
+    if (foundedCategory === undefined) {
+      return null
+    }
+    return foundedCategory
+  }
+
   private searchWitFuse(search: string): ProductCategory[] {
     const fuseResult = this.fuseSearcher.search(search)
     const paredResult = this.parseFuseResult(fuseResult)
