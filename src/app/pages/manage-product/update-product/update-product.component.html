@@ -1,17 +1,13 @@
-<common-titled-page-header
-  *ngIf="this.loaded === false"
-  title="Loading name"
-></common-titled-page-header>
-<common-titled-page-header *ngIf="this.loaded" title="Update product"></common-titled-page-header>
+<common-titled-page-header title="Update product"></common-titled-page-header>
 
 <mat-spinner
-  *ngIf="this.loaded === false"
+  *ngIf="!product"
   class="loader"
   [diameter]="this.getLoaderSpinnerDiameter()"
 ></mat-spinner>
 
-<div *ngIf="this.loaded" class="container">
-  <form>
+<div *ngIf="product" class="container">
+  <form (submit)="onUpdate()">
     <common-product-name-form-field
       [(model)]="this.productNameField"
     ></common-product-name-form-field>
@@ -22,6 +18,7 @@
 
     <common-product-category-autocomplete
       [(model)]="this.productCategoryField"
+      [defaultCategory]="this.loadedCategory"
     ></common-product-category-autocomplete>
 
     <common-product-description-field
@@ -33,13 +30,7 @@
       [initialFiles]="this.imagesSnapshot"
       maxFileSize="5MB"
     ></common-image-drag-and-drop>
-    <button
-      (click)="onUpdate()"
-      [disabled]="this.isUpdateLocked()"
-      mat-raised-button
-      color="primary"
-      type="submit"
-    >
+    <button [disabled]="this.isUpdateLocked()" mat-raised-button color="primary" type="submit">
       Save
     </button>
   </form>
