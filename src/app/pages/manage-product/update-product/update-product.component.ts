@@ -2,11 +2,14 @@ import { Component, OnInit, ViewChild } from "@angular/core"
 import { ActivatedRoute, Router } from "@angular/router"
 import { firstValueFrom, map } from "rxjs"
 import { CommonImageDragAndDrop } from "src/app/common/components/drag-and-drop/image/image-dad.component"
+import { ProductCategory } from "src/app/features/categories/categories.interface"
 import { ProductCategoriesService } from "src/app/features/categories/categories.service"
 import { Product } from "src/app/features/products/products.interface"
 import { ProductsService } from "src/app/features/products/products.service"
 import { ManageProductComponent } from "../manage-product.component"
 import { UpdateProductService } from "./update-product.service"
+
+// TODO: Disable image caching on redirect because old images load from it
 
 @Component({
   selector: "update-product-page",
@@ -14,14 +17,14 @@ import { UpdateProductService } from "./update-product.service"
   styleUrls: ["./update-product.component.scss"]
 })
 export class UpdateProductPageComponent extends ManageProductComponent implements OnInit {
-  loaded = false
-
   @ViewChild("imagesDragAndDrop")
   imagesDragAndDrop!: CommonImageDragAndDrop
 
   imagesSnapshot: Blob[] = []
 
   product!: Product
+
+  loadedCategory!: ProductCategory
 
   constructor(
     private updateProductService: UpdateProductService,
@@ -34,7 +37,6 @@ export class UpdateProductPageComponent extends ManageProductComponent implement
   }
 
   async ngOnInit() {
-    this.loaded = false
     const productId = await this.getProductId()
     const product = await this.loadProduct(productId)
     this.product = product
@@ -42,7 +44,6 @@ export class UpdateProductPageComponent extends ManageProductComponent implement
     this.initFormValues()
 
     this.imagesSnapshot = await this.updateProductService.makeImagesSnapshot(product.imagesUrls)
-    this.loaded = true
   }
 
   isUpdateLocked(): boolean {
@@ -55,20 +56,23 @@ export class UpdateProductPageComponent extends ManageProductComponent implement
   }
 
   private initFormValues(): void {
-    const loadedCategory = this.categoriesService.getCategoryByDatabaseName(
+    this.loadedCategory = this.categoriesService.getCategoryByDatabaseName(
       this.product.categoryName
-    )
+    )!
 
     this.productNameField = { isValid: true, value: this.product.name }
     this.productDescriptionField = { isValid: true, value: this.product.description ?? "" }
     this.productPriceField = { isValid: true, value: String(this.product.price) }
-    this.productCategoryField = { isValid: true, selectedCategory: loadedCategory }
+    this.productCategoryField = { isValid: true, selectedCategory: this.loadedCategory }
   }
 
   async onUpdate() {
-    this.loaded = false
     await this.updateProduct()
-    this.loaded = true
+    await this.redirectToProduct()
+  }
+
+  private async redirectToProduct() {
+    await this.router.navigate(["/product", this.product.id])
   }
 
   private async updateProduct() {
