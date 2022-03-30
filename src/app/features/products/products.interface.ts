@@ -30,6 +30,13 @@ export type DeleteProductImageStatus = "success" | "error"
 
 export type DeleteProductStatus = "success" | "unknown-error"
 
+export enum UpdateProductStatusesEnum {
+  Success = "success",
+  Error = "error"
+}
+// convert to union
+export type UpdateProductStatus = `${UpdateProductStatusesEnum}`
+
 export interface UploadManyProductImagesInput {
   images: Blob[]
   productId: string
