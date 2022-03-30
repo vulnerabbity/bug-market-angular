@@ -14,6 +14,10 @@ export class ProductAbilities {
     return this.authorizationService.isAllowed("delete", product)
   }
 
+  canCreateProduct(): boolean {
+    return this.authorizationService.isAllowed("create", Product)
+  }
+
   /**
    * Casl will ignore product instance without converting
    */
