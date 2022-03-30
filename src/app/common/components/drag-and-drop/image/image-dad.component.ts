@@ -13,18 +13,26 @@ export class CommonImageDragAndDrop {
   @Input()
   dropLabel = "Drop images here. Or click to select"
 
+  @Input()
+  maxFileSize: string | null = null
+
   @ViewChild("pondRef")
   protected pond!: FilePond
 
   readonly filePondConfig: FilePondOptions = {
+    // hide wrong type message
+    dropValidation: true,
     acceptedFileTypes: ["image/png", "image/jpg", "image/jpeg", "image/webp"],
+
+    // set files limits
     maxFiles: this.maxImages,
     allowMultiple: true,
+    maxFileSize: this.maxFileSize,
 
-    allowImagePreview: true,
-    imagePreviewHeight: 300,
+    // style
     stylePanelLayout: "compact",
-
+    imagePreviewHeight: 300,
+    allowImagePreview: true,
     labelIdle: this.dropLabel
   }
 
