@@ -5,7 +5,9 @@ import {
   DeleteProductGQL,
   FullProductGQL,
   ShortProductsGQL,
-  ShortProductsQueryVariables
+  ShortProductsQueryVariables,
+  UpdateProductGQL,
+  UpdateProductMutationVariables
 } from "src/generated-gql-types"
 import { catchError, firstValueFrom, map, Observable, of, pluck } from "rxjs"
 import {
@@ -16,7 +18,9 @@ import {
   DeleteProductStatus,
   Product,
   DeleteSingleProductImageInput,
-  DeleteProductImageStatus
+  DeleteProductImageStatus,
+  UpdateProductStatus,
+  UpdateProductStatusesEnum
 } from "./products.interface"
 import { FilesService } from "src/app/common/services/files.service"
 import { HttpClient } from "@angular/common/http"
@@ -32,6 +36,7 @@ export class ProductsService {
     private fullProductQuery: FullProductGQL,
     private createProductMutation: CreateProductGQL,
     private deleteProductMutation: DeleteProductGQL,
+    private updateProductMutation: UpdateProductGQL,
     private filesService: FilesService
   ) {}
 
@@ -139,6 +144,20 @@ export class ProductsService {
       map(() => successStatus),
       catchError(() => of(errorStatus))
     )
+  }
+
+  updateProduct$(variables: UpdateProductMutationVariables): Observable<UpdateProductStatus> {
+    const query = this.updateProductMutation.mutate(variables)
+    return query.pipe(
+      map(() => UpdateProductStatusesEnum.Success),
+      catchError(() => of(UpdateProductStatusesEnum.Error))
+    )
+  }
+
+  async updateProductAsync(
+    variables: UpdateProductMutationVariables
+  ): Promise<UpdateProductStatus> {
+    return firstValueFrom(this.updateProduct$(variables))
   }
 
   async deleteImageAsync(input: DeleteSingleProductImageInput): Promise<DeleteProductImageStatus> {
