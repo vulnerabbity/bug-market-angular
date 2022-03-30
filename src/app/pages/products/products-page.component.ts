@@ -29,15 +29,15 @@ export class ProductsPageComponent implements OnInit {
   }
 
   private loadProducts() {
-    const productsRequest = this.makeProductsRequest()
+    const productsRequest = this.makeProductsRequest$()
     productsRequest.subscribe(paginatedProducts => {
       this.products$.next(paginatedProducts.data)
       this.totalProducts = paginatedProducts.totalResultsCount
     })
   }
 
-  private makeProductsRequest() {
-    return this.productsService.loadShortProducts({
+  private makeProductsRequest$() {
+    return this.productsService.loadShortProducts$({
       pagination: {
         offset: this.pageSize * this.pageIndex,
         limit: this.pageSize
