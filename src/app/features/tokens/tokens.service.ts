@@ -1,3 +1,4 @@
+import { TokensLocalStorageService } from "../local-storage/tokens.service"
 import {
   AppJwtPayload,
   ParseAppTokenErrorsEnum,
@@ -6,7 +7,7 @@ import {
 } from "./tokens.interface"
 
 export class TokensService {
-  constructor() {}
+  private tokensStorage = new TokensLocalStorageService()
 
   isTokenExpired(token: string): boolean {
     const parsedTokenBody = this.parseAppToken(token)
@@ -29,6 +30,15 @@ export class TokensService {
     }
 
     return parsedTokenPayload
+  }
+
+  parseAccessTokenFromStorage(): AppAccessTokenPayload | null {
+    const hasAccessToken = this.tokensStorage.access.isRecordExists()
+    if (hasAccessToken === false) {
+      return null
+    }
+    let accessToken: string = this.tokensStorage.access.tryToGetRecord()
+    return this.parseAccessToken(accessToken)
   }
 
   parseAppToken(token: string): AppJwtPayload {
