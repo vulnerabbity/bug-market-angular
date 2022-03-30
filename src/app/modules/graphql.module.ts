@@ -11,7 +11,7 @@ const apolloOptionsProvider: Provider = {
     return {
       cache: new InMemoryCache(),
       link: httpLink.create({
-        uri: environment.graphqlBackendUrl
+        uri: environment.backendUrl + "/graphql"
       }),
 
       // disabling caching
