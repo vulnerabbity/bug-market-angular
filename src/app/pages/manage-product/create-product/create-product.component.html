@@ -18,10 +18,12 @@
         class="description-field"
         [(model)]="productDescriptionField"
       ></common-product-description-field>
+
+      <common-image-drag-and-drop #imagesDragAndDrop></common-image-drag-and-drop>
       <button
         class="create-product-button"
         [disabled]="this.isSubmitButtonLocked"
-        (click)="this.uploadProduct()"
+        (click)="this.onUploadProduct()"
         type="submit"
         mat-raised-button
         color="primary"
