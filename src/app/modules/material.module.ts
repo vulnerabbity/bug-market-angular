@@ -12,6 +12,7 @@ import { MatFormFieldModule } from "@angular/material/form-field"
 import { MatSliderModule } from "@angular/material/slider"
 import { MatAutocompleteModule } from "@angular/material/autocomplete"
 import { MatSidenavModule } from "@angular/material/sidenav"
+import { MatSelectModule } from "@angular/material/select"
 
 const materialModules = [
   MatButtonModule,
@@ -26,7 +27,8 @@ const materialModules = [
   MatFormFieldModule,
   MatSliderModule,
   MatAutocompleteModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatSelectModule
 ]
 
 @NgModule({
