@@ -11,6 +11,11 @@
   &__content {
     width: min(35rem, 80%);
   }
+  &__bottom {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+  }
   &__internal-toggler {
     position: absolute;
     top: 0;
@@ -34,4 +39,17 @@
     margin: 0;
     margin-left: 3.2rem;
   }
+  &__sorting-select {
+    width: 100%;
+  }
+}
+
+.button-apply {
+  display: block;
+  margin: 0 auto;
+
+  height: 6rem;
+  width: 25rem;
+
+  margin-bottom: 1rem;
 }
