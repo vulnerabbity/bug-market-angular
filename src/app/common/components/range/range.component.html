@@ -1,0 +1,44 @@
+<mat-form-field class="min-field" appearance="outline">
+  <mat-label>Min</mat-label>
+  <input
+    class="range-input"
+    matInput
+    [(ngModel)]="this.minValue"
+    (ngModelChange)="onRangeChange()"
+    type="number"
+    numbersOnly
+  />
+  <button
+    *ngIf="this.minValue"
+    (click)="this.minValue = ''"
+    mat-icon-button
+    matSuffix
+    aria-label="Reset minimal value"
+    matTooltip="Reset"
+    matTooltipClass="tooltip"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+<mat-form-field appearance="outline">
+  <mat-label>Max</mat-label>
+  <input
+    class="range-input"
+    matInput
+    [(ngModel)]="this.maxValue"
+    (ngModelChange)="onRangeChange()"
+    type="number"
+    numbersOnly
+  />
+  <button
+    *ngIf="this.maxValue"
+    (click)="this.maxValue = ''"
+    mat-icon-button
+    matSuffix
+    aria-label="Reset maximal value"
+    matTooltip="Reset"
+    matTooltipClass="tooltip"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>

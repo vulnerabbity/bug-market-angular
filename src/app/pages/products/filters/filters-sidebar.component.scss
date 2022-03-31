@@ -1,0 +1,55 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.sidebar {
+  height: 100%;
+
+  // background-color: inherit;
+
+  &__content {
+    width: min(35rem, 80%);
+  }
+  &__bottom {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+  }
+  &__internal-toggler {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  &__external-toggler {
+    margin-left: 1.6rem;
+  }
+  &__header-wrapper {
+    height: 8rem;
+  }
+  &__header-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  &__header {
+    display: block;
+    font-size: 2.8rem;
+    margin: 0;
+    margin-left: 3.2rem;
+  }
+  &__sorting-select {
+    width: 100%;
+  }
+}
+
+.button-apply {
+  display: block;
+  margin: 0 auto;
+
+  height: 6rem;
+  width: 25rem;
+
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,43 @@
+<mat-drawer-container hasBackdrop="true" class="sidebar">
+  <mat-drawer #drawer mode="over" class="sidebar__content">
+    <div class="sidenav__top">
+      <!-- Close button -->
+      <button class="sidebar__internal-toggler" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <common-themed-div class="sidebar__header-wrapper" color="accent">
+        <div class="sidebar__header-container">
+          <p class="sidebar__header">Filter products:</p>
+        </div>
+      </common-themed-div>
+
+      <common-product-category-autocomplete [required]="false" [(model)]="category">
+      </common-product-category-autocomplete>
+
+      <mat-form-field class="sidebar__sorting-select" appearance="fill">
+        <mat-label>Prise sorting</mat-label>
+        <mat-select disableRipple [(value)]="priceSorting">
+          <mat-option value="NO_SORTING">No sorting</mat-option>
+          <mat-option value="ASCENDING">Ascending</mat-option>
+          <mat-option value="DESCENDING">Descending</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <common-range-expander label="Price" [(model)]="this.rangeModel"></common-range-expander>
+    </div>
+    <div class="sidebar__bottom">
+      <button class="button-apply" (click)="emitApply()" mat-raised-button color="accent">
+        Apply filters
+      </button>
+    </div>
+  </mat-drawer>
+
+  <button class="sidebar__external-toggler" mat-button (click)="drawer.toggle()">
+    <!-- Burger icon -->
+    <mat-icon>dehaze</mat-icon>
+    Filters
+  </button>
+
+  <ng-content class="main-content"></ng-content>
+</mat-drawer-container>

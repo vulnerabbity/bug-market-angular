@@ -3,6 +3,8 @@ import { PageEvent } from "@angular/material/paginator"
 import { BehaviorSubject } from "rxjs"
 import { ShortProduct } from "src/app/features/products/products.interface"
 import { ProductsService } from "src/app/features/products/products.service"
+import { ProductFilters, ProductSorting, SortingOrder } from "src/generated-gql-types"
+import { ProductSidebarFilters } from "./filters/filters-sidebar.component"
 
 @Component({
   templateUrl: "./products-page.component.html",
@@ -16,6 +18,10 @@ export class ProductsPageComponent implements OnInit {
 
   products$ = new BehaviorSubject<ShortProduct[]>([])
 
+  sorting: ProductSorting = {}
+
+  filters: ProductFilters | undefined = undefined
+
   constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {
@@ -25,6 +31,21 @@ export class ProductsPageComponent implements OnInit {
   onPaginationUpdate({ pageSize, pageIndex }: PageEvent) {
     this.pageSize = pageSize
     this.pageIndex = pageIndex
+    this.loadProducts()
+  }
+
+  // TODO: Refactoring
+  onFiltersApply($productFilters: ProductSidebarFilters) {
+    const { category, priceSorting, priceRange } = $productFilters
+
+    if (priceSorting !== "NO_SORTING") {
+      this.sorting.price = priceSorting as SortingOrder
+    }
+
+    if (priceRange) {
+      this.filters = { priceRange }
+    }
+
     this.loadProducts()
   }
 
@@ -41,7 +62,9 @@ export class ProductsPageComponent implements OnInit {
       pagination: {
         offset: this.pageSize * this.pageIndex,
         limit: this.pageSize
-      }
+      },
+      sorting: this.sorting,
+      filtering: this.filters
     })
   }
 }

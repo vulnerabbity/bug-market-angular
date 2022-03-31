@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core"
-import { AbstractControl, FormControl, ValidatorFn } from "@angular/forms"
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core"
+import { AbstractControl, FormControl, ValidatorFn, Validators } from "@angular/forms"
 import { ProductCategory } from "src/app/features/categories/categories.interface"
 import { ProductCategoriesService } from "src/app/features/categories/categories.service"
 
@@ -16,7 +16,7 @@ interface ProductCategoryAutocompleteModel {
       <input
         type="text"
         matInput
-        required
+        [required]="required"
         [matAutocomplete]="auto"
         [formControl]="searchControl"
         (ngModelChange)="onSearchChange()"
@@ -35,11 +35,14 @@ interface ProductCategoryAutocompleteModel {
     </style>
   `
 })
-export class CommonProductCategoryAutocomplete {
+export class CommonProductCategoryAutocomplete implements OnInit {
   @Input()
   set defaultCategory(value: ProductCategory) {
     this.searchControl.setValue(value)
   }
+
+  @Input()
+  required = true
 
   // Name model is reserved for two way binding in angular
   @Input()
@@ -63,7 +66,9 @@ export class CommonProductCategoryAutocomplete {
     return controlValue.visualName
   }
 
-  constructor(private categoriesService: ProductCategoriesService) {
+  constructor(private categoriesService: ProductCategoriesService) {}
+
+  ngOnInit(): void {
     this.searchControl.setValidators(ValidatorIsCategorySelected())
   }
 
