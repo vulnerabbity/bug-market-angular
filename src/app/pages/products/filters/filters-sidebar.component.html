@@ -1,0 +1,21 @@
+<mat-drawer-container hasBackdrop="true" class="sidebar">
+  <mat-drawer #drawer mode="over" class="sidebar__content">
+    <common-themed-div class="sidebar__header-wrapper" color="accent">
+      <div class="sidebar__header-container">
+        <p class="sidebar__header">Filter products:</p>
+      </div>
+    </common-themed-div>
+    <button class="sidebar__internal-toggler" mat-icon-button (click)="drawer.toggle()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <common-product-category-autocomplete></common-product-category-autocomplete>
+  </mat-drawer>
+
+  <button class="sidebar__external-toggler" mat-button (click)="drawer.toggle()">
+    <!-- Burger icon -->
+    <mat-icon>dehaze</mat-icon>
+    Filters
+  </button>
+
+  <ng-content class="main-content"></ng-content>
+</mat-drawer-container>
