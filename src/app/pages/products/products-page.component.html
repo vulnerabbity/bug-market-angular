@@ -1,5 +1,5 @@
 <products-navbar></products-navbar>
-<product-page-filters-sidebar>
+<product-page-filters-sidebar (onApply)="onFiltersApply($event)">
   <div class="container">
     <mat-paginator
       class="paginator"
