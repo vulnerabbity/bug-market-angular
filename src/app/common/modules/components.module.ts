@@ -18,6 +18,9 @@ import { CommonPageHeaderWithTitleComponent } from "../components/page-header/pa
 import { commonAutocompleteComponents } from "../components/autocomplete/autocomplete.declaration"
 import { commonDragAndDropComponents } from "../components/drag-and-drop/drag-and-drop.declarations"
 import { AppFilepondModule } from "src/app/modules/filepond-module"
+import { CommonRangeComponent } from "../components/range/range.component"
+import { CommonDirectivesModule } from "../directives/directives.module"
+import { commonExpanderComponents } from "../components/expanders/expanders.declarations"
 
 const passThroughModules = [
   MaterialModule,
@@ -39,13 +42,15 @@ const passThroughComponents = [
   CommonTitleTextCardComponent,
   CommonLoginDialogComponent,
   CommonRegisterDialogComponent,
+  CommonRangeComponent,
   commonAppFormFieldsComponents,
   commonAutocompleteComponents,
-  commonDragAndDropComponents
+  commonDragAndDropComponents,
+  commonExpanderComponents
 ]
 
 @NgModule({
-  imports: [passThroughModules, CarouselModule, AppFilepondModule],
+  imports: [passThroughModules, CarouselModule, AppFilepondModule, CommonDirectivesModule],
   exports: [...passThroughModules, ...passThroughComponents],
   declarations: [...passThroughComponents]
 })
