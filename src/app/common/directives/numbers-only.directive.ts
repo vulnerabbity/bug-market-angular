@@ -1,14 +1,9 @@
-import { Directive, HostBinding, HostListener } from "@angular/core"
+import { Directive, HostListener } from "@angular/core"
 
 @Directive({
   selector: "[numbersOnly]"
 })
 export class NumbersOnlyDirective {
-  @HostBinding("autocomplete")
-  public autocomplete = "off"
-
-  constructor() {}
-
   @HostListener("keypress", ["$event"])
   disableTextInput(e: { keyCode: number }) {
     const isNumberKey = e.keyCode >= 48 && e.keyCode <= 57
