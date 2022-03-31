@@ -23,6 +23,8 @@
           <mat-option value="DESCENDING">Descending</mat-option>
         </mat-select>
       </mat-form-field>
+
+      <common-range-expander label="Price" [(model)]="this.rangeModel"></common-range-expander>
     </div>
     <div class="sidebar__bottom">
       <button class="button-apply" (click)="emitApply()" mat-raised-button color="accent">
