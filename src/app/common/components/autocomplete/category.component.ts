@@ -69,9 +69,7 @@ export class CommonProductCategoryAutocomplete implements OnInit {
   constructor(private categoriesService: ProductCategoriesService) {}
 
   ngOnInit(): void {
-    if (this.required) {
-      this.searchControl.setValidators(ValidatorIsCategorySelected())
-    }
+    this.searchControl.setValidators(ValidatorIsCategorySelected())
   }
 
   getSelectedCategoryOrNull(): ProductCategory | null {
