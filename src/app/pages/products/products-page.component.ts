@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core"
+import { Component, OnDestroy, OnInit } from "@angular/core"
 import { PageEvent } from "@angular/material/paginator"
 import { BehaviorSubject } from "rxjs"
 import { ShortProduct } from "src/app/features/products/products.interface"
@@ -10,13 +10,15 @@ import { ProductSidebarFilters } from "./filters/filters-sidebar.component"
   templateUrl: "./products-page.component.html",
   styleUrls: ["./product-page.component.scss"]
 })
-export class ProductsPageComponent implements OnInit {
+export class ProductsPageComponent implements OnInit, OnDestroy {
   pageIndex = 0
   pageSize = 25
   totalProducts = 0
   pageSizeOptions = [10, 25, 50]
 
   products$ = new BehaviorSubject<ShortProduct[]>([])
+
+  searchText = ""
 
   sorting: ProductSorting = {}
 
@@ -25,6 +27,15 @@ export class ProductsPageComponent implements OnInit {
   constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {
+    this.loadProducts()
+  }
+
+  ngOnDestroy(): void {
+    this.products$.unsubscribe()
+  }
+
+  onSearch(searchText: string) {
+    this.searchText = searchText
     this.loadProducts()
   }
 
@@ -64,7 +75,8 @@ export class ProductsPageComponent implements OnInit {
         limit: this.pageSize
       },
       sorting: this.sorting,
-      filtering: this.filters
+      filtering: this.filters,
+      fuzzy: this.searchText
     })
   }
 }
