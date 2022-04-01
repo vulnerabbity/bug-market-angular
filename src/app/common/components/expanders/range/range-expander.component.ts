@@ -3,7 +3,7 @@ import { MatExpansionPanel } from "@angular/material/expansion"
 import { RangeModel } from "../../range/range.component"
 
 @Component({
-  selector: "common-range-expander",
+  selector: "common-range-expander[model]",
   styleUrls: ["./range-expander.component.scss"],
   template: `
     <mat-accordion>
@@ -22,7 +22,7 @@ export class CommonRangeExpanderComponent {
   label: string = "Range"
 
   @Input()
-  model: RangeModel = { min: null, max: null }
+  model!: RangeModel
 
   @Output()
   modelChange = new EventEmitter<RangeModel>()

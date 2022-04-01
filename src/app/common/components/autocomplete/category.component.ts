@@ -98,9 +98,14 @@ export class CommonProductCategoryAutocomplete implements OnInit {
 
 function ValidatorIsCategorySelected(): ValidatorFn {
   return (control: AbstractControl) => {
+    const isEmpty = control.value === ""
+    if (isEmpty) {
+      return null
+    }
+
     const categoryNotSelected = isCategorySelected(control) === false
     if (categoryNotSelected) {
-      return { test: true }
+      return { categoryValid: "categoryValid" }
     }
     return null
   }

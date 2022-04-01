@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core"
+import { Component, EventEmitter, Output, ViewChild } from "@angular/core"
+import { MatDrawer } from "@angular/material/sidenav"
 import { initProductCategoryAutocompleteModel } from "src/app/common/components/autocomplete/category.component"
 import { RangeModel } from "src/app/common/components/range/range.component"
 import { ProductCategory } from "src/app/features/categories/categories.interface"
@@ -18,7 +19,10 @@ export interface ProductSidebarFilters {
   templateUrl: "./filters-sidebar.component.html",
   styleUrls: ["./filters-sidebar.component.scss"]
 })
-export class ProductPageFiltersSidebar implements OnInit {
+export class ProductPageFiltersSidebar {
+  @ViewChild("drawer")
+  drawer!: MatDrawer
+
   priceSorting: SortingOptions = "NO_SORTING"
 
   category = initProductCategoryAutocompleteModel()
@@ -28,7 +32,10 @@ export class ProductPageFiltersSidebar implements OnInit {
   @Output()
   onApply = new EventEmitter<ProductSidebarFilters>()
 
-  ngOnInit(): void {}
+  submit() {
+    this.emitApply()
+    this.drawer.close()
+  }
 
   emitApply() {
     const filters = this.getCurrentFilters()
@@ -42,11 +49,8 @@ export class ProductPageFiltersSidebar implements OnInit {
     }
 
     const { min: rangeMin, max: rangeMax } = this.rangeModel
-    const rangeSelected = rangeMax !== null
 
-    if (rangeSelected) {
-      filters.priceRange = { min: rangeMin ?? undefined, max: rangeMax }
-    }
+    filters.priceRange = { min: rangeMin ?? 0, max: rangeMax ?? 999_999_999 }
 
     return filters
   }

@@ -6,22 +6,26 @@
 .sidebar {
   height: 100%;
 
-  // background-color: inherit;
-
-  &__content {
+  &__drawer {
     width: min(35rem, 80%);
   }
-  &__bottom {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: column;
+
+    height: 100%;
   }
+
   &__internal-toggler {
     position: absolute;
+    z-index: 1;
     top: 0;
     right: 0;
   }
   &__external-toggler {
+    position: absolute;
     margin-left: 1.6rem;
   }
   &__header-wrapper {

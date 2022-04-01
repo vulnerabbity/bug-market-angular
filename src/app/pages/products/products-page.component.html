@@ -1,6 +1,13 @@
 <products-navbar></products-navbar>
 <product-page-filters-sidebar (onApply)="onFiltersApply($event)">
   <div class="container">
+    <products-page-search class="search" (onSearch)="onSearch($event)"></products-page-search>
+
+    <common-products-container
+      class="card-container"
+      [products]="(this.products$ | async) ?? []"
+    ></common-products-container>
+
     <mat-paginator
       class="paginator"
       [length]="this.totalProducts"
@@ -9,11 +16,5 @@
       (page)="this.onPaginationUpdate($event)"
     >
     </mat-paginator>
-
-    <common-products-container
-      class="card-container"
-      [products]="(this.products$ | async) ?? []"
-    ></common-products-container>
   </div>
-  <!-- TODO: Add bottom pagination -->
 </product-page-filters-sidebar>

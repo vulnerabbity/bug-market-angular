@@ -7,6 +7,7 @@ export class NumbersOnlyDirective {
   @HostListener("keypress", ["$event"])
   disableTextInput(e: { keyCode: number }) {
     const isNumberKey = e.keyCode >= 48 && e.keyCode <= 57
+
     return isNumberKey
   }
 
