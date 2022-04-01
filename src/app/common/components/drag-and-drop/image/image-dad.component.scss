@@ -5,11 +5,11 @@
 }
 
 // increase default 1 rem size
-::ng-deep .filepond--root {
+:host ::ng-deep .filepond--root {
   font-size: 2rem;
 }
 
-::ng-deep .filepond--item {
+:host ::ng-deep .filepond--item {
   // 2 columns
   width: calc(50% - 0.6em);
   margin: 0 0.25em !important;
@@ -23,7 +23,7 @@
   margin-bottom: 1% !important;
 }
 
-::ng-deep {
+:host ::ng-deep {
   .filepond--root {
     border-radius: 1rem;
     outline: 2px solid gray;
@@ -55,6 +55,6 @@
 }
 
 // disable plugin advertisement
-::ng-deep .filepond--credits {
+:host ::ng-deep .filepond--credits {
   display: none;
 }
