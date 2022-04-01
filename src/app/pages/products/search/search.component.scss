@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  width: 100%;
+}
+.search-field {
+  width: 100%;
+}
+
+// disable default material padding bottom
+:host ::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
