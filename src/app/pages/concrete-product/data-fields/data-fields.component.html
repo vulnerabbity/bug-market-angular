@@ -1,0 +1,16 @@
+<common-title-text-card
+  class="product-data-field"
+  title="Name"
+  [text]="this.product.name"
+></common-title-text-card>
+<common-title-text-card
+  class="product-data-field"
+  title="Category"
+  [text]="getCategory()"
+></common-title-text-card>
+<common-title-text-card
+  *ngIf="hasDescription()"
+  class="product-data-field"
+  title="Description"
+  [text]="this.product.description ?? ''"
+></common-title-text-card>

@@ -41,8 +41,7 @@ export class ConcreteProductPageComponent implements OnInit {
     private productsService: ProductsService,
     private usersService: UsersService,
     private currentRoute: ActivatedRoute,
-    private productAbilities: ProductAbilities,
-    private categoriesService: ProductCategoriesService
+    private productAbilities: ProductAbilities
   ) {}
 
   async ngOnInit() {
@@ -71,22 +70,6 @@ export class ConcreteProductPageComponent implements OnInit {
 
   canUpdateProduct(): boolean {
     return this.productAbilities.canUpdateProduct(this.product)
-  }
-
-  hasDescription() {
-    const trimmedDescription = this.product.description?.trim()
-    const hasDescription = !!trimmedDescription
-    return hasDescription
-  }
-
-  getCategory(): string {
-    const categoryOrNull = this.categoriesService.getCategoryByDatabaseName(
-      this.product.categoryName
-    )
-    if (categoryOrNull) {
-      return categoryOrNull.visualName
-    }
-    return "Unknown"
   }
 
   private deleteProduct() {
