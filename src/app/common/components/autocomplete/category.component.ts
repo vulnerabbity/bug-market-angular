@@ -105,7 +105,7 @@ function ValidatorIsCategorySelected(): ValidatorFn {
 
     const categoryNotSelected = isCategorySelected(control) === false
     if (categoryNotSelected) {
-      return { test: true }
+      return { categoryValid: "categoryValid" }
     }
     return null
   }
