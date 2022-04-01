@@ -1,0 +1,27 @@
+<p *ngIf="this.loading">loading ...</p>
+<div *ngIf="this.loading === false">
+  <span class="author-description">Author: </span>
+  <a
+    class="author-link"
+    mat-raised-button
+    matTooltip="Go to author profile"
+    matTooltipClass="tooltip"
+    color="accent"
+    [routerLink]="'/user/' + this.product.userId"
+    aria-label="Go to author profile"
+  >
+    {{ this.userNameOrDefault }}
+  </a>
+  <a
+    class="author-message"
+    [disabled]="true"
+    mat-raised-button
+    color="accent"
+    href="/users/mockid/write"
+    aria-label="Write message to author"
+    matTooltip="Write message"
+    matTooltipClass="tooltip"
+  >
+    <mat-icon>message</mat-icon>
+  </a>
+</div>

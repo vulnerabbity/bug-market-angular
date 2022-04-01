@@ -1,13 +1,9 @@
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { firstValueFrom, map, Observable } from "rxjs"
-import { ProductCategoriesService } from "src/app/features/categories/categories.service"
 import { ProductAbilities } from "src/app/features/products/product.abilities"
 import { Product } from "src/app/features/products/products.interface"
 import { ProductsService } from "src/app/features/products/products.service"
-import { userDefaults } from "src/app/features/users/user.defaults"
-import { User } from "src/app/features/users/users.interface"
-import { UsersService } from "src/app/features/users/users.service"
 
 @Component({
   templateUrl: "./concrete-product.component.html",
@@ -15,7 +11,6 @@ import { UsersService } from "src/app/features/users/users.service"
 })
 export class ConcreteProductPageComponent implements OnInit {
   product!: Product
-  user!: User
   loaded = false
 
   get updateProductUrl(): string {
@@ -30,16 +25,8 @@ export class ConcreteProductPageComponent implements OnInit {
     return "Free"
   }
 
-  get userNameOrDefault(): string {
-    if (this.user.name) {
-      return this.user.name
-    }
-    return userDefaults.name
-  }
-
   constructor(
     private productsService: ProductsService,
-    private usersService: UsersService,
     private currentRoute: ActivatedRoute,
     private productAbilities: ProductAbilities
   ) {}
@@ -83,19 +70,13 @@ export class ConcreteProductPageComponent implements OnInit {
   private async loadAll(): Promise<void> {
     const productId = await firstValueFrom(this.parseProductIdFromUrl)
     const product = await firstValueFrom(this.loadProduct(productId))
-    const user = await firstValueFrom(this.loadUser(product.userId))
 
     this.product = product
-    this.user = user
   }
 
   private parseProductIdFromUrl: Observable<string> = this.currentRoute.params.pipe(
     map(params => params["id"])
   )
-
-  private loadUser(id: string): Observable<User> {
-    return this.usersService.loadUser({ id })
-  }
 
   private loadProduct(id: string): Observable<Product> {
     return this.productsService
