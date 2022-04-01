@@ -10,7 +10,7 @@
   />
   <button
     *ngIf="this.minValue"
-    (click)="this.minValue = ''"
+    (click)="this.resetMinField()"
     mat-icon-button
     matSuffix
     aria-label="Reset minimal value"
@@ -32,7 +32,7 @@
   />
   <button
     *ngIf="this.maxValue"
-    (click)="this.maxValue = ''"
+    (click)="this.resetMaxField()"
     mat-icon-button
     matSuffix
     aria-label="Reset maximal value"

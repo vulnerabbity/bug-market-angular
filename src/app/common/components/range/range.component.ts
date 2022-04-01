@@ -25,6 +25,16 @@ export class CommonRangeComponent {
     this.modelChange.next(model)
   }
 
+  resetMinField() {
+    this.minValue = ""
+    this.onRangeChange()
+  }
+
+  resetMaxField() {
+    this.maxValue = ""
+    this.onRangeChange()
+  }
+
   private getCurrentRangeModel(): RangeModel {
     const min = this.getMinNumber()
     const max = this.getMaxNumber()
