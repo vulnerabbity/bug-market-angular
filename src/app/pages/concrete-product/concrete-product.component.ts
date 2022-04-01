@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { firstValueFrom, map, Observable } from "rxjs"
+import { ProductCategoriesService } from "src/app/features/categories/categories.service"
 import { ProductAbilities } from "src/app/features/products/product.abilities"
 import { Product } from "src/app/features/products/products.interface"
 import { ProductsService } from "src/app/features/products/products.service"
@@ -40,7 +41,8 @@ export class ConcreteProductPageComponent implements OnInit {
     private productsService: ProductsService,
     private usersService: UsersService,
     private currentRoute: ActivatedRoute,
-    private productAbilities: ProductAbilities
+    private productAbilities: ProductAbilities,
+    private categoriesService: ProductCategoriesService
   ) {}
 
   async ngOnInit() {
@@ -69,6 +71,22 @@ export class ConcreteProductPageComponent implements OnInit {
 
   canUpdateProduct(): boolean {
     return this.productAbilities.canUpdateProduct(this.product)
+  }
+
+  hasDescription() {
+    const trimmedDescription = this.product.description?.trim()
+    const hasDescription = !!trimmedDescription
+    return hasDescription
+  }
+
+  getCategory(): string {
+    const categoryOrNull = this.categoriesService.getCategoryByDatabaseName(
+      this.product.categoryName
+    )
+    if (categoryOrNull) {
+      return categoryOrNull.visualName
+    }
+    return "Unknown"
   }
 
   private deleteProduct() {

@@ -32,10 +32,6 @@ p {
   margin: 0;
 }
 
-.description {
-  margin-top: 2rem;
-}
-
 // for some reason tooltip not accessible without ::ng-deep
 ::ng-deep .tooltip {
   font-size: 1.6rem !important;
@@ -52,4 +48,8 @@ p {
 
   margin: 0 auto;
   margin-top: 5rem;
+}
+
+.product-data-field {
+  margin-top: 2rem;
 }

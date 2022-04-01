@@ -6,7 +6,7 @@
   </div>
 
   <div *ngIf="this.loaded">
-    <common-titled-page-header [title]="this.product.name | titlecase">
+    <common-titled-page-header [title]="this.product.name | titlecase" [titleLimit]="15">
       <button
         class="copy-to-clipboard"
         mat-icon-button
@@ -42,45 +42,56 @@
       </data>
     </common-titled-page-header>
     <br />
-    <common-themed-div>
-      <div class="container publishing-info">
-        <!-- Example -->
-        <!-- Monday, 20 March 14:23 -->
-        <p class="publishing-info__date">
-          Published: {{ product.createdAt | date: "cccc, dd MMMM HH:mm" }}
-        </p>
-        <div class="publishing-info__author">
-          <span class="publishing-info__author-description">Author: </span>
-          <a
-            class="publishing-info__author-link"
-            mat-raised-button
-            matTooltip="Go to author profile"
-            matTooltipClass="tooltip"
-            color="accent"
-            [routerLink]="'/user/' + this.product.userId"
-            aria-label="Go to author profile"
-          >
-            {{ this.userNameOrDefault }}
-          </a>
-          <a
-            class="publishing-info__author-message"
-            mat-raised-button
-            color="accent"
-            href="/users/mockid/write"
-            aria-label="Write message to author"
-            matTooltip="Write message"
-            matTooltipClass="tooltip"
-          >
-            <mat-icon>message</mat-icon>
-          </a>
-        </div>
+
+    <div class="container publishing-info">
+      <!-- Example -->
+      <!-- Monday, 20 March 14:23 -->
+      <p class="publishing-info__date">
+        Published: {{ product.createdAt | date: "cccc, dd MMMM HH:mm" }}
+      </p>
+      <div class="publishing-info__author">
+        <span class="publishing-info__author-description">Author: </span>
+        <a
+          class="publishing-info__author-link"
+          mat-raised-button
+          matTooltip="Go to author profile"
+          matTooltipClass="tooltip"
+          color="accent"
+          [routerLink]="'/user/' + this.product.userId"
+          aria-label="Go to author profile"
+        >
+          {{ this.userNameOrDefault }}
+        </a>
+        <a
+          class="publishing-info__author-message"
+          [disabled]="true"
+          mat-raised-button
+          color="accent"
+          href="/users/mockid/write"
+          aria-label="Write message to author"
+          matTooltip="Write message"
+          matTooltipClass="tooltip"
+        >
+          <mat-icon>message</mat-icon>
+        </a>
       </div>
-    </common-themed-div>
+    </div>
     <div class="container">
       <common-carousel [images]="this.product.imagesUrls"></common-carousel>
       <common-title-text-card
-        class="description"
-        title="Description: "
+        class="product-data-field"
+        title="Name"
+        [text]="this.product.name"
+      ></common-title-text-card>
+      <common-title-text-card
+        class="product-data-field"
+        title="Category"
+        [text]="getCategory()"
+      ></common-title-text-card>
+      <common-title-text-card
+        *ngIf="hasDescription()"
+        class="product-data-field"
+        title="Description"
         [text]="this.product.description ?? ''"
       ></common-title-text-card>
     </div>
