@@ -6,8 +6,12 @@ import { Directive, HostListener } from "@angular/core"
 export class NumbersOnlyDirective {
   @HostListener("keypress", ["$event"])
   disableTextInput(e: { keyCode: number }) {
+    const enterKeycode = 13
+    const isEnterKey = e.keyCode === enterKeycode
+
     const isNumberKey = e.keyCode >= 48 && e.keyCode <= 57
-    return isNumberKey
+
+    return isNumberKey || isEnterKey
   }
 
   @HostListener("paste", ["$event"])
