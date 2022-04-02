@@ -1,8 +1,10 @@
 import { Injectable } from "@angular/core"
+import { ProductsImagesService } from "src/app/features/products/products-images.service"
 import { ProductsService } from "src/app/features/products/products.service"
+import { Product } from "src/generated-gql-types"
 
 export interface UpdateChangedImagesOnlyInput {
-  productId: string
+  product: Product
   oldImages: Blob[]
   newImages: Blob[]
 }
@@ -11,7 +13,7 @@ export interface UpdateChangedImagesOnlyInput {
   providedIn: "root"
 })
 export class UpdateProductService {
-  constructor(private productsService: ProductsService) {}
+  constructor(private productsImagesService: ProductsImagesService) {}
 
   async makeImagesSnapshot(urls: string[]): Promise<Blob[]> {
     const result: Blob[] = []
@@ -24,25 +26,32 @@ export class UpdateProductService {
   }
 
   async updateChangedImagesOnly(input: UpdateChangedImagesOnlyInput): Promise<void> {
-    const { newImages, oldImages, productId } = input
+    const { newImages, oldImages, product } = input
+    const { id: productId } = product
 
     const changedImagesMask = this.getChangedImagesMask(oldImages, newImages)
 
     for (let imageIndex = 0; imageIndex < changedImagesMask.length; imageIndex++) {
-      const newImage = newImages[imageIndex]
-      const isImageChanged = changedImagesMask[imageIndex]
-      const needDeleteImage = newImage === undefined
+      const imageId = product.imagesIds[imageIndex]
 
-      if (isImageChanged === false) {
-        continue
-      }
+      const newImage = newImages[imageIndex]
+      const oldImage = oldImages[imageIndex]
+      const hasNewImage = newImage !== undefined
+      const hasOldImage = oldImage !== undefined
+
+      const needDeleteImage = !hasNewImage
+      const needCreateImage = hasNewImage && !hasOldImage
+      const needUpdateImage = hasNewImage && hasOldImage
 
       if (needDeleteImage) {
-        await this.productsService.deleteImageAsync({ imageIndex, productId })
-        continue
+        await this.productsImagesService.deleteImageAsync({ imageId, productId })
+      } else if (needCreateImage) {
+        await this.productsImagesService.sendImageAsync({ image: newImage, productId })
+      } else if (needUpdateImage) {
+        await this.productsImagesService.updateImageAsync({ image: newImage, imageId, productId })
+      } else {
+        console.log("nothing need")
       }
-
-      await this.productsService.uploadImageAsync({ image: newImage, imageIndex, productId })
     }
   }
 

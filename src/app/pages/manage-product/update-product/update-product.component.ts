@@ -4,12 +4,11 @@ import { firstValueFrom, map } from "rxjs"
 import { CommonImageDragAndDrop } from "src/app/common/components/drag-and-drop/image/image-dad.component"
 import { ProductCategory } from "src/app/features/categories/categories.interface"
 import { ProductCategoriesService } from "src/app/features/categories/categories.service"
+import { ProductsImagesService } from "src/app/features/products/products-images.service"
 import { Product } from "src/app/features/products/products.interface"
 import { ProductsService } from "src/app/features/products/products.service"
 import { ManageProductComponent } from "../manage-product.component"
 import { UpdateProductService } from "./update-product.service"
-
-// TODO: Disable image caching on redirect because old images load from it
 
 @Component({
   selector: "update-product-page",
@@ -31,9 +30,10 @@ export class UpdateProductPageComponent extends ManageProductComponent implement
     private currentRoute: ActivatedRoute,
     private categoriesService: ProductCategoriesService,
     protected productsService: ProductsService,
+    protected productImagesService: ProductsImagesService,
     protected router: Router
   ) {
-    super(productsService, router)
+    super(productsService, productImagesService, router)
   }
 
   async ngOnInit() {
@@ -90,8 +90,8 @@ export class UpdateProductPageComponent extends ManageProductComponent implement
   private async updateImages() {
     const newImages = this.getCurrentImages()
     const oldImages = this.imagesSnapshot
-    const productId = this.product.id
-    await this.updateProductService.updateChangedImagesOnly({ oldImages, newImages, productId })
+    const product = this.product
+    await this.updateProductService.updateChangedImagesOnly({ oldImages, newImages, product })
   }
 
   private async loadProduct(productId: string): Promise<Product> {

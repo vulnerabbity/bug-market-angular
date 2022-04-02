@@ -124,6 +124,7 @@ export type Product = {
   createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  imagesIds: Array<Scalars['String']>;
   imagesUrls: Array<Scalars['String']>;
   name: Scalars['String'];
   price: Scalars['Int'];
@@ -139,6 +140,7 @@ export type ProductInput = {
   createdAt: Scalars['DateTime'];
   description?: InputMaybe<Scalars['String']>;
   id: Scalars['String'];
+  imagesIds: Array<Scalars['String']>;
   imagesUrls: Array<Scalars['String']>;
   name: Scalars['String'];
   price?: InputMaybe<Scalars['Int']>;
@@ -544,7 +546,7 @@ export type FullProductQueryVariables = Exact<{
 }>;
 
 
-export type FullProductQuery = { __typename?: 'Query', product: { __typename?: 'Product', id: string, name: string, userId: string, categoryName: string, description?: string | null, imagesUrls: Array<string>, price: number, createdAt: any } };
+export type FullProductQuery = { __typename?: 'Query', product: { __typename?: 'Product', id: string, name: string, userId: string, categoryName: string, description?: string | null, imagesUrls: Array<string>, imagesIds: Array<string>, price: number, createdAt: any } };
 
 export type CreateProductMutationVariables = Exact<{
   input: CreateProductInput;
@@ -647,6 +649,7 @@ export const FullProductDocument = gql`
     categoryName
     description
     imagesUrls
+    imagesIds
     price
     createdAt
   }
