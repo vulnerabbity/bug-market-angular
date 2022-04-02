@@ -16,28 +16,13 @@
   &__date {
     display: block;
   }
-  &__author {
-    display: block;
-
-    &-description {
-      margin-right: 3rem;
-    }
-    &-link {
-      margin-right: 1.5rem;
-    }
-  }
 }
 
 p {
   margin: 0;
 }
 
-.description {
-  margin-top: 2rem;
-}
-
-// for some reason tooltip not accessible without ::ng-deep
-::ng-deep .tooltip {
+:host ::ng-deep .tooltip {
   font-size: 1.6rem !important;
 }
 

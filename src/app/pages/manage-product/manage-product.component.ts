@@ -5,6 +5,7 @@ import {
   FormFieldModel,
   initFromFieldModel
 } from "src/app/common/components/form-fields/components/abstract-form-field"
+import { ProductsImagesService } from "src/app/features/products/products-images.service"
 import { ProductsService } from "src/app/features/products/products.service"
 import { CreateProductInput } from "src/generated-gql-types"
 
@@ -75,7 +76,11 @@ export abstract class ManageProductComponent {
     return nameValid && priceValid && categoryValid && descriptionValid
   }
 
-  constructor(protected productsService: ProductsService, protected router: Router) {}
+  constructor(
+    protected productsService: ProductsService,
+    protected productsImagesService: ProductsImagesService,
+    protected router: Router
+  ) {}
 
   getDataToUpload(): CreateProductInput {
     if (this.isFromValid === false) {

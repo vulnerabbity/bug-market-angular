@@ -6,7 +6,7 @@
   </div>
 
   <div *ngIf="this.loaded">
-    <common-titled-page-header [title]="this.product.name | titlecase">
+    <common-titled-page-header [title]="this.product.name | titlecase" [titleLimit]="15">
       <button
         class="copy-to-clipboard"
         mat-icon-button
@@ -42,47 +42,18 @@
       </data>
     </common-titled-page-header>
     <br />
-    <common-themed-div>
-      <div class="container publishing-info">
-        <!-- Example -->
-        <!-- Monday, 20 March 14:23 -->
-        <p class="publishing-info__date">
-          Published: {{ product.createdAt | date: "cccc, dd MMMM HH:mm" }}
-        </p>
-        <div class="publishing-info__author">
-          <span class="publishing-info__author-description">Author: </span>
-          <a
-            class="publishing-info__author-link"
-            mat-raised-button
-            matTooltip="Go to author profile"
-            matTooltipClass="tooltip"
-            color="accent"
-            [routerLink]="'/user/' + this.product.userId"
-            aria-label="Go to author profile"
-          >
-            {{ this.userNameOrDefault }}
-          </a>
-          <a
-            class="publishing-info__author-message"
-            mat-raised-button
-            color="accent"
-            href="/users/mockid/write"
-            aria-label="Write message to author"
-            matTooltip="Write message"
-            matTooltipClass="tooltip"
-          >
-            <mat-icon>message</mat-icon>
-          </a>
-        </div>
-      </div>
-    </common-themed-div>
+
+    <div class="container publishing-info">
+      <!-- Example -->
+      <!-- Monday, 20 March 14:23 -->
+      <p class="publishing-info__date">
+        Published: {{ product.createdAt | date: "cccc, dd MMMM HH:mm" }}
+      </p>
+      <concrete-product-page-author [product]="this.product"></concrete-product-page-author>
+    </div>
     <div class="container">
       <common-carousel [images]="this.product.imagesUrls"></common-carousel>
-      <common-title-text-card
-        class="description"
-        title="Description: "
-        [text]="this.product.description ?? ''"
-      ></common-title-text-card>
+      <concrete-product-data-fields [product]="this.product"></concrete-product-data-fields>
     </div>
   </div>
 </div>

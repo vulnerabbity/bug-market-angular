@@ -9,7 +9,6 @@ import { RouterModule } from "@angular/router"
 import { CarouselModule } from "ngx-owl-carousel-o"
 import { CommonCarousel } from "../components/carousel/carousel.component"
 import { CommonDataFieldComponent } from "../components/data-field/data-field.component"
-import { CommonTitleTextCardComponent } from "../components/title-text-card/title-text-card.component"
 import { CommonLoginDialogComponent } from "../components/dialogs/login/login-dialog.component"
 import { CommonRegisterDialogComponent } from "../components/dialogs/register/register-dialog.component"
 import { FormsModule, ReactiveFormsModule } from "@angular/forms"
@@ -21,6 +20,7 @@ import { AppFilepondModule } from "src/app/modules/filepond-module"
 import { CommonRangeComponent } from "../components/range/range.component"
 import { CommonDirectivesModule } from "../directives/directives.module"
 import { commonExpanderComponents } from "../components/expanders/expanders.declarations"
+import { commonCardsComponents } from "../components/cards/cards.declaration"
 
 const passThroughModules = [
   MaterialModule,
@@ -39,14 +39,14 @@ const passThroughComponents = [
   CommonProductsContainer,
   CommonCarousel,
   CommonDataFieldComponent,
-  CommonTitleTextCardComponent,
   CommonLoginDialogComponent,
   CommonRegisterDialogComponent,
   CommonRangeComponent,
   commonAppFormFieldsComponents,
   commonAutocompleteComponents,
   commonDragAndDropComponents,
-  commonExpanderComponents
+  commonExpanderComponents,
+  commonCardsComponents
 ]
 
 @NgModule({

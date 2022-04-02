@@ -37,16 +37,17 @@ export class CreateProductPageComponent extends ManageProductComponent implement
     }
 
     const productId = response.productId!
-    await this.uploadImages(productId)
+    await this.sendImages(productId)
 
     this.router.navigate(["/product", productId])
 
     this.loading = false
   }
 
-  private async uploadImages(productId: string) {
-    await this.productsService.uploadImages({
-      images: this.getImages(),
+  private async sendImages(productId: string) {
+    const images = this.getImages()
+    await this.productsImagesService.sendImages({
+      images,
       productId
     })
   }

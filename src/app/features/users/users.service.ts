@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core"
 import { firstValueFrom, from, map, Observable, pluck } from "rxjs"
-import { FilesService } from "src/app/common/services/files.service"
 import {
   CreateSellerGQL,
   CreateSellerMutationVariables,
@@ -8,7 +7,6 @@ import {
   UserQueryVariables,
   UserWithShortProductsGQL
 } from "src/generated-gql-types"
-import { ProductsService } from "../products/products.service"
 import { User, UserWithShortProducts } from "./users.interface"
 
 export type CreateSellerStatus = "success" | "duplicate" | "unknown"
@@ -18,8 +16,6 @@ export type CreateSellerStatus = "success" | "duplicate" | "unknown"
 })
 export class UsersService {
   constructor(
-    private filesService: FilesService,
-    private productsService: ProductsService,
     private userQuery: UserGQL,
     private userWithShortProductsQuery: UserWithShortProductsGQL,
     private createSellerMutation: CreateSellerGQL
@@ -27,18 +23,14 @@ export class UsersService {
 
   loadUser(variables: UserQueryVariables): Observable<User> {
     const parsedUser$ = this.userQuery.fetch(variables).pipe(pluck("data", "user"))
-    const userWithAvatarPath$ = parsedUser$.pipe(map(user => this.addAvatarFullPathToUser(user)))
 
-    return userWithAvatarPath$
+    return parsedUser$
   }
 
   loadUserWithProducts(variables: UserQueryVariables): Observable<UserWithShortProducts> {
     const parsedUser$ = this.userWithShortProductsQuery.fetch(variables).pipe(pluck("data", "user"))
-    const userWithAvatarPath$ = parsedUser$.pipe(map(user => this.addAvatarFullPathToUser(user)))
-    const userWithAvatarAndProductsPaths$ = userWithAvatarPath$.pipe(
-      map(user => this.addProductImagesFullPathToUser(user))
-    )
-    return userWithAvatarAndProductsPaths$
+
+    return parsedUser$
   }
 
   createSeller$(variables: CreateSellerMutationVariables): Observable<CreateSellerStatus> {
@@ -59,20 +51,5 @@ export class UsersService {
       }
       return "unknown"
     }
-  }
-
-  private addAvatarFullPathToUser<T extends User>(user: T): T {
-    user = { ...user }
-    if (!user.avatarUrl) {
-      return user
-    }
-    user.avatarUrl = this.filesService.getPublicFileFullPath(user.avatarUrl)
-    return user
-  }
-
-  private addProductImagesFullPathToUser(user: UserWithShortProducts): UserWithShortProducts {
-    user = { ...user }
-    user.products = user.products.map(product => this.productsService.addImagePath(product))
-    return user
   }
 }

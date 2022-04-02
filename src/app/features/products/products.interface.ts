@@ -7,6 +7,7 @@ export class Product implements GeneratedProduct {
   description?: Maybe<string> | undefined
   id!: string
   imagesUrls!: string[]
+  imagesIds!: string[]
   name!: string
   price!: number
   userId!: string
@@ -16,19 +17,19 @@ export type ShortProduct = Pick<GeneratedProduct, "id" | "name" | "price" | "ima
 
 export type PaginatedShortProducts = PaginatedFeature<ShortProduct>
 
+export interface CreateManyProductImagesInput {
+  images: Blob[]
+  productId: string
+}
+
+// convert to union
+export type CreateProductImageStatus = "success" | "error"
+
 export interface UploadProductResponse {
   status: "success" | "error"
   productId?: string
   error?: "unknownError"
 }
-
-export interface UploadProductImageResponse {
-  status: "success" | "error"
-}
-
-export type DeleteProductImageStatus = "success" | "error"
-
-export type DeleteProductStatus = "success" | "unknown-error"
 
 export enum UpdateProductStatusesEnum {
   Success = "success",
@@ -36,17 +37,23 @@ export enum UpdateProductStatusesEnum {
 }
 // convert to union
 export type UpdateProductStatus = `${UpdateProductStatusesEnum}`
-
-export interface UploadManyProductImagesInput {
-  images: Blob[]
-  productId: string
+export interface UpdateProductImageResponse {
+  status: "success" | "error"
 }
+
+export interface UpdateManyProductImagesInput {
+  images: Blob[]
+  product: Product
+}
+
+export interface UpdateSingleProductImageInput extends DeleteSingleProductImageInput {
+  image: Blob
+}
+
+export type DeleteProductImageStatus = "success" | "error"
+export type DeleteProductStatus = "success" | "unknown-error"
 
 export interface DeleteSingleProductImageInput {
   productId: string
-  imageIndex: number
-}
-
-export interface UploadSingleProductImageInput extends DeleteSingleProductImageInput {
-  image: Blob
+  imageId: string
 }

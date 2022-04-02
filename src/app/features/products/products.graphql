@@ -23,6 +23,7 @@ query FullProduct($id: String!) {
     categoryName
     description
     imagesUrls
+    imagesIds
     price
     createdAt
   }

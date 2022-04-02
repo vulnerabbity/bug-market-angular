@@ -54,7 +54,6 @@ $icon-shadow-focus: 2px 2px 10px rgba(black, 0.3);
   }
 }
 
-// for some reason tooltip not accessible without ::ng-deep
-::ng-deep .tooltip {
+:host ::ng-deep .tooltip {
   font-size: 1.6rem !important;
 }
