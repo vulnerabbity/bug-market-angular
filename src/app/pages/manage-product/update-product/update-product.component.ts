@@ -91,7 +91,7 @@ export class UpdateProductPageComponent extends ManageProductComponent implement
     const newImages = this.getCurrentImages()
     const oldImages = this.imagesSnapshot
     const productId = this.product.id
-    this.updateProductService.updateChangedImagesOnly({ oldImages, newImages, productId })
+    await this.updateProductService.updateChangedImagesOnly({ oldImages, newImages, productId })
   }
 
   private async loadProduct(productId: string): Promise<Product> {
