@@ -65,3 +65,7 @@ $custom-typography: mat-typography-config(
   $input: define-typography-level(inherit, 1.125, 400)
 );
 @include mat-core($custom-typography);
+
+.tooltip {
+  font-size: 1.6rem !important;
+}
