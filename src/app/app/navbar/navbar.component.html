@@ -1,19 +1,9 @@
 <mat-toolbar color="primary" class="navbar">
-  <a mat-button routerLink="/" aria-label="home">
-    <mat-icon>home</mat-icon>
-    Bug market
-  </a>
+  <common-home-link></common-home-link>
   <nav aria-label="left navigation">
     <ul class="list list-horizontal">
       <li *ngFor="let location of this.leftLocations" class="link-containter">
-        <a
-          class="navbar__button"
-          mat-button
-          [routerLink]="location.path"
-          routerLinkActive="selected-button"
-        >
-          {{ location.name }}
-        </a>
+        <common-products-link></common-products-link>
       </li>
     </ul>
   </nav>
@@ -23,7 +13,6 @@
       <li class="link-container">
         <common-preferences-link></common-preferences-link>
       </li>
-
       <li class="link-container">
         <common-login-button></common-login-button>
       </li>
