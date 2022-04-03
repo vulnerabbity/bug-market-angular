@@ -1,11 +1,11 @@
 import { CommonButtonComponent } from "./button-link/button.component"
 import { CommonLinkComponent } from "./button-link/link.component"
-import { CommonManageAccountButtonComponent } from "./components/manage-account/manage-account.component"
-import { ProductsLinkComponent } from "./components/products.component"
-import { CommonLoginButtonComponent } from "./components/login.component"
-import { CommonPreferencesLinkComponent } from "./components/preferences.component"
-import { CommonCreateProductLinkComponent } from "./components/product-create.component"
-import { CommonHomeLinkComponent } from "./components/home.component"
+import { CommonHomeLinkComponent } from "./links/home.component"
+import { CommonLoginButtonComponent } from "./buttons/login.component"
+import { CommonManageAccountButtonComponent } from "./links/manage-account/manage-account.component"
+import { CommonPreferencesLinkComponent } from "./links/preferences.component"
+import { CommonCreateProductLinkComponent } from "./links/product-create.component"
+import { ProductsLinkComponent } from "./links/products.component"
 
 export const commonButtonsComponents = [
   CommonLinkComponent,
