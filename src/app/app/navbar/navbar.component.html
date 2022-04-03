@@ -21,29 +21,11 @@
   <nav aria-label="right navigation">
     <ul class="list list-horizontal">
       <li class="link-container">
-        <a
-          class="icon-link"
-          [routerLink]="this.paths.Preferences"
-          matTooltip="Preferences"
-          matTooltipClass="tooltip"
-          aria-label="Preferences"
-        >
-          <mat-icon routerLinkActive="selected-icon" class="icon">settings</mat-icon>
-        </a>
+        <common-preferences-link></common-preferences-link>
       </li>
 
       <li class="link-container">
-        <button
-          class="icon-link"
-          mat-button
-          matTooltip="Login"
-          matTooltipClass="tooltip"
-          aria-label="Login"
-          (click)="onLoginClick()"
-        >
-          <!-- TODO: Place avatar if logged in -->
-          <mat-icon class="icon">account_circle</mat-icon>
-        </button>
+        <common-login-button></common-login-button>
       </li>
     </ul>
   </nav>
