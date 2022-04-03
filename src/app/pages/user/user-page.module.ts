@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core"
-import { AppCommonModule } from "src/app/common/modules/common.module"
+import { AppCommonModule } from "src/app/common/common.module"
 import { UsersModule } from "src/app/features/users/users.module"
 import { UserPageComponent } from "./user-page.component"
 
