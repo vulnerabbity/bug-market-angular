@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core"
 import { BrowserModule } from "@angular/platform-browser"
-import { GraphqlModule } from "../modules/graphql.module"
+import { GraphqlModule } from "./graphql.module"
 import { AppRoutingModule } from "./app-routing.module"
 import { AppComponent } from "./app.component"
 import { AppNavbarComponent } from "./navbar/navbar.component"
