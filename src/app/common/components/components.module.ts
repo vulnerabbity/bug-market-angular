@@ -16,7 +16,7 @@ import { commonAppFormFieldsComponents } from "./form-fields/form-fields.declara
 import { CommonPageHeaderWithTitleComponent } from "./page-header/page-header-with-title.component"
 import { commonAutocompleteComponents } from "./autocomplete/autocomplete.declaration"
 import { commonDragAndDropComponents } from "./drag-and-drop/drag-and-drop.declarations"
-import { AppFilepondModule } from "src/app/modules/filepond-module"
+import { AppFilepondModule } from "./filepond.module"
 import { CommonRangeComponent } from "./range/range.component"
 import { CommonDirectivesModule } from "../directives/directives.module"
 import { commonExpanderComponents } from "./expanders/expanders.declarations"
