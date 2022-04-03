@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common"
 import { NgModule } from "@angular/core"
-import { MaterialModule } from "src/app/modules/material.module"
+import { MaterialModule } from "./material.module"
 import { CommonPageHeaderComponent } from "./page-header/page-header.component"
 import { CommonProductCardComponent } from "./product-card/product-card.component"
 import { CommonProductsContainer } from "./products-container/products-container.component"
