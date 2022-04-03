@@ -1,44 +1,11 @@
-import { TokensLocalStorageService } from "../local-storage/tokens.service"
-import {
-  AppJwtPayload,
-  ParseAppTokenErrorsEnum,
-  AppAccessTokenPayload,
-  ParseAccessTokenErrorsEnum
-} from "./tokens.interface"
+import { AppJwtPayload, ParseAppTokenErrorsEnum } from "./tokens.interface"
 
 export class TokensService {
-  private tokensStorage = new TokensLocalStorageService()
-
   isTokenExpired(token: string): boolean {
     const parsedTokenBody = this.parseAppToken(token)
     const { exp: expirationIsoSeconds } = parsedTokenBody
     const currentIsoSeconds = this.getCurrentIsoSeconds()
     return currentIsoSeconds >= expirationIsoSeconds
-  }
-
-  parseAccessToken(token: string): AppAccessTokenPayload {
-    const parsedTokenPayload = this.parseAppToken(token) as AppAccessTokenPayload
-
-    const hasRoles = parsedTokenPayload.roles instanceof Array
-    if (hasRoles === false) {
-      throw new Error(ParseAccessTokenErrorsEnum.InvalidRoles)
-    }
-
-    const invalidTokenType = parsedTokenPayload.tokenType !== "access"
-    if (invalidTokenType) {
-      throw new Error(ParseAccessTokenErrorsEnum.InvalidTokenType)
-    }
-
-    return parsedTokenPayload
-  }
-
-  parseAccessTokenFromStorage(): AppAccessTokenPayload | null {
-    const hasAccessToken = this.tokensStorage.access.isRecordExists()
-    if (hasAccessToken === false) {
-      return null
-    }
-    let accessToken: string = this.tokensStorage.access.tryToGetRecord()
-    return this.parseAccessToken(accessToken)
   }
 
   parseAppToken(token: string): AppJwtPayload {

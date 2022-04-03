@@ -11,10 +11,11 @@ import { Injectable } from "@angular/core"
 import { TokensService } from "../tokens/tokens.service"
 import { UserStatusService } from "../users/user-status.service"
 import { Product } from "../products/products.interface"
+import { AccessTokensService } from "../tokens/access/access-token.service"
 
 @Injectable()
 export class AuthorizationService {
-  private tokensService = new TokensService()
+  private accessTokenService = new AccessTokensService()
   private userStatusService = new UserStatusService()
 
   isAllowed(action: AppAbilityAction, subject: AppAbilitySubject): boolean {
@@ -56,7 +57,7 @@ export class AuthorizationService {
       return { roles: [], userId: "none" }
     }
 
-    const { roles, userId } = this.tokensService.parseAccessTokenFromStorage()!
+    const { roles, userId } = this.accessTokenService.getTokenPayloadFromStorageOrNull()!
     return { roles, userId }
   }
 }
