@@ -21,6 +21,7 @@ import { CommonRangeComponent } from "./range/range.component"
 import { CommonDirectivesModule } from "../directives/directives.module"
 import { commonExpanderComponents } from "./expanders/expanders.declarations"
 import { commonCardsComponents } from "./cards/cards.declaration"
+import { commonButtonsComponents } from "./buttons/buttons.declaration"
 
 const passThroughModules = [
   MaterialModule,
@@ -46,7 +47,8 @@ const passThroughComponents = [
   commonAutocompleteComponents,
   commonDragAndDropComponents,
   commonExpanderComponents,
-  commonCardsComponents
+  commonCardsComponents,
+  commonButtonsComponents
 ]
 
 @NgModule({

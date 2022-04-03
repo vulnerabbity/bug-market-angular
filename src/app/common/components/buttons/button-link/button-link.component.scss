@@ -1,16 +1,19 @@
-$icon-shadow-selected: 2px 2px 10px rgba(black, 0.6);
 $icon-shadow-focus: 2px 2px 10px rgba(black, 0.3);
 
 .icon {
   display: flex;
   align-items: center;
+  height: 100%;
+  width: auto;
+
+  aspect-ratio: 1;
 
   &--big {
     font-size: 3.6rem;
   }
 }
 
-.link {
+.button-link {
   display: flex;
   align-items: center;
 
@@ -31,12 +34,6 @@ $icon-shadow-focus: 2px 2px 10px rgba(black, 0.3);
   margin-left: 0.2rem;
 }
 
-.solid-background {
-  background-color: rgba(black, 0.15);
-}
-
-.shadow-background {
-  &.mat-icon-button {
-    text-shadow: $icon-shadow-selected;
-  }
+.disabled {
+  color: rgba($color: white, $alpha: 0.5);
 }

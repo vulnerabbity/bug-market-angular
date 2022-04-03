@@ -1,17 +1,20 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core"
+import { Component, Input } from "@angular/core"
+import { BaseButtonLinkComponent } from "./base-button-link.component"
 
 @Component({
-  selector: "common-link-component",
-  styleUrls: ["./link.component.scss"],
+  selector: "common-link",
+  styleUrls: ["./button-link.component.scss", "./link.component.scss"],
   template: `
     <a
-      #linkRef
-      class="link"
+      class="button-link"
+      [class.disabled]="disabled"
       [ngClass]="this.getMaterialClass()"
       matTooltipClass="tooltip"
-      [routerLink]="this.link"
+      [routerLink]="getDisableableLink()"
       [routerLinkActive]="getActiveClass()"
+      [routerLinkActiveOptions]="{ exact: true }"
       [matTooltip]="tooltip"
+      [attr.aria-label]="this.label"
     >
       <span class="text-before" *ngIf="text && iconPosition === 'after'">{{ text }}</span>
       <mat-icon
@@ -26,34 +29,9 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core"
     </a>
   `
 })
-export class CommonLinkComponent implements OnInit {
-  @ViewChild("linkRef", { static: true })
-  linkReference!: ElementRef
-
-  @Input()
-  text: string | null = null
-
-  @Input()
-  tooltip = ""
-
+export class CommonLinkComponent extends BaseButtonLinkComponent {
   @Input()
   link: string | null = null
-
-  @Input()
-  label: string | null = null
-
-  @Input()
-  matIconName: string | null = null
-
-  @Input()
-  iconPosition: "before" | "after" = "before"
-
-  @Input()
-  iconSize: "big" | "small" = "big"
-
-  ngOnInit(): void {
-    this.setLabel()
-  }
 
   getActiveClass() {
     if (this.isIconOnly()) {
@@ -62,37 +40,10 @@ export class CommonLinkComponent implements OnInit {
     return "solid-background"
   }
 
-  getMaterialClass() {
-    if (this.isIconOnly()) {
-      return "mat-icon-button"
+  getDisableableLink(): null | string {
+    if (this.disabled) {
+      return null
     }
-    return "mat-button"
-  }
-
-  private isIconOnly(): boolean {
-    return this.hasIcon() && this.hasText() === false
-  }
-
-  private hasIcon(): boolean {
-    return !!this.matIconName
-  }
-
-  private hasText(): boolean {
-    const hasText = !!this.text
-    return hasText
-  }
-
-  private setLabel() {
-    this.addAttributeToLinkIfTruthy("aria-label", this.label)
-  }
-
-  private addAttributeToLinkIfTruthy(key: string, value: unknown) {
-    if (value) {
-      this.addAttributeToLink(key, value)
-    }
-  }
-
-  private addAttributeToLink(key: string, value: unknown) {
-    this.linkReference.nativeElement.setAttribute(key, value)
+    return this.link
   }
 }
