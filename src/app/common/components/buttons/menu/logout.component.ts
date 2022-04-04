@@ -1,13 +1,14 @@
-import { Component } from "@angular/core"
+import { Component, EventEmitter, Output } from "@angular/core"
 import { MatDialog } from "@angular/material/dialog"
 import { firstValueFrom } from "rxjs"
 import { AuthenticationService } from "src/app/features/authentication/authentication.service"
-import { CommonConfirmDialogComponent } from "../../../dialogs/confirm/confirm-dialog.component"
+import { CommonConfirmDialogComponent } from "../../dialogs/confirm/confirm-dialog.component"
 
 @Component({
   selector: "common-logout-menu-button",
+  styleUrls: ["./menu.styles.scss"],
   template: `
-    <button (click)="onLogoutClick()" mat-menu-item>
+    <button class="menu-item" (click)="onLogoutClick()" mat-menu-item>
       <mat-icon>logout</mat-icon>
       <span>Logout</span>
     </button>
@@ -19,10 +20,14 @@ export class CommonLogoutMenuButtonComponent {
     private dialogsManager: MatDialog
   ) {}
 
+  @Output()
+  onLogout = new EventEmitter()
+
   async onLogoutClick() {
     const needLogout = await this.showConfirmationDialog()
     if (needLogout) {
       this.logout()
+      this.onLogout.emit()
     }
   }
 
