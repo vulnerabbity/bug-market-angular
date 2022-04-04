@@ -8,6 +8,7 @@ import { CommonCreateProductLinkComponent } from "./links/product-create.compone
 import { ProductsLinkComponent } from "./links/products.component"
 import { CommonGoToProfileMenuLinkComponent } from "./menu/to-profile.component"
 import { CommonLogoutMenuButtonComponent } from "./menu/logout.component"
+import { CommonLoginOrManageButtonComponent } from "./buttons/login-or-manage.component"
 
 export const commonButtonsComponents = [
   CommonLinkComponent,
@@ -19,5 +20,6 @@ export const commonButtonsComponents = [
   CommonManageAccountButtonComponent,
   CommonHomeLinkComponent,
   CommonGoToProfileMenuLinkComponent,
+  CommonLoginOrManageButtonComponent,
   ProductsLinkComponent
 ]
