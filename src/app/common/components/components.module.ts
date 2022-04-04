@@ -9,8 +9,6 @@ import { RouterModule } from "@angular/router"
 import { CarouselModule } from "ngx-owl-carousel-o"
 import { CommonCarousel } from "./carousel/carousel.component"
 import { CommonDataFieldComponent } from "./data-field/data-field.component"
-import { CommonLoginDialogComponent } from "./dialogs/login/login-dialog.component"
-import { CommonRegisterDialogComponent } from "./dialogs/register/register-dialog.component"
 import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { commonAppFormFieldsComponents } from "./form-fields/form-fields.declarations"
 import { CommonPageHeaderWithTitleComponent } from "./page-header/page-header-with-title.component"
@@ -22,6 +20,7 @@ import { CommonDirectivesModule } from "../directives/directives.module"
 import { commonExpanderComponents } from "./expanders/expanders.declarations"
 import { commonCardsComponents } from "./cards/cards.declaration"
 import { commonButtonsComponents } from "./buttons/buttons.declaration"
+import { commonDialogsComponents } from "./dialogs/dialogs.declaration"
 
 const passThroughModules = [
   MaterialModule,
@@ -40,9 +39,8 @@ const passThroughComponents = [
   CommonProductsContainer,
   CommonCarousel,
   CommonDataFieldComponent,
-  CommonLoginDialogComponent,
-  CommonRegisterDialogComponent,
   CommonRangeComponent,
+  commonDialogsComponents,
   commonAppFormFieldsComponents,
   commonAutocompleteComponents,
   commonDragAndDropComponents,
