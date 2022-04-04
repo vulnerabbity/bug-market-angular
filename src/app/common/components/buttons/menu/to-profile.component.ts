@@ -7,7 +7,7 @@ import { LocalUserService } from "src/app/features/users/local-user.service"
   styleUrls: ["./menu.styles.scss"],
   template: `
     <a [routerLink]="this.linkToProfileOrNull" class="menu-item" mat-menu-item>
-      <mat-icon>face</mat-icon><span>Go to my profile</span>
+      <mat-icon>face</mat-icon><span>My profile</span>
     </a>
   `
 })

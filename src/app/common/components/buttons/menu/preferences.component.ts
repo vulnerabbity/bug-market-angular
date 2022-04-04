@@ -6,7 +6,7 @@ import { AppPathsEnum } from "src/app/app/app-routing.module"
   styleUrls: ["./menu.styles.scss"],
   template: `
     <a [routerLink]="linkToPreferences" class="menu-item" mat-menu-item>
-      <mat-icon>settings</mat-icon><span>Go to preferences</span>
+      <mat-icon>settings</mat-icon><span>Preferences</span>
     </a>
   `
 })
