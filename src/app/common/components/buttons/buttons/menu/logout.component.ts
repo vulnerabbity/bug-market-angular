@@ -34,9 +34,6 @@ export class CommonLogoutMenuButtonComponent {
     const confirmDialogRef = this.dialogsManager.open(CommonConfirmDialogComponent)
     confirmDialogRef.componentInstance.confirmationText = "You sure you want logout?"
 
-    return await new Promise(async resolve => {
-      const result = await firstValueFrom<boolean>(confirmDialogRef.afterClosed())
-      resolve(result)
-    })
+    return await firstValueFrom<boolean>(confirmDialogRef.afterClosed())
   }
 }
