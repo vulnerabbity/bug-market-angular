@@ -9,6 +9,8 @@ export interface UpdateChangedImagesOnlyInput {
   newImages: Blob[]
 }
 
+type ImageAction = "nothing" | "update" | "delete" | "create"
+
 @Injectable({
   providedIn: "root"
 })
@@ -29,44 +31,45 @@ export class UpdateProductService {
     const { newImages, oldImages, product } = input
     const { id: productId } = product
 
-    const changedImagesMask = this.getChangedImagesMask(oldImages, newImages)
+    const imagesLength = Math.max(newImages.length, oldImages.length)
 
-    for (let imageIndex = 0; imageIndex < changedImagesMask.length; imageIndex++) {
+    for (let imageIndex = 0; imageIndex < imagesLength; imageIndex++) {
       const imageId = product.imagesIds[imageIndex]
-
       const newImage = newImages[imageIndex]
       const oldImage = oldImages[imageIndex]
-      const hasNewImage = newImage !== undefined
-      const hasOldImage = oldImage !== undefined
 
-      const needDeleteImage = !hasNewImage
-      const needCreateImage = hasNewImage && !hasOldImage
-      const needUpdateImage = hasNewImage && hasOldImage
+      const actionWithImage = this.getActionWithImages(oldImage, newImage)
 
-      if (needDeleteImage) {
+      if (actionWithImage === "delete") {
         await this.productsImagesService.deleteImageAsync({ imageId, productId })
-      } else if (needCreateImage) {
+      } else if (actionWithImage === "create") {
         await this.productsImagesService.sendImageAsync({ image: newImage, productId })
-      } else if (needUpdateImage) {
+      } else if (actionWithImage === "update") {
         await this.productsImagesService.updateImageAsync({ image: newImage, imageId, productId })
-      } else {
-        console.log("nothing need")
       }
     }
   }
 
-  private getChangedImagesMask(oldImages: Blob[], newImages: Blob[]): boolean[] {
-    const result = []
-    const largestImagesLength = Math.max(oldImages.length, newImages.length)
+  private getActionWithImages(oldImage: Blob | undefined, newImage: Blob | undefined): ImageAction {
+    const hasNewImage = newImage !== undefined
+    const hasOldImage = oldImage !== undefined
+    const hasBothImages = hasNewImage && hasOldImage
+    const hasDifferentImages = hasBothImages && this.isBlobsSameFast(oldImage, newImage) === false
 
-    for (let imageIndex = 0; imageIndex < largestImagesLength; imageIndex++) {
-      const oldImage = oldImages[imageIndex]
-      const newImage = newImages[imageIndex]
+    const needDeleteImage = !hasNewImage
+    const needCreateImage = hasNewImage && !hasOldImage
+    const needUpdateImage = hasDifferentImages
 
-      result.push(this.isNewImage(oldImage, newImage))
+    if (needCreateImage) {
+      return "create"
     }
-
-    return result
+    if (needDeleteImage) {
+      return "delete"
+    }
+    if (needUpdateImage) {
+      return "update"
+    }
+    return "nothing"
   }
 
   private isNewImage(
