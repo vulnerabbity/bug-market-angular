@@ -21,6 +21,7 @@ import { commonExpanderComponents } from "./expanders/expanders.declarations"
 import { commonCardsComponents } from "./cards/cards.declaration"
 import { commonButtonsComponents } from "./buttons/buttons.declaration"
 import { commonDialogsComponents } from "./dialogs/dialogs.declaration"
+import { commonTogglersComponents } from "./togglers/togglers.declaration"
 
 const passThroughModules = [
   MaterialModule,
@@ -46,7 +47,8 @@ const passThroughComponents = [
   commonDragAndDropComponents,
   commonExpanderComponents,
   commonCardsComponents,
-  commonButtonsComponents
+  commonButtonsComponents,
+  commonTogglersComponents
 ]
 
 @NgModule({
