@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core"
 import { TokensLocalStorageService } from "../local-storage/tokens.service"
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class UserStatusService {
   private tokensStorage = new TokensLocalStorageService()
 

@@ -24,12 +24,15 @@ interface TokenPair {
   providedIn: "root"
 })
 export class AuthenticationService {
+  private readonly accessTokenStorage = new AccessTokenLocalStorageService()
+  private readonly refreshTokenStorage = new RefreshTokenLocalStorageService()
+
   constructor(private loginWithUsernameQuery: LoginWithUsernameGQL) {}
 
   async loginWithUsername(variables: LoginWithUsernameQueryVariables): Promise<LoginStatus> {
     try {
       const tokens = await firstValueFrom(this.sendCredentials$(variables))
-      this.saveTokensLocally(tokens)
+      this.saveTokens(tokens)
       return "success"
     } catch (err: any) {
       if (err.message === BackendAuthenticationErrors.NotFound) {
@@ -42,11 +45,22 @@ export class AuthenticationService {
     }
   }
 
-  private saveTokensLocally(tokens: TokenPair) {
-    const accessTokenStorage = new AccessTokenLocalStorageService()
-    const refreshTokenStorage = new RefreshTokenLocalStorageService()
-    accessTokenStorage.saveRecord(tokens.access_token)
-    refreshTokenStorage.saveRecord(tokens.refresh_token)
+  logout(): void {
+    this.logoutLocally()
+  }
+
+  private logoutLocally() {
+    this.deleteTokens()
+  }
+
+  private saveTokens(tokens: TokenPair) {
+    this.accessTokenStorage.saveRecord(tokens.access_token)
+    this.refreshTokenStorage.saveRecord(tokens.refresh_token)
+  }
+
+  private deleteTokens() {
+    this.accessTokenStorage.deleteRecord()
+    this.refreshTokenStorage.deleteRecord()
   }
 
   private sendCredentials$(variables: LoginWithUsernameQueryVariables): Observable<LoginResponse> {

@@ -1,8 +1,5 @@
-import {
-  AppAccessTokenPayload,
-  AppRefreshTokenPayload,
-  ParseAppTokenErrorsEnum
-} from "./tokens.interface"
+import { AppAccessTokenPayload } from "./access/access-token.interface"
+import { AppRefreshTokenPayload, ParseAppTokenErrorsEnum } from "./tokens.interface"
 import { TokensService } from "./tokens.service"
 
 const appAccessTokenPayload: AppAccessTokenPayload = {
@@ -11,14 +8,6 @@ const appAccessTokenPayload: AppAccessTokenPayload = {
   roles: ["seller"],
   iat: 1648225584,
   exp: 9999999999
-}
-
-const appRefreshTokenPayload: AppRefreshTokenPayload = {
-  tokenType: "refresh",
-  userId: "f981cfcf-cce6-4c84-a1a8-57952e0c6603",
-  sessionId: "b155eb56-2d17-429d-9c0f-b6c9eb8e06c9",
-  iat: 1648225584,
-  exp: 1679783184
 }
 
 const emptyToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.Et9HFtf9R3GEMA0IICOfFMVXY7kkTX1wr4qCyhIf58U`
@@ -74,37 +63,6 @@ describe("TokensService", async () => {
 
       expect(exp).toEqual(appAccessTokenPayload.exp)
       expect(iat).toEqual(appAccessTokenPayload.iat)
-    })
-  })
-
-  describe("isTokenExpired method", () => {
-    it("should return true if token expired", () => {
-      const isExpired = service.isTokenExpired(expiredAccessToken)
-      expect(isExpired).toBe(true)
-    })
-
-    it("should return false if token NOT expired", () => {
-      const isExpired = service.isTokenExpired(appAccessToken)
-      expect(isExpired).toBe(false)
-    })
-  })
-
-  describe("parseAccessToken method", () => {
-    it("should parse valid access token", () => {
-      const { roles, tokenType } = service.parseAccessToken(appAccessToken)
-      expect(roles).toEqual(appAccessTokenPayload.roles)
-      expect(tokenType).toBe("access")
-    })
-
-    it("should throw error for invalid access token", () => {
-      let hasError = false
-      try {
-        service.parseAccessToken(appRefreshToken)
-      } catch {
-        hasError = true
-      }
-
-      expect(hasError).toBe(true)
     })
   })
 })

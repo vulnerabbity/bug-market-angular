@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core"
-import { AppCommonModule } from "src/app/common/modules/common.module"
+import { AppCommonModule } from "src/app/common/common.module"
 import { ProductsModule } from "src/app/features/products/products.module"
 import { UsersService } from "src/app/features/users/users.service"
 import { ConcreteProductPageAuthorComponent } from "./author/author.component"

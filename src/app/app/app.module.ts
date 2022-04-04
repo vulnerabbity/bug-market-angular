@@ -1,12 +1,12 @@
 import { NgModule } from "@angular/core"
 import { BrowserModule } from "@angular/platform-browser"
-import { AppCommonModule } from "../common/modules/common.module"
-import { GraphqlModule } from "../modules/graphql.module"
+import { GraphqlModule } from "./graphql.module"
 import { AppRoutingModule } from "./app-routing.module"
 import { AppComponent } from "./app.component"
 import { AppNavbarComponent } from "./navbar/navbar.component"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { AuthenticationInterceptorProvider } from "../common/interceptors/authentication.interceptor"
+import { AppCommonModule } from "../common/common.module"
 
 const imports = [
   BrowserModule,

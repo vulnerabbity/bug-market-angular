@@ -26,6 +26,10 @@ export class LocalStorageService<T> {
     return true
   }
 
+  deleteRecord(): void {
+    localStorage.removeItem(this.keyName)
+  }
+
   protected toJson(value: any) {
     return JSON.stringify(value)
   }

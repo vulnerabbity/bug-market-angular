@@ -1,50 +1,14 @@
 <mat-toolbar color="primary" class="navbar">
-  <a mat-button routerLink="/" aria-label="home">
-    <mat-icon>home</mat-icon>
-    Bug market
-  </a>
+  <common-home-link></common-home-link>
   <nav aria-label="left navigation">
     <ul class="list list-horizontal">
-      <li *ngFor="let location of this.leftLocations" class="link-containter">
-        <a
-          class="navbar__button"
-          mat-button
-          [routerLink]="location.path"
-          routerLinkActive="selected-button"
-        >
-          {{ location.name }}
-        </a>
+      <li class="link-containter">
+        <common-products-link></common-products-link>
       </li>
     </ul>
   </nav>
   <span class="navbar__spacer" role="none"></span>
   <nav aria-label="right navigation">
-    <ul class="list list-horizontal">
-      <li class="link-container">
-        <a
-          class="icon-link"
-          [routerLink]="this.paths.Preferences"
-          matTooltip="Preferences"
-          matTooltipClass="tooltip"
-          aria-label="Preferences"
-        >
-          <mat-icon routerLinkActive="selected-icon" class="icon">settings</mat-icon>
-        </a>
-      </li>
-
-      <li class="link-container">
-        <button
-          class="icon-link"
-          mat-button
-          matTooltip="Login"
-          matTooltipClass="tooltip"
-          aria-label="Login"
-          (click)="onLoginClick()"
-        >
-          <!-- TODO: Place avatar if logged in -->
-          <mat-icon class="icon">account_circle</mat-icon>
-        </button>
-      </li>
-    </ul>
+    <common-login-or-manage-button></common-login-or-manage-button>
   </nav>
 </mat-toolbar>

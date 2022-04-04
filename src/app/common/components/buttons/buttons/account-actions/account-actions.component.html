@@ -1,0 +1,8 @@
+<button class="menu-toggler" [mat-menu-trigger-for]="menu" mat-icon-button>
+  <img class="menu-toggler__image" [src]="this.getAvatarSource()" />
+</button>
+<mat-menu #menu="matMenu">
+  <common-go-to-profile-menu-link></common-go-to-profile-menu-link>
+  <common-go-to-preferences-menu-link></common-go-to-preferences-menu-link>
+  <common-logout-menu-button (onLogout)="this.onLogoutClick()"></common-logout-menu-button>
+</mat-menu>
