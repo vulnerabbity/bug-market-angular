@@ -9,6 +9,9 @@ export class CommonConfirmDialogComponent {
   @Input()
   confirmationText = "Are you sure?"
 
+  @Input()
+  hint = "This action cannot be undone"
+
   constructor(private currentDialogRef: MatDialogRef<CommonConfirmDialogComponent>) {
     this.mapCloseResultToBoolean()
   }
