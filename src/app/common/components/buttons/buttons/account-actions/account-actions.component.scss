@@ -1,0 +1,18 @@
+.menu-toggler {
+  display: block;
+  height: 3.6rem;
+  width: 3.6rem;
+
+  &__image {
+    display: block;
+
+    /* Square */
+    aspect-ratio: 1;
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+
+    /* Round */
+    border-radius: 50%;
+  }
+}
