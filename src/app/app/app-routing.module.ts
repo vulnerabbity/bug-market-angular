@@ -12,10 +12,10 @@ import { UpdateProductPageComponent } from "../pages/manage-product/update-produ
 export enum AppPathsEnum {
   Products = "products",
   Preferences = "preferences",
-  ConcreteProduct = "product/:id",
-  UserPage = "user/:id",
+  ConcreteProduct = "product",
+  UserPage = "user",
   CreateProduct = "create-product",
-  UpdateProduct = "update-product/:id"
+  UpdateProduct = "update-product"
 }
 
 const homeRoute: Route = {
@@ -40,7 +40,7 @@ const preferencesRoute: Route = {
 }
 
 const concreteProductRoute: Route = {
-  path: AppPathsEnum.ConcreteProduct,
+  path: `${AppPathsEnum.ConcreteProduct}/:id`,
   loadChildren: () =>
     import("../pages/concrete-product/concrete-product.module").then(
       m => m.ConcreteProductPageModule
@@ -50,7 +50,7 @@ const concreteProductRoute: Route = {
 }
 
 const userPageRoute: Route = {
-  path: AppPathsEnum.UserPage,
+  path: `${AppPathsEnum.UserPage}/:id`,
   loadChildren: () => import("../pages/user/user-page.module").then(m => m.UserPageModule),
   component: UserPageComponent
 }
@@ -65,7 +65,7 @@ const createProductRoute: Route = {
 }
 
 const updateProductRoute: Route = {
-  path: AppPathsEnum.UpdateProduct,
+  path: `${AppPathsEnum.UpdateProduct}/:id`,
   loadChildren: () =>
     import("../pages/manage-product/update-product/update-product.module").then(
       m => m.UpdateProductPageModule
