@@ -11,7 +11,11 @@ interface ToggleEvent {
 @Component({
   selector: "common-theme-toggler",
   template: `
-    <mat-slide-toggle [checked]="isTogglerChecked()" (change)="this.onToggle($event)">
+    <mat-slide-toggle
+      [checked]="isTogglerChecked()"
+      (change)="this.onToggle($event)"
+      aria-label="theme-toggler"
+    >
     </mat-slide-toggle>
     <mat-icon>{{ getMaterialIconName() }}</mat-icon>
     <style>
