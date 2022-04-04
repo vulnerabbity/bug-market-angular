@@ -1,8 +1,11 @@
+import { Injectable } from "@angular/core"
 import { AccessTokenLocalStorageService } from "../../local-storage/access-token.service"
-import { AppJwtPayload, ParseAppTokenErrorsEnum } from "../tokens.interface"
 import { TokensService } from "../tokens.service"
 import { AppAccessTokenPayload, ParseAccessTokenErrorsEnum } from "./access-token.interface"
 
+@Injectable({
+  providedIn: "root"
+})
 export class AccessTokensService {
   private tokensService = new TokensService()
   private accessTokenStorage = new AccessTokenLocalStorageService()
