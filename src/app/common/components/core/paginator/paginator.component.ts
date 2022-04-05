@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core"
 })
 export class CommonPaginatorComponent {
   @Input()
-  totalItems = 100
+  totalItems = 0
 
   @Input()
   itemsPerPage = 10
@@ -19,7 +19,7 @@ export class CommonPaginatorComponent {
   pagesRange = 2
 
   get lastPage(): number {
-    return Math.floor(this.totalItems / this.itemsPerPage)
+    return Math.ceil(this.totalItems / this.itemsPerPage)
   }
 
   @Output("onPageChange")
