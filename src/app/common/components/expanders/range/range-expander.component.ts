@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core"
 import { MatExpansionPanel } from "@angular/material/expansion"
-import { RangeModel } from "../../range/range.component"
+import { RangeModel } from "../../core/range/range.component"
 
 @Component({
   selector: "common-range-expander[model]",

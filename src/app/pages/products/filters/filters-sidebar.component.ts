@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output, ViewChild } from "@angular/core"
 import { MatDrawer } from "@angular/material/sidenav"
 import { initProductCategoryAutocompleteModel } from "src/app/common/components/autocomplete/category.component"
-import { RangeModel } from "src/app/common/components/range/range.component"
+import { RangeModel } from "src/app/common/components/core/range/range.component"
 import { ProductCategory } from "src/app/features/categories/categories.interface"
 import { SortingOrder as SortingOrderEnum, ProductFilters } from "src/generated-gql-types"
 
