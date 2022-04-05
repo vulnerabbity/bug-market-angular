@@ -1,0 +1,30 @@
+<div>
+  <button
+    [disabled]="isPreviousLocked()"
+    color="primary"
+    mat-raised-button
+    (click)="onPreviousClick()"
+  >
+    <mat-icon>navigate_before</mat-icon>
+  </button>
+
+  <ng-template [ngFor] let-beforePage [ngForOf]="nearbyPreviousPages">
+    <button mat-button (click)="changePage(beforePage)">
+      {{ beforePage }}
+    </button>
+  </ng-template>
+
+  <button mat-raised-button color="primary">
+    {{ currentPage }}
+  </button>
+
+  <ng-template [ngFor] let-nextPage [ngForOf]="nearbyNextPages">
+    <button mat-button (click)="changePage(nextPage)">
+      {{ nextPage }}
+    </button>
+  </ng-template>
+
+  <button [disabled]="isNextLocked()" mat-raised-button color="primary" (click)="onNextClick()">
+    <mat-icon>navigate_next</mat-icon>
+  </button>
+</div>
