@@ -4,14 +4,12 @@ import { PreloadModuleOnDemand } from "../common/routing/preload-on-demand.strat
 import { ConcreteProductPageComponent } from "../pages/concrete-product/concrete-product.component"
 import { CreateProductPageComponent } from "../pages/manage-product/create-product/create-product.component"
 import { HomePageComponent } from "../pages/home/home-page.component"
-import { PreferencesPageComponent } from "../pages/preferences/preferences-page.component"
 import { ProductsPageComponent } from "../pages/products/products-page.component"
 import { UserPageComponent } from "../pages/user/user-page.component"
 import { UpdateProductPageComponent } from "../pages/manage-product/update-product/update-product.component"
 
 export enum AppPathsEnum {
   Products = "products",
-  Preferences = "preferences",
   ConcreteProduct = "product",
   UserPage = "user",
   CreateProduct = "create-product",
@@ -30,13 +28,6 @@ const productsRoute: Route = {
     import("../pages/products/products-page.module").then(m => m.ProductsPageModule),
   component: ProductsPageComponent,
   data: { preload: true }
-}
-
-const preferencesRoute: Route = {
-  path: AppPathsEnum.Preferences,
-  loadChildren: () =>
-    import("../pages/preferences/preferences.module").then(m => m.PreferencesPageModule),
-  component: PreferencesPageComponent
 }
 
 const concreteProductRoute: Route = {
@@ -76,7 +67,6 @@ const updateProductRoute: Route = {
 const routes: Route[] = [
   homeRoute,
   productsRoute,
-  preferencesRoute,
   concreteProductRoute,
   userPageRoute,
   createProductRoute,

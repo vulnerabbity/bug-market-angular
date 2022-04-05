@@ -1,20 +1,30 @@
 <products-navbar></products-navbar>
-<product-page-filters-sidebar (onApply)="onFiltersApply($event)">
+<product-page-filters-sidebar #sidebar (onApply)="onFiltersApply($event)">
   <div class="container">
-    <products-page-search class="search" (onSearch)="onSearch($event)"></products-page-search>
+    <div class="search-container">
+      <button
+        class="filters-toggler"
+        mat-raised-button
+        color="accent"
+        (click)="sidebar.toggleSidebar()"
+      >
+        <!-- Burger icon -->
+        <mat-icon>dehaze</mat-icon>
+        <span>Filters</span>
+      </button>
+      <products-page-search class="search" (onSearch)="onSearch($event)"></products-page-search>
+    </div>
 
     <common-products-container
       class="card-container"
       [products]="(this.products$ | async) ?? []"
     ></common-products-container>
-
-    <mat-paginator
-      class="paginator"
-      [length]="this.totalProducts"
-      [pageSize]="this.pageSize"
-      [pageSizeOptions]="pageSizeOptions"
-      (page)="this.onPaginationUpdate($event)"
-    >
-    </mat-paginator>
   </div>
+  <common-paginator
+    class="paginator"
+    [totalItems]="this.totalProducts"
+    [itemsPerPage]="this.pageSize"
+    [currentPage]="this.pageIndex + 1"
+    (onPageChange)="onPaginationUpdate($event)"
+  ></common-paginator>
 </product-page-filters-sidebar>

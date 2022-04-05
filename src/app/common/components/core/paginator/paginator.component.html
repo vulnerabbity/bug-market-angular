@@ -1,0 +1,21 @@
+<div>
+  <button
+    [disabled]="isPreviousLocked()"
+    color="primary"
+    mat-raised-button
+    (click)="onPreviousClick()"
+  >
+    <mat-icon>navigate_before</mat-icon>
+  </button>
+
+  <paginator-page-button
+    *ngFor="let page of getPagesSlice()"
+    [pageNumber]="page"
+    [isActive]="this.isPageActive(page)"
+    (onClick)="this.changePage(page)"
+  ></paginator-page-button>
+
+  <button [disabled]="isNextLocked()" mat-raised-button color="primary" (click)="onNextClick()">
+    <mat-icon>navigate_next</mat-icon>
+  </button>
+</div>

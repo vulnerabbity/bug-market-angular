@@ -3,29 +3,30 @@
   <h2 class="dialog-title" mat-dialog-title>Login</h2>
   <div class="forms-container">
     <mat-error *ngIf="requestError">{{ requestError }}</mat-error>
-    <form>
-      <common-username-form-field [(model)]="this.usernameField"></common-username-form-field>
-      <common-password-form-field [(model)]="this.passwordField"></common-password-form-field>
-    </form>
+    <form (submit)="onLogin()">
+      <common-username-form-field [(model)]="usernameField"></common-username-form-field>
+      <common-password-form-field [(model)]="passwordField"></common-password-form-field>
 
-    <div class="bottom-actions">
-      <button
-        class="bottom-action register-button"
-        (click)="this.showRegisterDialogInstead()"
-        mat-button
-      >
-        Create account
-      </button>
-      <button
-        class="bottom-action"
-        (click)="onLogin()"
-        [disabled]="this.isFormValid() === false && this.loading === false"
-        mat-raised-button
-        color="primary"
-      >
-        Login
-      </button>
-    </div>
+      <div class="bottom-actions">
+        <button
+          class="bottom-action register-button"
+          (click)="this.showRegisterDialogInstead()"
+          mat-button
+          type="button"
+        >
+          Create account
+        </button>
+        <button
+          class="bottom-action"
+          [disabled]="this.isFormValid() === false && this.loading === false"
+          mat-raised-button
+          color="primary"
+          type="submit"
+        >
+          Login
+        </button>
+      </div>
+    </form>
   </div>
 
   <button
