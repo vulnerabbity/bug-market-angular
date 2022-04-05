@@ -33,7 +33,7 @@ $inner-shadow-top: 0 8px 10px -6px rgba(black, 0.3) inset;
     text-align: center;
   }
 
-  &__link-products {
+  &__big-link {
     display: block;
     width: fit-content;
     height: fit-content;
@@ -62,7 +62,7 @@ $inner-shadow-top: 0 8px 10px -6px rgba(black, 0.3) inset;
   }
 }
 
-.link-products__text {
+.big-link__text {
   display: block;
   font-size: min(5rem, 5vw);
 }
