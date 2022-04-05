@@ -42,6 +42,10 @@ export class ProductPageFiltersSidebar {
     this.onApply.next(filters)
   }
 
+  toggleSidebar() {
+    this.drawer.toggle()
+  }
+
   private getCurrentFilters(): ProductSidebarFilters {
     const filters: ProductSidebarFilters = {
       category: this.category.selectedCategory,
