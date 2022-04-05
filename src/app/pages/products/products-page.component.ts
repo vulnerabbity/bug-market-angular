@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
-import { PageEvent } from "@angular/material/paginator"
 import { BehaviorSubject } from "rxjs"
 import { ShortProduct } from "src/app/features/products/products.interface"
 import { ProductsService } from "src/app/features/products/products.service"
@@ -12,9 +11,8 @@ import { ProductSidebarFilters } from "./filters/filters-sidebar.component"
 })
 export class ProductsPageComponent implements OnInit, OnDestroy {
   pageIndex = 0
-  pageSize = 25
+  pageSize = 7
   totalProducts = 0
-  pageSizeOptions = [10, 25, 50]
 
   products$ = new BehaviorSubject<ShortProduct[]>([])
 
@@ -36,12 +34,12 @@ export class ProductsPageComponent implements OnInit, OnDestroy {
 
   onSearch(searchText: string) {
     this.searchText = searchText
+    this.pageIndex = 0
     this.loadProducts()
   }
 
-  onPaginationUpdate({ pageSize, pageIndex }: PageEvent) {
-    this.pageSize = pageSize
-    this.pageIndex = pageIndex
+  onPaginationUpdate(page: number) {
+    this.pageIndex = page - 1
     this.loadProducts()
   }
 
