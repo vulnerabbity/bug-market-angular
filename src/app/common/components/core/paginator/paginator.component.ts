@@ -18,6 +18,10 @@ export class CommonPaginatorComponent {
   @Input()
   pagesRange = 2
 
+  get lastPage(): number {
+    return Math.floor(this.totalItems / this.itemsPerPage)
+  }
+
   @Output("onPageChange")
   pageEmitter = new EventEmitter<number>()
 
@@ -37,38 +41,67 @@ export class CommonPaginatorComponent {
     this.changePage(this.currentPage + 1)
   }
 
+  isPageActive(pageCandidate: number) {
+    return this.currentPage === pageCandidate
+  }
+
   changePage(page: number) {
     this.currentPage = page
     this.pageEmitter.next(this.currentPage)
   }
 
-  get nearbyPreviousPages(): number[] {
-    const range = this.pagesRange
+  getPagesSlice() {
+    let previousPages = this.getPreviousPagesWithExtra()
+    let nextPages = this.getNextPagesWithExtra()
+    const previousPagesLength = previousPages.length
+    const nextPagesLength = nextPages.length
 
-    const pagesBefore = this.getHowManyPagesBefore()
-    const nearbyPagesNumber = Math.min(range, pagesBefore)
+    // calculating to always have same pagination buttons number
+    const lastIndexOfNextPages =
+      this.pagesRange * 2 - Math.min(previousPagesLength, this.pagesRange)
+    nextPages = nextPages.slice(0, lastIndexOfNextPages)
 
-    return this.getNearbyPreviousPages(nearbyPagesNumber)
+    const lastIndexOfPreviousPages =
+      this.pagesRange * 2 - Math.min(nextPagesLength, this.pagesRange)
+    previousPages = previousPages.reverse().slice(0, lastIndexOfPreviousPages).reverse()
+
+    let pages = [...previousPages, this.currentPage, ...nextPages]
+
+    return pages
   }
 
-  get nearbyNextPages(): number[] {
-    const range = this.pagesRange
-    const pagesAfter = this.getHowManyPagesAfter()
-    const pagesToDisplay = Math.min(pagesAfter, range)
+  private getPreviousPagesWithExtra(): number[] {
+    const pages = []
+    const current = this.currentPage
+    const start = current - this.pagesRange * 2
 
-    return this.getNearbyNextPages(pagesToDisplay)
+    for (let page = start; page < current; page++) {
+      if (this.isPageValid(page)) {
+        pages.push(page)
+      }
+    }
+
+    return pages
   }
 
-  private getHowManyPagesBefore(): number {
-    return this.currentPage - 1
+  private getNextPagesWithExtra(): number[] {
+    const pages = []
+    const current = this.currentPage
+    const start = current + this.pagesRange * 2
+
+    for (let page = start; page > current; page--) {
+      if (this.isPageValid(page)) {
+        pages.unshift(page)
+      }
+    }
+
+    return pages
   }
 
-  private getHowManyPagesAfter(): number {
-    return this.getTotalPages() - this.currentPage
-  }
-
-  private getTotalPages() {
-    return this.totalItems / this.itemsPerPage
+  private isPageValid(pageCandidate: number): boolean {
+    const isPositive = pageCandidate > 0
+    const lessOrEqualLast = pageCandidate <= this.lastPage
+    return isPositive && lessOrEqualLast
   }
 
   private hasPreviousPage(): boolean {
@@ -78,31 +111,5 @@ export class CommonPaginatorComponent {
   private hasNextPage(): boolean {
     const howManySkipped = this.currentPage * this.itemsPerPage
     return howManySkipped < this.totalItems
-  }
-
-  private getNearbyPreviousPages(limit: number): number[] {
-    const currentPage = this.currentPage
-
-    const pages = []
-    let pageToAdd = currentPage
-
-    for (let pageIndex = 0; pageIndex < limit; pageIndex++) {
-      pageToAdd -= 1
-      pages.unshift(pageToAdd)
-    }
-
-    return pages
-  }
-
-  private getNearbyNextPages(limit: number): number[] {
-    const currentPage = this.currentPage
-
-    const pages = []
-    let pageToAdd = currentPage
-    for (let pageIndex = 0; pageIndex < limit; pageIndex++) {
-      pageToAdd += 1
-      pages.push(pageToAdd)
-    }
-    return pages
   }
 }
