@@ -15,13 +15,7 @@ import { commonCardsComponents } from "./cards/cards.declaration"
 import { commonButtonsComponents } from "./buttons/buttons.declaration"
 import { commonDialogsComponents } from "./dialogs/dialogs.declaration"
 import { commonTogglersComponents } from "./togglers/togglers.declaration"
-import { CommonPageHeaderComponent } from "./core/page-header/page-header.component"
-import { CommonPageHeaderWithTitleComponent } from "./core/page-header/page-header-with-title.component"
-import { CommonProductCardComponent } from "./core/product-card/product-card.component"
-import { CommonThemedDiv } from "./core/themed-div/themed-div.component"
-import { CommonCarousel } from "./core/carousel/carousel.component"
-import { CommonDataFieldComponent } from "./core/data-field/data-field.component"
-import { CommonRangeComponent } from "./core/range/range.component"
+import { commonCoreComponents } from "./core/core.declarations"
 
 const passThroughModules = [
   MaterialModule,
@@ -32,15 +26,7 @@ const passThroughModules = [
 ]
 
 const passThroughComponents = [
-  CommonPageHeaderComponent,
-  CommonPageHeaderWithTitleComponent,
-  CommonProductCardComponent,
-  CommonThemedDiv,
-  CommonProductCardComponent,
-  CommonProductsContainer,
-  CommonCarousel,
-  CommonDataFieldComponent,
-  CommonRangeComponent,
+  commonCoreComponents,
   commonDialogsComponents,
   commonAppFormFieldsComponents,
   commonAutocompleteComponents,
