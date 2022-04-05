@@ -11,7 +11,7 @@ import { ProductSidebarFilters } from "./filters/filters-sidebar.component"
 })
 export class ProductsPageComponent implements OnInit, OnDestroy {
   pageIndex = 0
-  pageSize = 7
+  pageSize = 24
   totalProducts = 0
 
   products$ = new BehaviorSubject<ShortProduct[]>([])
