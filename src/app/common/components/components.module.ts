@@ -1,7 +1,6 @@
 import { CommonModule } from "@angular/common"
 import { NgModule } from "@angular/core"
 import { MaterialModule } from "./material.module"
-import { CommonProductsContainer } from "./products-container/products-container.component"
 import { RouterModule } from "@angular/router"
 import { CarouselModule } from "ngx-owl-carousel-o"
 import { FormsModule, ReactiveFormsModule } from "@angular/forms"
