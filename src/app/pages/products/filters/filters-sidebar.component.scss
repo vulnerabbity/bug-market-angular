@@ -1,10 +1,13 @@
+@import "src/app/app/app.component.scss";
+$component-height: calc($content-height - 6rem);
+
 :host {
   display: block;
-  height: 100%;
+  min-height: $component-height;
 }
 
 .sidebar {
-  height: 100%;
+  min-height: $component-height;
 
   &__drawer {
     width: min(35rem, 80%);
