@@ -16,4 +16,11 @@ export class CommonImagesService {
     }
     return result
   }
+
+  /**
+   * Compares two blobs by size
+   */
+  isBlobsSameFast(oldBlob: Blob, newBlob: Blob): boolean {
+    return oldBlob.size == newBlob.size
+  }
 }
