@@ -10,14 +10,17 @@
 }
 
 :host ::ng-deep .filepond--item {
-  // 2 columns
-  width: calc(50% - 0.6em);
-  margin: 0 0.25em !important;
-
   // 1 columns on small screen
-  @media (max-width: 50rem) {
-    width: calc(100% - 2em);
-    margin: 0 0.5em !important;
+  width: calc(100% - 0.5em);
+
+  // 2 columns
+  @media (min-width: 50rem) {
+    width: calc(50% - 0.5em);
+  }
+
+  // 3 columns
+  @media (min-width: 80rem) {
+    width: calc(33.33% - 0.5em);
   }
 
   margin-bottom: 1% !important;
