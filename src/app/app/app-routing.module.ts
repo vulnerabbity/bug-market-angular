@@ -50,7 +50,7 @@ const userPageRoute: Route = {
 }
 
 const editUserPageRoute: Route = {
-  path: AppPathsEnum.EditUserPage,
+  path: `${AppPathsEnum.EditUserPage}/:id`,
   loadChildren: () =>
     import("../pages/user/edit-user/edit-user.module").then(m => m.EditUserModule),
   component: EditUserPage
