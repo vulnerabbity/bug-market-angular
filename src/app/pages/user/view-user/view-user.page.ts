@@ -71,7 +71,6 @@ export class ViewUserPage implements OnInit {
     this.usersService.loadUserWithProducts({ id }).subscribe(loadedUser => {
       this.user = loadedUser
       this.isLoaded = true
-      console.log(loadedUser)
     })
   }
 }
