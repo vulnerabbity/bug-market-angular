@@ -34,6 +34,6 @@ export class ConcreteProductPageAuthorComponent implements OnInit {
   }
 
   private async loadUser(id: string): Promise<User> {
-    return firstValueFrom(this.usersService.loadUser({ id }))
+    return await this.usersService.loadUserAsync({ id })
   }
 }

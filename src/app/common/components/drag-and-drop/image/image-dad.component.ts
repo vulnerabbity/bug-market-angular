@@ -43,7 +43,6 @@ export class CommonImageDragAndDrop {
       maxFileSize: this.maxFileSize,
 
       // style
-      stylePanelLayout: "compact",
       imagePreviewHeight: 300,
       allowImagePreview: true,
       labelIdle: this.dropLabel

@@ -3,6 +3,7 @@
   flex-flow: column;
 
   width: 100%;
+  height: inherit;
 
   // disabling white line after component
   line-height: 0;
@@ -21,6 +22,7 @@
 
 .div-container {
   display: block;
+  height: inherit;
 
   flex-grow: 1;
 

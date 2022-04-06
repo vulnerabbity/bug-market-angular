@@ -36,12 +36,10 @@ export class CommonManageAccountButtonComponent implements OnInit {
     this.user = undefined
   }
 
-  private loadUserIfAuthenticated() {
+  private async loadUserIfAuthenticated() {
     if (!this.userId) {
       return
     }
-    this.userService.loadUser({ id: this.userId }).subscribe(user => {
-      this.user = user
-    })
+    this.user = await this.userService.loadUserAsync({ id: this.userId })
   }
 }

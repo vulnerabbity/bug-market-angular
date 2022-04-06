@@ -1,5 +1,6 @@
 import { Ability, InferSubjects } from "@casl/ability"
 import { Product } from "../products/products.interface"
+import { User } from "../users/users.interface"
 
 export type UserRole = "seller" | "admin" | "super admin"
 
@@ -9,7 +10,8 @@ export class ItemWithUserId {
   userId!: string
 }
 
-export type AppAbilitySubject = InferSubjects<typeof Product> | "all"
+export type Subject = typeof Product | typeof User
+export type AppAbilitySubject = InferSubjects<Subject> | "all"
 
 export type AppAbility = Ability<[AppAbilityAction, AppAbilitySubject]>
 

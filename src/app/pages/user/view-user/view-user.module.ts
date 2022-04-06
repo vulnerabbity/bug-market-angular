@@ -1,10 +1,10 @@
 import { NgModule } from "@angular/core"
 import { AppCommonModule } from "src/app/common/common.module"
 import { UsersModule } from "src/app/features/users/users.module"
-import { UserPageComponent } from "./user-page.component"
+import { ViewUserPage } from "./view-user.page"
 
 @NgModule({
-  declarations: [UserPageComponent],
+  declarations: [ViewUserPage],
   imports: [AppCommonModule, UsersModule]
 })
-export class UserPageModule {}
+export class ViewUserPageModule {}

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core"
 import { ActivatedRoute, Router } from "@angular/router"
 import { firstValueFrom, map } from "rxjs"
 import { CommonImageDragAndDrop } from "src/app/common/components/drag-and-drop/image/image-dad.component"
+import { CommonImagesService } from "src/app/common/services/images.service"
 import { ProductCategory } from "src/app/features/categories/categories.interface"
 import { ProductCategoriesService } from "src/app/features/categories/categories.service"
 import { ProductsImagesService } from "src/app/features/products/products-images.service"
@@ -31,6 +32,7 @@ export class UpdateProductPageComponent extends ManageProductComponent implement
     private categoriesService: ProductCategoriesService,
     protected productsService: ProductsService,
     protected productImagesService: ProductsImagesService,
+    protected imagesService: CommonImagesService,
     protected router: Router
   ) {
     super(productsService, productImagesService, router)
@@ -43,7 +45,7 @@ export class UpdateProductPageComponent extends ManageProductComponent implement
 
     this.initFormValues()
 
-    this.imagesSnapshot = await this.updateProductService.makeImagesSnapshot(product.imagesUrls)
+    this.imagesSnapshot = await this.imagesService.makeImagesSnapshot(product.imagesUrls)
   }
 
   isUpdateLocked(): boolean {

@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { firstValueFrom, map, Observable } from "rxjs"
+import { AppRouterService } from "src/app/common/services/router.service"
 import { ProductAbilities } from "src/app/features/products/product.abilities"
 import { Product } from "src/app/features/products/products.interface"
 import { ProductsService } from "src/app/features/products/products.service"
+import { ConcreteProductDialogsService } from "./concrete-product-dialogs.service"
 
 @Component({
   templateUrl: "./concrete-product.component.html",
@@ -28,7 +30,9 @@ export class ConcreteProductPageComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
     private currentRoute: ActivatedRoute,
-    private productAbilities: ProductAbilities
+    private productAbilities: ProductAbilities,
+    private dialogs: ConcreteProductDialogsService,
+    private appRouter: AppRouterService
   ) {}
 
   async ngOnInit() {
@@ -36,9 +40,12 @@ export class ConcreteProductPageComponent implements OnInit {
     this.loaded = true
   }
 
-  onDelete() {
-    // TODO: Show confirmation
-    this.deleteProduct()
+  async onDelete() {
+    const needDelete = await this.dialogs.showConfirmDeleteProduct(this.product.name)
+    if (needDelete) {
+      await this.deleteProduct()
+      this.appRouter.redirectToViewUser(this.product.userId)
+    }
   }
 
   copyUrlToClipboard() {
@@ -59,8 +66,8 @@ export class ConcreteProductPageComponent implements OnInit {
     return this.productAbilities.canUpdateProduct(this.product)
   }
 
-  private deleteProduct() {
-    return this.productsService.deleteProduct$(this.product.id).subscribe()
+  private async deleteProduct() {
+    return await firstValueFrom(this.productsService.deleteProduct$(this.product.id))
   }
 
   private getCurrentUrl() {

@@ -592,6 +592,14 @@ export type CreateSellerMutationVariables = Exact<{
 
 export type CreateSellerMutation = { __typename?: 'Mutation', createSeller: { __typename?: 'User', id: string } };
 
+export type UpdateUserMutationVariables = Exact<{
+  id: Scalars['String'];
+  update: UpdateUserInput;
+}>;
+
+
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string } };
+
 export const LoginWithUsernameDocument = gql`
     query LoginWithUsername($username: String!, $password: String!) {
   loginWithUsername(username: $username, password: $password) {
@@ -787,6 +795,24 @@ export const CreateSellerDocument = gql`
   })
   export class CreateSellerGQL extends Apollo.Mutation<CreateSellerMutation, CreateSellerMutationVariables> {
     document = CreateSellerDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateUserDocument = gql`
+    mutation UpdateUser($id: String!, $update: UpdateUserInput!) {
+  updateUser(userId: $id, input: $update) {
+    id
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateUserGQL extends Apollo.Mutation<UpdateUserMutation, UpdateUserMutationVariables> {
+    document = UpdateUserDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

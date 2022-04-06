@@ -33,3 +33,9 @@ mutation CreateSeller($username: String!, $password: String!) {
     id
   }
 }
+
+mutation UpdateUser($id: String!, $update: UpdateUserInput!) {
+  updateUser(userId: $id, input: $update) {
+    id
+  }
+}

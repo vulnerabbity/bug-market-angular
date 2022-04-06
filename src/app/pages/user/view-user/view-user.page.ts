@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { map, Observable } from "rxjs"
 import { userDefaults } from "src/app/features/users/user.defaults"
+import { UserAbilities } from "src/app/features/users/users-abilities.service"
 import { UserWithShortProducts } from "src/app/features/users/users.interface"
 import { UsersService } from "src/app/features/users/users.service"
 import { assetsPaths } from "src/assets/assets.paths"
@@ -12,10 +13,10 @@ interface KeyValue {
 }
 
 @Component({
-  templateUrl: "./user-page.component.html",
-  styleUrls: ["./user-page.component.scss"]
+  templateUrl: "./view-user.page.html",
+  styleUrls: ["./view-user.page.scss"]
 })
-export class UserPageComponent implements OnInit {
+export class ViewUserPage implements OnInit {
   isLoaded = false
 
   user!: UserWithShortProducts
@@ -50,7 +51,15 @@ export class UserPageComponent implements OnInit {
 
   private userId$: Observable<string> = this.currentRoute.params.pipe(map(params => params["id"]))
 
-  constructor(private currentRoute: ActivatedRoute, private usersService: UsersService) {}
+  constructor(
+    private currentRoute: ActivatedRoute,
+    private usersService: UsersService,
+    private userAbilities: UserAbilities
+  ) {}
+
+  isUpdateAllowed() {
+    return this.userAbilities.canUpdate(this.user)
+  }
 
   ngOnInit(): void {
     this.userId$.subscribe(userId => {
@@ -62,7 +71,6 @@ export class UserPageComponent implements OnInit {
     this.usersService.loadUserWithProducts({ id }).subscribe(loadedUser => {
       this.user = loadedUser
       this.isLoaded = true
-      console.log(loadedUser)
     })
   }
 }
