@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { map, Observable } from "rxjs"
 import { userDefaults } from "src/app/features/users/user.defaults"
+import { UserAbilities } from "src/app/features/users/users-abilities.service"
 import { UserWithShortProducts } from "src/app/features/users/users.interface"
 import { UsersService } from "src/app/features/users/users.service"
 import { assetsPaths } from "src/assets/assets.paths"
@@ -50,7 +51,15 @@ export class ViewUserPage implements OnInit {
 
   private userId$: Observable<string> = this.currentRoute.params.pipe(map(params => params["id"]))
 
-  constructor(private currentRoute: ActivatedRoute, private usersService: UsersService) {}
+  constructor(
+    private currentRoute: ActivatedRoute,
+    private usersService: UsersService,
+    private userAbilities: UserAbilities
+  ) {}
+
+  isUpdateAllowed() {
+    return this.userAbilities.canUpdate(this.user)
+  }
 
   ngOnInit(): void {
     this.userId$.subscribe(userId => {

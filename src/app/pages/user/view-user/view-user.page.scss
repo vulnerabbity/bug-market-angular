@@ -19,11 +19,19 @@
 }
 
 .avatar-wrapper {
+  position: relative;
+
   padding: 1rem;
   margin: 0 auto;
 
   max-height: 50rem;
   max-width: 50rem;
+}
+
+.edit-user-under-avatar {
+  position: absolute;
+  top: 3%;
+  right: 15%;
 }
 
 .user-profile {

@@ -17,6 +17,11 @@
         <section class="user-profile">
           <h2 class="visually-hidden">Profile data</h2>
           <div class="avatar-wrapper">
+            <common-edit-user-icon
+              *ngIf="isUpdateAllowed()"
+              class="edit-user-under-avatar"
+              [userId]="this.user.id"
+            ></common-edit-user-icon>
             <img class="avatar" [src]="this.avatarUrlOrDefault" />
           </div>
           <div class="user-specs">
