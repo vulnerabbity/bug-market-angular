@@ -21,7 +21,11 @@ export class UsersService {
     private createSellerMutation: CreateSellerGQL
   ) {}
 
-  loadUser(variables: UserQueryVariables): Observable<User> {
+  async loadUserAsync(variables: UserQueryVariables): Promise<User> {
+    return firstValueFrom(this.loadUser$(variables))
+  }
+
+  loadUser$(variables: UserQueryVariables): Observable<User> {
     const parsedUser$ = this.userQuery.fetch(variables).pipe(pluck("data", "user"))
 
     return parsedUser$
