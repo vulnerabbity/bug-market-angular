@@ -132,6 +132,7 @@ export type Product = {
 };
 
 export type ProductFilters = {
+  categoryName?: InputMaybe<Scalars['String']>;
   priceRange?: InputMaybe<Range>;
 };
 

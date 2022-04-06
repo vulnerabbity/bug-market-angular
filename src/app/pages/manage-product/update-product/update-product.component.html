@@ -7,6 +7,7 @@
 ></mat-spinner>
 
 <div *ngIf="product" class="container">
+  <mat-icon class="section-logo" color="primary">edit_note</mat-icon>
   <form (submit)="onUpdate()">
     <common-product-name-form-field
       [(model)]="this.productNameField"
@@ -30,8 +31,27 @@
       [initialFiles]="this.imagesSnapshot"
       maxFileSize="10MB"
     ></common-image-drag-and-drop>
-    <button [disabled]="this.isUpdateLocked()" mat-raised-button color="primary" type="submit">
-      Save
-    </button>
+    <div class="form-actions">
+      <button
+        class="big-button"
+        (click)="this.onDiscard()"
+        [disabled]="this.isUpdateLocked()"
+        mat-raised-button
+        color="accent"
+        type="button"
+      >
+        <span>Discard</span>
+      </button>
+
+      <button
+        class="big-button"
+        [disabled]="this.isUpdateLocked()"
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >
+        <span>Save</span>
+      </button>
+    </div>
   </form>
 </div>

@@ -46,13 +46,18 @@ export class ProductsPageComponent implements OnInit, OnDestroy {
   // TODO: Refactoring
   onFiltersApply($productFilters: ProductSidebarFilters) {
     const { category, priceSorting, priceRange } = $productFilters
+    this.filters = {}
 
     if (priceSorting !== "NO_SORTING") {
       this.sorting.price = priceSorting as SortingOrder
     }
 
     if (priceRange) {
-      this.filters = { priceRange }
+      this.filters.priceRange = priceRange
+    }
+
+    if (category) {
+      this.filters.categoryName = category.databaseName
     }
 
     this.loadProducts()

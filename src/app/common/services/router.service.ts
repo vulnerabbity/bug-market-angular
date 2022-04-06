@@ -18,6 +18,11 @@ export class AppRouterService {
     this.redirect(editUserPath)
   }
 
+  redirectToConcreteProduct(productId: string) {
+    const concreteProductPath = `/${AppPathsEnum.ConcreteProduct}/${productId}`
+    this.redirect(concreteProductPath)
+  }
+
   private redirect(path: string) {
     this.router.navigate([path])
   }
