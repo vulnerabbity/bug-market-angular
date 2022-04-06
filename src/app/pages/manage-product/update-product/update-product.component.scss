@@ -1,3 +1,5 @@
+@import "src/styles/mixins.scss";
+
 .loader {
   display: block;
 
@@ -6,11 +8,27 @@
   margin-top: 5rem;
 }
 
-.submit-button {
+.form-actions {
+  width: 60%;
+  margin: 0 auto;
+
+  @media (min-width: 30rem) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2vw;
+  }
+
+  margin-bottom: 1rem;
+}
+
+.big-button {
   display: block;
-  width: 20vw;
+  width: 100%;
   height: 8rem;
 
-  margin: 0 auto;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+}
+
+.section-logo {
+  @include section-logo();
 }
