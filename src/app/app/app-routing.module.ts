@@ -7,11 +7,13 @@ import { HomePageComponent } from "../pages/home/home-page.component"
 import { ProductsPageComponent } from "../pages/products/products-page.component"
 import { UpdateProductPageComponent } from "../pages/manage-product/update-product/update-product.component"
 import { ViewUserPage } from "../pages/user/view-user/view-user.page"
+import { EditUserPage } from "../pages/user/edit-user/edit-user.page"
 
 export enum AppPathsEnum {
   Products = "products",
   ConcreteProduct = "product",
   UserPage = "user",
+  EditUserPage = "edit-user",
   CreateProduct = "create-product",
   UpdateProduct = "update-product"
 }
@@ -47,6 +49,13 @@ const userPageRoute: Route = {
   component: ViewUserPage
 }
 
+const editUserPageRoute: Route = {
+  path: AppPathsEnum.EditUserPage,
+  loadChildren: () =>
+    import("../pages/user/edit-user/edit-user.module").then(m => m.EditUserModule),
+  component: EditUserPage
+}
+
 const createProductRoute: Route = {
   path: AppPathsEnum.CreateProduct,
   loadChildren: () =>
@@ -70,6 +79,7 @@ const routes: Route[] = [
   productsRoute,
   concreteProductRoute,
   userPageRoute,
+  editUserPageRoute,
   createProductRoute,
   updateProductRoute
 ]
