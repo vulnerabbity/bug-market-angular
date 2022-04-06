@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core"
+import { Component, OnInit, ViewChild } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { firstValueFrom, map } from "rxjs"
+import { CommonAvatarDragAndDropComponent } from "src/app/common/components/drag-and-drop/avatar/avatar.component"
 import { FormFieldModel } from "src/app/common/components/form-fields/components/abstract-form-field"
 import { AppRouterService } from "src/app/common/services/router.service"
 import { UpdateUserService } from "src/app/features/users/update-user.service"
@@ -14,6 +15,9 @@ import { EditUserDialogsService } from "./edit-user-dialogs.service"
   styleUrls: ["./edit-user.page.scss"]
 })
 export class EditUserPage implements OnInit {
+  @ViewChild("avatarDragAndDrop")
+  avatarDragAndDrop!: CommonAvatarDragAndDropComponent
+
   loaded = false
   user!: User
 
@@ -69,6 +73,33 @@ export class EditUserPage implements OnInit {
   }
 
   private async updateUser() {
+    await this.updateUserFields()
+    await this.handlerAvatarChange()
+  }
+
+  private async handlerAvatarChange() {
+    const needUpdate = this.avatarDragAndDrop.hasNewImage()
+    if (needUpdate) {
+      return await this.updateAvatar()
+    }
+    const needDelete = this.avatarDragAndDrop.isImageDeleted()
+    if (needDelete) {
+      return await this.deleteAvatar()
+    }
+  }
+
+  private async deleteAvatar() {
+    await this.updateUserService.deleteAvatarAsync(this.user.id)
+  }
+
+  private async updateAvatar() {
+    const avatar = this.avatarDragAndDrop.getCurrentImage()
+    if (avatar) {
+      await this.updateUserService.uploadAvatarAsync(this.user.id, avatar)
+    }
+  }
+
+  private async updateUserFields() {
     const currentUserId = await this.getUserId()
     const update = this.getUpdate()
     this.updateUserService.updateUserAsync(currentUserId, update)

@@ -2,6 +2,10 @@
 <div class="container">
   <mat-icon class="section-logo" color="primary">manage_accounts</mat-icon>
   <form *ngIf="this.loaded">
+    <common-avatar-drag-and-drop
+      #avatarDragAndDrop
+      [user]="this.user"
+    ></common-avatar-drag-and-drop>
     <common-user-name-form-field [(model)]="nameModel"></common-user-name-form-field>
     <common-multiline-field
       [(model)]="aboutModel"
