@@ -4,3 +4,11 @@
   width: $size;
   line-height: $size;
 }
+
+@mixin section-logo() {
+  display: block;
+  margin: 1rem auto;
+  height: min(30vw, 25rem);
+  width: min(30vw, 25rem);
+  font-size: min(30vw, 25rem);
+}
