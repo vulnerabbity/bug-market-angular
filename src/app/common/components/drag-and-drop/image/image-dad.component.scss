@@ -20,7 +20,7 @@
 
   // 3 columns
   @media (min-width: 80rem) {
-    width: calc(33.33% - 0.5em);
+    width: max(calc(33.33% - 0.5em), 30rem);
   }
 
   margin-bottom: 1% !important;
