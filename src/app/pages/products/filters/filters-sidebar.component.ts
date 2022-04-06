@@ -9,8 +9,8 @@ type SortingOrder = `${SortingOrderEnum}`
 export type SortingOptions = SortingOrder | "NO_SORTING"
 
 export interface ProductSidebarFilters {
-  category: ProductCategory | null
-  priceSorting: SortingOptions
+  category?: ProductCategory | null
+  priceSorting?: SortingOptions
   priceRange?: ProductFilters["priceRange"]
 }
 
@@ -25,9 +25,13 @@ export class ProductPageFiltersSidebar {
 
   priceSorting: SortingOptions = "NO_SORTING"
 
-  category = initProductCategoryAutocompleteModel()
+  categoryModel = initProductCategoryAutocompleteModel()
 
   rangeModel: RangeModel = { min: null, max: null }
+
+  getCategory(): ProductCategory | null {
+    return this.categoryModel.selectedCategory
+  }
 
   @Output()
   onApply = new EventEmitter<ProductSidebarFilters>()
@@ -48,13 +52,17 @@ export class ProductPageFiltersSidebar {
 
   private getCurrentFilters(): ProductSidebarFilters {
     const filters: ProductSidebarFilters = {
-      category: this.category.selectedCategory,
       priceSorting: this.priceSorting
     }
 
     const { min: rangeMin, max: rangeMax } = this.rangeModel
 
     filters.priceRange = { min: rangeMin ?? 0, max: rangeMax ?? 999_999_999 }
+
+    const category = this.getCategory()
+    if (category) {
+      filters.category = category
+    }
 
     return filters
   }
