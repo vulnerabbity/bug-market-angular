@@ -12,10 +12,10 @@ interface KeyValue {
 }
 
 @Component({
-  templateUrl: "./user-page.component.html",
-  styleUrls: ["./user-page.component.scss"]
+  templateUrl: "./view-user.page.html",
+  styleUrls: ["./view-user.page.scss"]
 })
-export class UserPageComponent implements OnInit {
+export class ViewUserPage implements OnInit {
   isLoaded = false
 
   user!: UserWithShortProducts

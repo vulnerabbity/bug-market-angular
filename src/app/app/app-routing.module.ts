@@ -5,8 +5,8 @@ import { ConcreteProductPageComponent } from "../pages/concrete-product/concrete
 import { CreateProductPageComponent } from "../pages/manage-product/create-product/create-product.component"
 import { HomePageComponent } from "../pages/home/home-page.component"
 import { ProductsPageComponent } from "../pages/products/products-page.component"
-import { UserPageComponent } from "../pages/user/user-page.component"
 import { UpdateProductPageComponent } from "../pages/manage-product/update-product/update-product.component"
+import { ViewUserPage } from "../pages/user/view-user/view-user.page"
 
 export enum AppPathsEnum {
   Products = "products",
@@ -42,8 +42,9 @@ const concreteProductRoute: Route = {
 
 const userPageRoute: Route = {
   path: `${AppPathsEnum.UserPage}/:id`,
-  loadChildren: () => import("../pages/user/user-page.module").then(m => m.UserPageModule),
-  component: UserPageComponent
+  loadChildren: () =>
+    import("../pages/user/view-user/view-user.module").then(m => m.ViewUserPageModule),
+  component: ViewUserPage
 }
 
 const createProductRoute: Route = {
