@@ -15,7 +15,7 @@
 
   // 2 columns
   @media (min-width: 50rem) {
-    width: calc(50% - 0.5em);
+    width: max(calc(50% - 0.5em), 30rem);
   }
 
   // 3 columns
