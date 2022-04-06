@@ -2,16 +2,14 @@ import {
   AbilityUser,
   AppAbility,
   AppAbilityAction,
-  AppAbilitySubject,
-  ItemWithUserId,
-  UserRole
+  AppAbilitySubject
 } from "./authorization.interface"
 import { Ability, AbilityBuilder, AbilityClass, ExtractSubjectType } from "@casl/ability"
 import { Injectable } from "@angular/core"
-import { TokensService } from "../tokens/tokens.service"
 import { UserStatusService } from "../users/user-status.service"
 import { Product } from "../products/products.interface"
 import { AccessTokensService } from "../tokens/access/access-token.service"
+import { User } from "../users/users.interface"
 
 @Injectable()
 export class AuthorizationService {
@@ -39,8 +37,9 @@ export class AuthorizationService {
     }
 
     if (roles.includes("seller")) {
-      // can manage self products only
+      // can manage self subjects only
       can("manage", Product, { userId })
+      can("manage", User, { id: userId })
 
       can("create", Product)
     }
