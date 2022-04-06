@@ -35,11 +35,11 @@ export class CommonProductPriceFieldComponent extends AbstractCommonFormField im
     return Number(this.inputText)
   }
 
-  validators = [Validators.required, Validators.min(0), Validators.max(999_999_999_999)]
+  validators = [Validators.required, Validators.min(0), Validators.max(999_999_999)]
 
   ngOnInit(): void {
     super.ngOnInit()
-    this.inputText = "0"
+    this.inputText = this.inputText || "0"
   }
 
   isFormValid(): boolean {
