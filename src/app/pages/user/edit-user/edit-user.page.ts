@@ -5,6 +5,7 @@ import { CommonAvatarDragAndDropComponent } from "src/app/common/components/drag
 import { FormFieldModel } from "src/app/common/components/form-fields/components/abstract-form-field"
 import { AppRouterService } from "src/app/common/services/router.service"
 import { UpdateUserService } from "src/app/features/users/update-user.service"
+import { UserAbilities } from "src/app/features/users/users-abilities.service"
 import { User } from "src/app/features/users/users.interface"
 import { UsersService } from "src/app/features/users/users.service"
 import { UpdateUserInput } from "src/generated-gql-types"
@@ -29,7 +30,8 @@ export class EditUserPage implements OnInit {
     private updateUserService: UpdateUserService,
     private currentRoute: ActivatedRoute,
     private appRouter: AppRouterService,
-    private dialogsService: EditUserDialogsService
+    private dialogsService: EditUserDialogsService,
+    private userAbilities: UserAbilities
   ) {}
 
   async onDiscard() {
@@ -49,6 +51,11 @@ export class EditUserPage implements OnInit {
 
   async ngOnInit() {
     await this.loadUser()
+    const canUpdate = this.userAbilities.canUpdate(this.user)
+    if (canUpdate === false) {
+      return this.appRouter.redirectToViewUser(this.user.id)
+    }
+
     this.fillFormFieldsWithExistingData()
     this.loaded = true
   }
