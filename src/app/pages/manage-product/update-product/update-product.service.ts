@@ -17,16 +17,6 @@ type ImageAction = "nothing" | "update" | "delete" | "create"
 export class UpdateProductService {
   constructor(private productsImagesService: ProductsImagesService) {}
 
-  async makeImagesSnapshot(urls: string[]): Promise<Blob[]> {
-    const result: Blob[] = []
-    for (const url of urls) {
-      const response = await fetch(url)
-      const blobFromResponse = await response.blob()
-      result.push(blobFromResponse)
-    }
-    return result
-  }
-
   async updateChangedImagesOnly(input: UpdateChangedImagesOnlyInput): Promise<void> {
     const { newImages, oldImages, product } = input
     const { id: productId } = product
