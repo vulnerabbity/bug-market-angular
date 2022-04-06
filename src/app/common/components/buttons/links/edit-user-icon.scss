@@ -1,0 +1,21 @@
+@import "src/styles/mixins.scss";
+
+.link-back {
+  aspect-ratio: 1;
+  width: 8rem;
+  height: 8rem;
+  overflow: hidden;
+
+  border-radius: 50%;
+}
+.link {
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+  justify-content: center;
+  align-items: center;
+}
+.icon {
+  @include mat-icon-size(5rem);
+}
