@@ -44,7 +44,7 @@
             </common-title-text-card>
           </ng-template>
         </section>
-        <section>
+        <section *ngIf="this.user.products.length">
           <h2 class="products-header">Products of {{ this.userNameOrDefault }}:</h2>
           <common-products-container [products]="this.user.products"></common-products-container>
         </section>
