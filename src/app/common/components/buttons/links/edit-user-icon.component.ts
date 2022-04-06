@@ -1,8 +1,8 @@
-import { Component } from "@angular/core"
+import { Component, Input } from "@angular/core"
 import { AppPathsEnum } from "src/app/app/app-routing.module"
 
 @Component({
-  selector: "common-edit-user-icon",
+  selector: "common-edit-user-icon[userId]",
   styleUrls: ["./edit-user-icon.scss"],
   template: `
     <common-themed-div class="link-back" color="accent">
@@ -13,5 +13,10 @@ import { AppPathsEnum } from "src/app/app/app-routing.module"
   `
 })
 export class CommonEditUserIconLink {
-  editUserUrl = `/${AppPathsEnum.EditUserPage}`
+  @Input()
+  userId!: string
+
+  get editUserUrl(): string {
+    return `/${AppPathsEnum.EditUserPage}/${this.userId}`
+  }
 }
