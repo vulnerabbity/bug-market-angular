@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core"
+import { CommonImagesService } from "src/app/common/services/images.service"
 import { ProductsImagesService } from "src/app/features/products/products-images.service"
 import { ProductsService } from "src/app/features/products/products.service"
 import { Product } from "src/generated-gql-types"
@@ -15,7 +16,10 @@ type ImageAction = "nothing" | "update" | "delete" | "create"
   providedIn: "root"
 })
 export class UpdateProductService {
-  constructor(private productsImagesService: ProductsImagesService) {}
+  constructor(
+    private productsImagesService: ProductsImagesService,
+    private imagesService: CommonImagesService
+  ) {}
 
   async updateChangedImagesOnly(input: UpdateChangedImagesOnlyInput): Promise<void> {
     const { newImages, oldImages, product } = input
@@ -43,8 +47,7 @@ export class UpdateProductService {
   private getActionWithImages(oldImage: Blob | undefined, newImage: Blob | undefined): ImageAction {
     const hasNewImage = newImage !== undefined
     const hasOldImage = oldImage !== undefined
-    const hasBothImages = hasNewImage && hasOldImage
-    const hasDifferentImages = hasBothImages && this.isBlobsSameFast(oldImage, newImage) === false
+    const hasDifferentImages = this.hasDifferentImages(newImage, oldImage)
 
     const needDeleteImage = !hasNewImage
     const needCreateImage = hasNewImage && !hasOldImage
@@ -62,25 +65,8 @@ export class UpdateProductService {
     return "nothing"
   }
 
-  private isNewImage(
-    oldImageCandidate: Blob | undefined,
-    newImageCandidate: Blob | undefined
-  ): boolean {
-    if (newImageCandidate === undefined) {
-      return true
-    }
-    if (oldImageCandidate === undefined) {
-      return true
-    }
-
-    const isNotSame = !this.isBlobsSameFast(oldImageCandidate, newImageCandidate)
-    return isNotSame
-  }
-
-  /**
-   * Compares two blobs by size
-   */
-  private isBlobsSameFast(oldBlob: Blob, newBlob: Blob): boolean {
-    return oldBlob.size == newBlob.size
+  private hasDifferentImages(oldImage: Blob | undefined, newImage: Blob | undefined): boolean {
+    const hasBothImages = !!oldImage && !!newImage
+    return hasBothImages && this.imagesService.isBlobsSameFast(oldImage, newImage) === false
   }
 }
