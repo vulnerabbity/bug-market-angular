@@ -30,8 +30,14 @@
       [initialFiles]="this.imagesSnapshot"
       maxFileSize="10MB"
     ></common-image-drag-and-drop>
-    <button [disabled]="this.isUpdateLocked()" mat-raised-button color="primary" type="submit">
-      Save
+    <button
+      class="submit-button"
+      [disabled]="this.isUpdateLocked()"
+      mat-raised-button
+      color="primary"
+      type="submit"
+    >
+      <span>Save</span>
     </button>
   </form>
 </div>
