@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core"
+import { NgModule, Provider } from "@angular/core"
 import { BrowserModule } from "@angular/platform-browser"
 import { GraphqlModule } from "./graphql.module"
 import { AppRoutingModule } from "./app-routing.module"
@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { AuthenticationInterceptorProvider } from "../common/interceptors/authentication.interceptor"
 import { AppCommonModule } from "../common/common.module"
 import { AppPreferencesConfigModule } from "../features/preferences/preferences.module"
+import { RefreshTokenInterceptorProvider } from "../common/interceptors/refresh-token.interceptor"
 
 const imports = [
   BrowserModule,
@@ -18,10 +19,15 @@ const imports = [
   AppPreferencesConfigModule
 ]
 
+const interceptors: Provider[] = [
+  RefreshTokenInterceptorProvider,
+  AuthenticationInterceptorProvider
+]
+
 @NgModule({
   declarations: [AppComponent, AppNavbarComponent],
   imports,
-  providers: [AuthenticationInterceptorProvider],
+  providers: [...interceptors],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -571,6 +571,13 @@ export type UpdateProductMutationVariables = Exact<{
 
 export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct: { __typename?: 'Product', id: string } };
 
+export type RefreshAccessTokenQueryVariables = Exact<{
+  refreshToken: Scalars['String'];
+}>;
+
+
+export type RefreshAccessTokenQuery = { __typename?: 'Query', refreshAccessToken: { __typename?: 'LoginResponse', access_token: string, refresh_token: string } };
+
 export type UserQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -724,6 +731,25 @@ export const UpdateProductDocument = gql`
   })
   export class UpdateProductGQL extends Apollo.Mutation<UpdateProductMutation, UpdateProductMutationVariables> {
     document = UpdateProductDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RefreshAccessTokenDocument = gql`
+    query RefreshAccessToken($refreshToken: String!) {
+  refreshAccessToken(refreshToken: $refreshToken) {
+    access_token
+    refresh_token
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RefreshAccessTokenGQL extends Apollo.Query<RefreshAccessTokenQuery, RefreshAccessTokenQueryVariables> {
+    document = RefreshAccessTokenDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
