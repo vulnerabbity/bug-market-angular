@@ -109,7 +109,7 @@ export class EditUserPage implements OnInit {
   private async updateUserFields() {
     const currentUserId = await this.getUserId()
     const update = this.getUpdate()
-    this.updateUserService.updateUserAsync(currentUserId, update)
+    await this.updateUserService.updateUserAsync(currentUserId, update)
   }
 
   private async redirectToUser() {
