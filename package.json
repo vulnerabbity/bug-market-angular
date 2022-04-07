@@ -5,7 +5,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href https://vulnerabbity.github.io/bug-market-angular/",
+    "build": "ng build",
+    "build:prod": "ng build --configuration production --base-href https://vulnerabbity.github.io/bug-market-angular/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "codegen": "graphql-codegen",
