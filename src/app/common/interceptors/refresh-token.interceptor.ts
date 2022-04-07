@@ -6,7 +6,7 @@ import {
   HTTP_INTERCEPTORS
 } from "@angular/common/http"
 import { Injectable, Provider } from "@angular/core"
-import { catchError, firstValueFrom, from, lastValueFrom, Observable, tap } from "rxjs"
+import { from, lastValueFrom, Observable } from "rxjs"
 import { AccessTokenRefresherService } from "src/app/features/tokens/refresh/access-token-refresher.service"
 
 @Injectable()
