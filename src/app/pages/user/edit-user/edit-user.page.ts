@@ -19,7 +19,7 @@ export class EditUserPage implements OnInit {
   @ViewChild("avatarDragAndDrop")
   avatarDragAndDrop!: CommonAvatarDragAndDropComponent
 
-  loaded = false
+  loading = false
   user!: User
 
   nameModel: FormFieldModel = { isValid: true, value: "" }
@@ -44,12 +44,15 @@ export class EditUserPage implements OnInit {
   async onApply() {
     const needApply = await this.dialogsService.showApplyConfirmDialog()
     if (needApply) {
+      this.loading = true
       await this.updateUser()
+      this.loading = false
       return await this.redirectToUser()
     }
   }
 
   async ngOnInit() {
+    this.loading = true
     await this.loadUser()
     const canUpdate = this.userAbilities.canUpdate(this.user)
     if (canUpdate === false) {
@@ -57,7 +60,7 @@ export class EditUserPage implements OnInit {
     }
 
     this.fillFormFieldsWithExistingData()
-    this.loaded = true
+    this.loading = false
   }
 
   private async loadUser() {

@@ -1,7 +1,7 @@
 <common-titled-page-header title="Edit account"></common-titled-page-header>
 <div class="container">
   <mat-icon class="section-logo" color="primary">manage_accounts</mat-icon>
-  <form *ngIf="this.loaded">
+  <form *ngIf="this.user">
     <common-avatar-drag-and-drop
       #avatarDragAndDrop
       [user]="this.user"
@@ -14,8 +14,24 @@
     ></common-multiline-field>
 
     <div class="form-actions">
-      <button (click)="onDiscard()" mat-raised-button color="accent" type="button">Discard</button>
-      <button (click)="onApply()" mat-raised-button color="primary" type="submit">Apply</button>
+      <button
+        [disabled]="this.loading"
+        (click)="onDiscard()"
+        mat-raised-button
+        color="accent"
+        type="button"
+      >
+        Discard
+      </button>
+      <button
+        [disabled]="this.loading"
+        (click)="onApply()"
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >
+        Apply
+      </button>
     </div>
   </form>
 </div>
