@@ -39,7 +39,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
       await this.accessTokenRefresher.refreshAccessTokenAsync()
     }
 
-    return await lastValueFrom(next.handle(req))
+    return response ?? (await lastValueFrom(next.handle(req)))
   }
 
   private isAccessTokenExpiredGraphqlError(response: any): boolean {
