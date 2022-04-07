@@ -32,8 +32,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
     const accessToken = this.accessTokenStorage.tryToGetRecord()
     const bearerToken = this.makeBearerToken(accessToken)
-    // TODO: remove later
-    console.log(`patched ${req.url} with access token`)
 
     return req.clone({
       headers: req.headers.set("Authorization", bearerToken)
