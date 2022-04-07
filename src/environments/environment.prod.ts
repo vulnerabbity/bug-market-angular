@@ -1,10 +1,10 @@
 import { AppEnvironment } from "./environment.interface"
 
-const backendUrl = "http://localhost:3000"
+const backendUrl = "https://bug-market-nest.herokuapp.com"
 
 export const environment: AppEnvironment = {
   production: false,
-  publicFilesUrl: "http://localhost:3000/public-files",
+  publicFilesUrl: "https://bug-market-nest.herokuapp.com/public-files",
   backendUrl,
   hostsForTokenUsage: [backendUrl]
 }
