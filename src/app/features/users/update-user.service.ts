@@ -15,7 +15,7 @@ export class UpdateUserService {
   constructor(private updateUserMutation: UpdateUserGQL, private http: HttpClient) {}
 
   async updateUserAsync(id: string, update: UpdateUserInput): Promise<UpdateUserStatus> {
-    return firstValueFrom(this.updateUser$(id, update))
+    return await firstValueFrom(this.updateUser$(id, update))
   }
 
   updateUser$(id: string, update: UpdateUserInput): Observable<UpdateUserStatus> {
