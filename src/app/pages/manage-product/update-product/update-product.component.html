@@ -33,6 +33,7 @@
     ></common-image-drag-and-drop>
     <div class="form-actions">
       <button
+        [disabled]="this.loading"
         class="big-button"
         (click)="this.onDiscard()"
         [disabled]="this.isUpdateLocked()"
@@ -45,7 +46,7 @@
 
       <button
         class="big-button"
-        [disabled]="this.isUpdateLocked()"
+        [disabled]="this.isUpdateLocked() || loading"
         mat-raised-button
         color="primary"
         type="submit"

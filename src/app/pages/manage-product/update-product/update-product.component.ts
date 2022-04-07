@@ -25,6 +25,8 @@ export class UpdateProductPageComponent extends ManageProductComponent implement
 
   imagesSnapshot: Blob[] = []
 
+  loading = false
+
   product!: Product
 
   loadedCategory!: ProductCategory
