@@ -9,9 +9,9 @@ app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "/dist/bug-market-angular/index.html"))
 })
 
-const port = process.env.PORT || 4201
+const httpsPort = 443
 
-const server = app.listen(port, () => {
+const server = app.listen(httpsPort, () => {
   const port = server.address().port
   console.log(`Running on port ${port}`)
 })
