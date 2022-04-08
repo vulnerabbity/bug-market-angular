@@ -9,6 +9,7 @@ import { AuthenticationInterceptorProvider } from "../common/interceptors/authen
 import { AppCommonModule } from "../common/common.module"
 import { AppPreferencesConfigModule } from "../features/preferences/preferences.module"
 import { RefreshTokenInterceptorProvider } from "../common/interceptors/refresh-token.interceptor"
+import { ErrorsPageModule } from "../pages/errors/errors-page.module"
 
 const imports = [
   BrowserModule,
@@ -16,7 +17,8 @@ const imports = [
   AppCommonModule,
   BrowserAnimationsModule,
   GraphqlModule,
-  AppPreferencesConfigModule
+  AppPreferencesConfigModule,
+  ErrorsPageModule
 ]
 
 const interceptors: Provider[] = [
