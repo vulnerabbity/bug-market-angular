@@ -19,27 +19,28 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
   }
 
   private async interceptAsync(req: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
-    let response
-    // intercept rest errors
     try {
-      response = await lastValueFrom(next.handle(req))
-    } catch (error: any) {
-      const isTokenExpired = error?.error?.message === this.expiredTokenMessage
+      const response = await lastValueFrom(next.handle(req))
 
-      if (isTokenExpired === false) {
-        throw error
+      // handle gql expiration
+      const isTokenExpired = this.isAccessTokenExpiredGraphqlError(response)
+      if (isTokenExpired) {
+        await this.accessTokenRefresher.refreshAccessTokenAsync()
+        return await lastValueFrom(next.handle(req))
       }
 
-      await this.accessTokenRefresher.refreshAccessTokenAsync()
-    }
+      return response
+    } catch (error: any) {
+      // handle rest expiration
+      const isTokenExpired = error?.error?.message === this.expiredTokenMessage
 
-    // intercept gql errors
-    const isTokenExpired = this.isAccessTokenExpiredGraphqlError(response)
-    if (isTokenExpired) {
-      await this.accessTokenRefresher.refreshAccessTokenAsync()
-    }
+      if (isTokenExpired) {
+        await this.accessTokenRefresher.refreshAccessTokenAsync()
+        return await lastValueFrom(next.handle(req))
+      }
 
-    return response ?? (await lastValueFrom(next.handle(req)))
+      throw error
+    }
   }
 
   private isAccessTokenExpiredGraphqlError(response: any): boolean {
