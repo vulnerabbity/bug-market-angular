@@ -1,22 +1,24 @@
 import { ErrorHandler, Injectable, NgZone, Provider } from "@angular/core"
-import { RedirectionGuardError } from "src/app/pages/errors/error-router.service"
+import {
+  ErrorsRouterService,
+  RedirectionGuardError
+} from "src/app/pages/errors/error-router.service"
 
 @Injectable({
   providedIn: "root"
 })
 export class GlobalErrorHandler implements ErrorHandler {
-  constructor() {}
+  constructor(private errorsRouter: ErrorsRouterService) {}
   handleError(error: any): void {
     // ignore only expected errors
-    if (this.isErrorToIgnore(error)) {
+    if (this.isRedirectionError(error)) {
       return
+    }
+    if (this.isServerUnavailableError(error)) {
+      return this.errorsRouter.redirectToUnavailable()
     }
 
     throw error
-  }
-
-  private isErrorToIgnore(error: any) {
-    return this.isRedirectionError(error) || this.isServerUnavailableError(error)
   }
 
   private isRedirectionError(error: any): boolean {
