@@ -4,8 +4,9 @@ import { map, Observable } from "rxjs"
 import { UsersLoaderService } from "src/app/features/users/users-loader.service"
 import { userDefaults } from "src/app/features/users/user.defaults"
 import { UserAbilities } from "src/app/features/users/users-abilities.service"
-import { UserWithShortProducts } from "src/app/features/users/users.interface"
 import { assetsPaths } from "src/assets/assets.paths"
+import { User } from "src/generated-gql-types"
+import { UserWithShortProducts } from "src/app/features/users/users.interface"
 
 interface KeyValue {
   key: string
@@ -68,7 +69,7 @@ export class ViewUserPage implements OnInit {
   }
 
   private async loadUser(id: string) {
-    const loadedUser = await this.usersLoader.loadUserWithProducts({ id })
+    const loadedUser = await this.usersLoader.loadUserWithProductsOrRedirect({ id })
     this.user = loadedUser
     this.isLoaded = true
   }

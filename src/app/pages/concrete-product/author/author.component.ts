@@ -33,6 +33,6 @@ export class ConcreteProductPageAuthorComponent implements OnInit {
   }
 
   private async loadUser(id: string): Promise<User> {
-    return await this.usersLoader.loadUser({ id })
+    return await this.usersLoader.loadUserOrRedirect({ id })
   }
 }

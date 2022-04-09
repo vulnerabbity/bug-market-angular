@@ -65,7 +65,7 @@ export class EditUserPage implements OnInit {
 
   private async loadUser() {
     const userId = await this.getUserId()
-    const loadedUser = await this.usersLoader.loadUser({ id: userId })
+    const loadedUser = await this.usersLoader.loadUserOrRedirect({ id: userId })
     this.user = loadedUser
   }
 
