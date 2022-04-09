@@ -40,6 +40,8 @@ export class CommonManageAccountButtonComponent implements OnInit {
     if (!this.userId) {
       return
     }
-    this.user = await this.usersLoader.loadUser({ id: this.userId })
+
+    const userResponse = await this.usersLoader.loadUserResponse({ id: this.userId })
+    this.user = userResponse.data
   }
 }
