@@ -1,8 +1,7 @@
 import { NgModule } from "@angular/core"
-import { RedirectGuardErrorHandlerProvider } from "src/app/pages/errors/redirect.error-handler"
-import { ServerUnavailableErrorHandlerProvider } from "src/app/pages/errors/server-unavailable/server-unavailable.handler"
+import { GlobalErrorHandlerProvider } from "./error.handler"
 
 @NgModule({
-  providers: [RedirectGuardErrorHandlerProvider, ServerUnavailableErrorHandlerProvider]
+  providers: [GlobalErrorHandlerProvider]
 })
 export class AppErrorHandlingModule {}
