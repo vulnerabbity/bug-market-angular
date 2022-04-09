@@ -1,11 +1,10 @@
 <div class="component-root">
-  <!-- TODO: Place loading spinner -->
   <div *ngIf="this.loaded === false">
     <common-titled-page-header title="Loading product ..."></common-titled-page-header>
     <mat-spinner class="loader" [diameter]="getLoaderSpinnerDiameter()"></mat-spinner>
   </div>
 
-  <div *ngIf="this.loaded">
+  <div *ngIf="this.product">
     <common-titled-page-header [title]="this.product.name | titlecase" [titleLimit]="15">
       <button
         class="copy-to-clipboard"
