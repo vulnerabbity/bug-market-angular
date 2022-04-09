@@ -32,7 +32,7 @@ const imports = [RouterModule.forRoot(routes)]
 
 @NgModule({
   imports,
-  providers: [ErrorsRouterService],
+  providers: [],
   exports: [RouterModule]
 })
 export class ErrorsRoutingModule {}
