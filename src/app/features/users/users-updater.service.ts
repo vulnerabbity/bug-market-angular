@@ -11,7 +11,7 @@ export type DeleteAvatarStatus = "success" | "error"
 @Injectable({
   providedIn: "root"
 })
-export class UpdateUserService {
+export class UsersUpdaterService {
   constructor(private updateUserMutation: UpdateUserGQL, private http: HttpClient) {}
 
   async updateUserAsync(id: string, update: UpdateUserInput): Promise<UpdateUserStatus> {

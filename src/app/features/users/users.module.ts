@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core"
 import { LocalUserService } from "./local-user.service"
-import { UpdateUserService } from "./update-user.service"
+import { UsersUpdaterService } from "./users-updater.service"
 import { UsersLoaderService } from "./user-loader.service"
 import { UserStatusService } from "./user-status.service"
 import { UserAbilities } from "./users-abilities.service"
@@ -10,7 +10,7 @@ import { UsersCreatorService } from "./users-creator.service"
   providers: [
     UsersCreatorService,
     UsersLoaderService,
-    UpdateUserService,
+    UsersUpdaterService,
     LocalUserService,
     UserStatusService,
     UserAbilities
