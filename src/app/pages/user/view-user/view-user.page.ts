@@ -5,7 +5,6 @@ import { UsersLoaderService } from "src/app/features/users/user-loader.service"
 import { userDefaults } from "src/app/features/users/user.defaults"
 import { UserAbilities } from "src/app/features/users/users-abilities.service"
 import { UserWithShortProducts } from "src/app/features/users/users.interface"
-import { UsersService } from "src/app/features/users/users.service"
 import { assetsPaths } from "src/assets/assets.paths"
 
 interface KeyValue {
@@ -54,7 +53,6 @@ export class ViewUserPage implements OnInit {
 
   constructor(
     private currentRoute: ActivatedRoute,
-    private usersService: UsersService,
     private usersLoader: UsersLoaderService,
     private userAbilities: UserAbilities
   ) {}

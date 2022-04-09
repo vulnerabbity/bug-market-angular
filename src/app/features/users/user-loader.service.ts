@@ -3,8 +3,6 @@ import { firstValueFrom, Observable, pluck } from "rxjs"
 import { UserGQL, UserQueryVariables, UserWithShortProductsGQL } from "src/generated-gql-types"
 import { User, UserWithShortProducts } from "./users.interface"
 
-export type CreateSellerStatus = "success" | "duplicate" | "unknown"
-
 @Injectable({
   providedIn: "root"
 })

@@ -7,7 +7,7 @@ export type CreateSellerStatus = "success" | "duplicate" | "unknown"
 @Injectable({
   providedIn: "root"
 })
-export class UsersService {
+export class UsersCreatorService {
   constructor(private createSellerMutation: CreateSellerGQL) {}
 
   createSeller$(variables: CreateSellerMutationVariables): Observable<CreateSellerStatus> {

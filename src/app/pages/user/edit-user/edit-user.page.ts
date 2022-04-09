@@ -8,7 +8,6 @@ import { UpdateUserService } from "src/app/features/users/update-user.service"
 import { UsersLoaderService } from "src/app/features/users/user-loader.service"
 import { UserAbilities } from "src/app/features/users/users-abilities.service"
 import { User } from "src/app/features/users/users.interface"
-import { UsersService } from "src/app/features/users/users.service"
 import { UpdateUserInput } from "src/generated-gql-types"
 import { EditUserDialogsService } from "./edit-user-dialogs.service"
 
@@ -27,7 +26,6 @@ export class EditUserPage implements OnInit {
   aboutModel: FormFieldModel = { isValid: true, value: "" }
 
   constructor(
-    private usersService: UsersService,
     private usersLoader: UsersLoaderService,
     private updateUserService: UpdateUserService,
     private currentRoute: ActivatedRoute,

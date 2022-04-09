@@ -1,7 +1,10 @@
 import { Component, OnInit } from "@angular/core"
 import { MatDialog, MatDialogRef } from "@angular/material/dialog"
 import { AuthenticationService } from "src/app/features/authentication/authentication.service"
-import { CreateSellerStatus, UsersService } from "src/app/features/users/users.service"
+import {
+  CreateSellerStatus,
+  UsersCreatorService
+} from "src/app/features/users/users-creator.service"
 import { FormFieldModel } from "../../form-fields/components/abstract-form-field"
 import { CommonLoginDialogComponent } from "../login/login-dialog.component"
 
@@ -29,7 +32,7 @@ export class CommonRegisterDialogComponent implements OnInit {
   }
 
   constructor(
-    private usersService: UsersService,
+    private usersCreator: UsersCreatorService,
     private authenticationService: AuthenticationService,
     private dialog: MatDialog,
     private currentDialog: MatDialogRef<CommonRegisterDialogComponent>
@@ -41,7 +44,7 @@ export class CommonRegisterDialogComponent implements OnInit {
 
   async onRegister() {
     this.isLoading = true
-    const createUserStatus = await this.usersService.createSeller(this.credentials)
+    const createUserStatus = await this.usersCreator.createSeller(this.credentials)
     if (createUserStatus === "success") {
       await this.login()
       this.currentDialog.close()

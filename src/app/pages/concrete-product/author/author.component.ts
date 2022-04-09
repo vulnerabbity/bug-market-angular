@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core"
 import { Product } from "src/app/features/products/products.interface"
 import { User } from "src/app/features/users/users.interface"
-import { UsersService } from "src/app/features/users/users.service"
 import { userDefaults } from "src/app/features/users/user.defaults"
 import { UsersLoaderService } from "src/app/features/users/user-loader.service"
 
