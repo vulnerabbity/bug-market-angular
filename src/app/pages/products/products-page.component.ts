@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { BehaviorSubject } from "rxjs"
+import { ProductsLoaderService } from "src/app/features/products/products-loader.service"
 import { ShortProduct } from "src/app/features/products/products.interface"
-import { ProductsService } from "src/app/features/products/products.service"
 import { ProductFilters, ProductSorting, SortingOrder } from "src/generated-gql-types"
 import { ProductSidebarFilters } from "./filters/filters-sidebar.component"
 
@@ -22,7 +22,7 @@ export class ProductsPageComponent implements OnInit, OnDestroy {
 
   filters: ProductFilters | undefined = undefined
 
-  constructor(private productsService: ProductsService) {}
+  constructor(private productsLoader: ProductsLoaderService) {}
 
   ngOnInit(): void {
     this.loadProducts()
@@ -72,7 +72,7 @@ export class ProductsPageComponent implements OnInit, OnDestroy {
   }
 
   private makeProductsRequest$() {
-    return this.productsService.loadShortProducts$({
+    return this.productsLoader.loadShortProductsOrRedirect$({
       pagination: {
         offset: this.pageSize * this.pageIndex,
         limit: this.pageSize
