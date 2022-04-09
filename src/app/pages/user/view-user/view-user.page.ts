@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { map, Observable } from "rxjs"
-import { UsersLoaderService } from "src/app/features/users/user-loader.service"
+import { UsersLoaderService } from "src/app/features/users/users-loader.service"
 import { userDefaults } from "src/app/features/users/user.defaults"
 import { UserAbilities } from "src/app/features/users/users-abilities.service"
 import { UserWithShortProducts } from "src/app/features/users/users.interface"

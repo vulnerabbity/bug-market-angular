@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core"
 import { LocalUserService } from "src/app/features/users/local-user.service"
-import { UsersLoaderService } from "src/app/features/users/user-loader.service"
+import { UsersLoaderService } from "src/app/features/users/users-loader.service"
 import { User } from "src/app/features/users/users.interface"
 import { assetsPaths } from "src/assets/assets.paths"
 

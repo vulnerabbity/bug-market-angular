@@ -5,7 +5,7 @@ import { CommonAvatarDragAndDropComponent } from "src/app/common/components/drag
 import { FormFieldModel } from "src/app/common/components/form-fields/components/abstract-form-field"
 import { AppRouterService } from "src/app/common/services/router.service"
 import { UsersUpdaterService } from "src/app/features/users/users-updater.service"
-import { UsersLoaderService } from "src/app/features/users/user-loader.service"
+import { UsersLoaderService } from "src/app/features/users/users-loader.service"
 import { UserAbilities } from "src/app/features/users/users-abilities.service"
 import { User } from "src/app/features/users/users.interface"
 import { UpdateUserInput } from "src/generated-gql-types"

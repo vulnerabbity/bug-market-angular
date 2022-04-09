@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from "@angular/core"
 import { Product } from "src/app/features/products/products.interface"
 import { User } from "src/app/features/users/users.interface"
 import { userDefaults } from "src/app/features/users/user.defaults"
-import { UsersLoaderService } from "src/app/features/users/user-loader.service"
+import { UsersLoaderService } from "src/app/features/users/users-loader.service"
 
 @Component({
   selector: "concrete-product-page-author[product]",
