@@ -41,7 +41,7 @@ export class CommonRegisterDialogComponent implements OnInit {
 
   async onRegister() {
     this.isLoading = true
-    const createUserStatus = await this.usersService.createSellerAsync(this.credentials)
+    const createUserStatus = await this.usersService.createSeller(this.credentials)
     if (createUserStatus === "success") {
       await this.login()
       this.currentDialog.close()

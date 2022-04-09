@@ -38,10 +38,10 @@ export class UsersService {
   }
 
   createSeller$(variables: CreateSellerMutationVariables): Observable<CreateSellerStatus> {
-    return from(this.createSellerAsync(variables))
+    return from(this.createSeller(variables))
   }
 
-  async createSellerAsync(variables: CreateSellerMutationVariables): Promise<CreateSellerStatus> {
+  async createSeller(variables: CreateSellerMutationVariables): Promise<CreateSellerStatus> {
     try {
       await firstValueFrom(this.createSellerMutation.mutate(variables))
       return "success"
