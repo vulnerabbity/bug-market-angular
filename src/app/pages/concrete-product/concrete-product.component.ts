@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router"
 import { firstValueFrom, map, Observable } from "rxjs"
 import { AppRouterService } from "src/app/common/services/router.service"
 import { ProductAbilities } from "src/app/features/products/product.abilities"
+import { ProductsLoaderService } from "src/app/features/products/products-loader.service"
 import { Product } from "src/app/features/products/products.interface"
 import { ProductsService } from "src/app/features/products/products.service"
 import { ConcreteProductDialogsService } from "./concrete-product-dialogs.service"
@@ -29,6 +30,7 @@ export class ConcreteProductPageComponent implements OnInit {
 
   constructor(
     private productsService: ProductsService,
+    private productsLoader: ProductsLoaderService,
     private currentRoute: ActivatedRoute,
     private productAbilities: ProductAbilities,
     private dialogs: ConcreteProductDialogsService,
@@ -76,7 +78,7 @@ export class ConcreteProductPageComponent implements OnInit {
 
   private async loadAll(): Promise<void> {
     const productId = await firstValueFrom(this.parseProductIdFromUrl)
-    const product = await firstValueFrom(this.loadProduct(productId))
+    const product = await this.loadProduct(productId)
 
     this.product = product
   }
@@ -85,10 +87,10 @@ export class ConcreteProductPageComponent implements OnInit {
     map(params => params["id"])
   )
 
-  private loadProduct(id: string): Observable<Product> {
-    return this.productsService
-      .loadFullProduct$(id)
-      .pipe(map(product => this.addDefaultImageToProduct(product)))
+  private async loadProduct(id: string): Promise<Product> {
+    const product = await firstValueFrom(this.productsLoader.loadFullProductOrRedirect$(id))
+    const productWithDefaultImage = this.addDefaultImageToProduct(product)
+    return productWithDefaultImage
   }
 
   private addDefaultImageToProduct(product: Product): Product {

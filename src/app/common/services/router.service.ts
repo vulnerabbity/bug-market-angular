@@ -23,6 +23,10 @@ export class AppRouterService {
     this.redirect(concreteProductPath)
   }
 
+  redirectHome() {
+    this.redirect("/")
+  }
+
   private redirect(path: string) {
     this.router.navigate([path])
   }

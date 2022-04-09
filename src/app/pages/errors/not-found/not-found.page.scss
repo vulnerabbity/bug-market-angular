@@ -1,0 +1,25 @@
+:host {
+  text-align: center;
+  * {
+    line-height: 100%;
+  }
+}
+
+.header {
+  font-size: min(40vw, 20rem);
+}
+
+.description {
+  font-size: min(20vw, 10rem);
+}
+
+.hint {
+  display: block;
+  font-size: min(10vw, 2.5rem);
+}
+
+.home-button {
+  display: inline-flex;
+  align-items: center;
+  height: 5rem;
+}

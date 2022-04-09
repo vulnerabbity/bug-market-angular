@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core"
 import { LocalUserService } from "src/app/features/users/local-user.service"
+import { UsersLoaderService } from "src/app/features/users/users-loader.service"
 import { User } from "src/app/features/users/users.interface"
-import { UsersService } from "src/app/features/users/users.service"
 import { assetsPaths } from "src/assets/assets.paths"
 
 @Component({
@@ -13,7 +13,7 @@ export class CommonManageAccountButtonComponent implements OnInit {
   private user?: User
   private userId: string | null = this.localUser.getUserIdOrNull()
 
-  constructor(private userService: UsersService, private localUser: LocalUserService) {}
+  constructor(private usersLoader: UsersLoaderService, private localUser: LocalUserService) {}
 
   ngOnInit(): void {
     this.loadUserIfAuthenticated()
@@ -40,6 +40,8 @@ export class CommonManageAccountButtonComponent implements OnInit {
     if (!this.userId) {
       return
     }
-    this.user = await this.userService.loadUserAsync({ id: this.userId })
+
+    const userResponse = await this.usersLoader.loadUserResponse({ id: this.userId })
+    this.user = userResponse.data
   }
 }
