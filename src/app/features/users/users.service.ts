@@ -1,13 +1,6 @@
 import { Injectable } from "@angular/core"
-import { firstValueFrom, from, map, Observable, pluck } from "rxjs"
-import {
-  CreateSellerGQL,
-  CreateSellerMutationVariables,
-  UserGQL,
-  UserQueryVariables,
-  UserWithShortProductsGQL
-} from "src/generated-gql-types"
-import { User, UserWithShortProducts } from "./users.interface"
+import { firstValueFrom, from, Observable } from "rxjs"
+import { CreateSellerGQL, CreateSellerMutationVariables } from "src/generated-gql-types"
 
 export type CreateSellerStatus = "success" | "duplicate" | "unknown"
 
@@ -15,27 +8,7 @@ export type CreateSellerStatus = "success" | "duplicate" | "unknown"
   providedIn: "root"
 })
 export class UsersService {
-  constructor(
-    private userQuery: UserGQL,
-    private userWithShortProductsQuery: UserWithShortProductsGQL,
-    private createSellerMutation: CreateSellerGQL
-  ) {}
-
-  async loadUserAsync(variables: UserQueryVariables): Promise<User> {
-    return firstValueFrom(this.loadUser$(variables))
-  }
-
-  loadUser$(variables: UserQueryVariables): Observable<User> {
-    const parsedUser$ = this.userQuery.fetch(variables).pipe(pluck("data", "user"))
-
-    return parsedUser$
-  }
-
-  loadUserWithProducts(variables: UserQueryVariables): Observable<UserWithShortProducts> {
-    const parsedUser$ = this.userWithShortProductsQuery.fetch(variables).pipe(pluck("data", "user"))
-
-    return parsedUser$
-  }
+  constructor(private createSellerMutation: CreateSellerGQL) {}
 
   createSeller$(variables: CreateSellerMutationVariables): Observable<CreateSellerStatus> {
     return from(this.createSeller(variables))

@@ -5,6 +5,7 @@ import { CommonAvatarDragAndDropComponent } from "src/app/common/components/drag
 import { FormFieldModel } from "src/app/common/components/form-fields/components/abstract-form-field"
 import { AppRouterService } from "src/app/common/services/router.service"
 import { UpdateUserService } from "src/app/features/users/update-user.service"
+import { UsersLoaderService } from "src/app/features/users/user-loader.service"
 import { UserAbilities } from "src/app/features/users/users-abilities.service"
 import { User } from "src/app/features/users/users.interface"
 import { UsersService } from "src/app/features/users/users.service"
@@ -27,6 +28,7 @@ export class EditUserPage implements OnInit {
 
   constructor(
     private usersService: UsersService,
+    private usersLoader: UsersLoaderService,
     private updateUserService: UpdateUserService,
     private currentRoute: ActivatedRoute,
     private appRouter: AppRouterService,
@@ -65,7 +67,7 @@ export class EditUserPage implements OnInit {
 
   private async loadUser() {
     const userId = await this.getUserId()
-    const loadedUser = await this.usersService.loadUserAsync({ id: userId })
+    const loadedUser = await this.usersLoader.loadUser({ id: userId })
     this.user = loadedUser
   }
 

@@ -3,7 +3,7 @@ import { Product } from "src/app/features/products/products.interface"
 import { User } from "src/app/features/users/users.interface"
 import { UsersService } from "src/app/features/users/users.service"
 import { userDefaults } from "src/app/features/users/user.defaults"
-import { firstValueFrom } from "rxjs"
+import { UsersLoaderService } from "src/app/features/users/user-loader.service"
 
 @Component({
   selector: "concrete-product-page-author[product]",
@@ -25,7 +25,7 @@ export class ConcreteProductPageAuthorComponent implements OnInit {
     return userDefaults.name
   }
 
-  constructor(private usersService: UsersService) {}
+  constructor(private usersLoader: UsersLoaderService) {}
 
   async ngOnInit() {
     this.loading = true
@@ -34,6 +34,6 @@ export class ConcreteProductPageAuthorComponent implements OnInit {
   }
 
   private async loadUser(id: string): Promise<User> {
-    return await this.usersService.loadUserAsync({ id })
+    return await this.usersLoader.loadUser({ id })
   }
 }
