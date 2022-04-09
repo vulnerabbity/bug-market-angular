@@ -1,0 +1,19 @@
+@import "src/styles/mixins.scss";
+
+:host {
+  * {
+    line-height: 100%;
+  }
+  text-align: center;
+}
+
+.section-icon {
+  @include section-logo();
+}
+
+.header {
+  font-size: min(10rem, 10vw);
+}
+.hint {
+  font-size: min(2.5rem, 5vw);
+}
