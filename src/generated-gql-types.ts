@@ -22,6 +22,24 @@ export type Categories = {
   data: Array<Scalars['String']>;
 };
 
+export type Chat = {
+  __typename?: 'Chat';
+  createdAt: Scalars['DateTime'];
+  id: Scalars['String'];
+  peersIds: Array<Scalars['String']>;
+  updatedAt: Scalars['DateTime'];
+};
+
+export type ChatMessage = {
+  __typename?: 'ChatMessage';
+  chatId: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  id: Scalars['String'];
+  text: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  userId: Scalars['String'];
+};
+
 export type City = {
   __typename?: 'City';
   countryCode: Scalars['String'];
@@ -64,6 +82,7 @@ export type Mutation = {
   createProduct: Product;
   createSeller: User;
   deleteProduct: Product;
+  sendMessage: ChatMessage;
   updateProduct: Product;
   updateUser: User;
 };
@@ -84,6 +103,11 @@ export type MutationDeleteProductArgs = {
 };
 
 
+export type MutationSendMessageArgs = {
+  SendMessageInput: SendChatMessageInput;
+};
+
+
 export type MutationUpdateProductArgs = {
   id: Scalars['String'];
   updateProductInput: UpdateProductInput;
@@ -93,6 +117,18 @@ export type MutationUpdateProductArgs = {
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
   userId: Scalars['String'];
+};
+
+export type PaginatedChatMessages = {
+  __typename?: 'PaginatedChatMessages';
+  data: Array<ChatMessage>;
+  totalResultsCount: Scalars['Int'];
+};
+
+export type PaginatedChats = {
+  __typename?: 'PaginatedChats';
+  data: Array<Chat>;
+  totalResultsCount: Scalars['Int'];
 };
 
 export type PaginatedCities = {
@@ -157,15 +193,22 @@ export type ProductSorting = {
 export type Query = {
   __typename?: 'Query';
   categories: Categories;
+  chats: PaginatedChats;
   cities: PaginatedCities;
   city: City;
   countries: PaginatedCountries;
   country: Country;
   loginWithUsername: LoginResponse;
+  messages: PaginatedChatMessages;
   product: Product;
   products: PaginatedProducts;
   refreshAccessToken: LoginResponse;
   user: User;
+};
+
+
+export type QueryChatsArgs = {
+  pagination?: InputMaybe<Pagination>;
 };
 
 
@@ -192,6 +235,12 @@ export type QueryCountryArgs = {
 export type QueryLoginWithUsernameArgs = {
   password: Scalars['String'];
   username: Scalars['String'];
+};
+
+
+export type QueryMessagesArgs = {
+  chatId: Scalars['String'];
+  pagination?: InputMaybe<Pagination>;
 };
 
 
@@ -233,6 +282,11 @@ export type SearchManyQuery = {
 export type SearchSingleQuery = {
   id: Scalars['Int'];
   languageCode?: InputMaybe<Scalars['String']>;
+};
+
+export type SendChatMessageInput = {
+  text: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 export enum SortingOrder {
@@ -532,6 +586,13 @@ export type LoginWithUsernameQueryVariables = Exact<{
 
 export type LoginWithUsernameQuery = { __typename?: 'Query', loginWithUsername: { __typename?: 'LoginResponse', access_token: string, refresh_token: string } };
 
+export type GetChatsPaginatedQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+
+export type GetChatsPaginatedQuery = { __typename?: 'Query', chats: { __typename?: 'PaginatedChats', totalResultsCount: number, data: Array<{ __typename?: 'Chat', id: string, peersIds: Array<string>, createdAt: any, updatedAt: any }> } };
+
 export type ShortProductsQueryVariables = Exact<{
   fuzzy?: InputMaybe<Scalars['String']>;
   pagination?: InputMaybe<Pagination>;
@@ -622,6 +683,30 @@ export const LoginWithUsernameDocument = gql`
   })
   export class LoginWithUsernameGQL extends Apollo.Query<LoginWithUsernameQuery, LoginWithUsernameQueryVariables> {
     document = LoginWithUsernameDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetChatsPaginatedDocument = gql`
+    query GetChatsPaginated($pagination: Pagination) {
+  chats(pagination: $pagination) {
+    totalResultsCount
+    data {
+      id
+      peersIds
+      createdAt
+      updatedAt
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetChatsPaginatedGQL extends Apollo.Query<GetChatsPaginatedQuery, GetChatsPaginatedQueryVariables> {
+    document = GetChatsPaginatedDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
