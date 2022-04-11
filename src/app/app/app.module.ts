@@ -11,6 +11,7 @@ import { AppPreferencesConfigModule } from "../features/preferences/preferences.
 import { RefreshTokenInterceptorProvider } from "../common/interceptors/refresh-token.interceptor"
 import { ErrorsPageModule } from "../pages/errors/errors-page.module"
 import { AppErrorHandlingModule } from "../common/error-handling/error-handling.module"
+import { AppStateModule } from "../state/state.module"
 
 const imports = [
   BrowserModule,
@@ -20,7 +21,8 @@ const imports = [
   GraphqlModule,
   AppPreferencesConfigModule,
   ErrorsPageModule,
-  AppErrorHandlingModule
+  AppErrorHandlingModule,
+  AppStateModule
 ]
 
 const interceptors: Provider[] = [
