@@ -21,7 +21,7 @@ export class CurrentUserState implements ReactiveState<User> {
     this.subject$.next(input)
   }
 
-  private async initState(): Promise<void> {
+  async fetchState() {
     const userIdOrNull = this.localUserService.getUserIdOrNull()
     if (userIdOrNull) {
       const userId = userIdOrNull
@@ -29,5 +29,9 @@ export class CurrentUserState implements ReactiveState<User> {
       const currentUser = await this.usersLoader.loadUserOrRedirect({ id: userId })
       this.setItem(currentUser)
     }
+  }
+
+  private async initState() {
+    await this.fetchState()
   }
 }
