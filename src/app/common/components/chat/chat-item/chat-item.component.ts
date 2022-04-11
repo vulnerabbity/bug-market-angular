@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core"
-import { Chat } from "src/app/features/chat/chats/chat.interface"
+import { ExtendedChat } from "src/app/features/chat/chats/chat.interface"
 import { assetsPaths } from "src/assets/assets.paths"
 
 @Component({
@@ -9,7 +9,7 @@ import { assetsPaths } from "src/assets/assets.paths"
 })
 export class CommonChatItemComponent {
   @Input()
-  chat!: Chat
+  chat!: ExtendedChat
 
   getChatImage() {
     return this.chat.chatImage ?? assetsPaths.NoAvatar
