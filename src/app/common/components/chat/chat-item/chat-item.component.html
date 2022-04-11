@@ -1,0 +1,11 @@
+<mat-card class="chat__card">
+  <div class="chat__image-wrapper">
+    <img class="chat__image" [src]="getChatImage()" />
+  </div>
+  <div class="chat__info">
+    <p else withLastMessage class="chat__name">
+      {{ chat.chatName }}
+    </p>
+    <p *ngIf="chat.lastMessage" class="chat__last-message">{{ chat.lastMessage }}</p>
+  </div>
+</mat-card>
