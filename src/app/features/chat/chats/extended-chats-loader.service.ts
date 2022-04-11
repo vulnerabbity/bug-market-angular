@@ -5,6 +5,7 @@ import { CurrentUserState } from "../../users/current-user.state"
 import { userDefaults } from "../../users/user.defaults"
 import { UsersLoaderService } from "../../users/users-loader.service"
 import { User } from "../../users/users.interface"
+import { MessagesLoader } from "../messages/messages-loader.service"
 import { ExtendedChat, PaginatedExtendedChats } from "./chat.interface"
 import { ChatsLoaderService } from "./chats-loader.service"
 
@@ -18,6 +19,7 @@ export class ExtendedChatsLoader implements OnDestroy {
 
   constructor(
     private usersLoader: UsersLoaderService,
+    private messagesLoader: MessagesLoader,
     private currentUserState: CurrentUserState,
     private chatsLoader: ChatsLoaderService
   ) {}
@@ -52,7 +54,11 @@ export class ExtendedChatsLoader implements OnDestroy {
   }
 
   private async resolveLastMessage(chat: ExtendedChat): Promise<ExtendedChat> {
-    return { ...chat, lastMessage: "mock last message" }
+    const { data: lastMessage } = await this.messagesLoader.getLastMessageResponse(chat.id)
+
+    const lastText = lastMessage?.text
+
+    return { ...chat, lastMessage: lastText }
   }
 
   private getChatPeerId(chat: Chat): string {
