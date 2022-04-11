@@ -16,6 +16,7 @@ import { commonDialogsComponents } from "./dialogs/dialogs.declaration"
 import { commonTogglersComponents } from "./togglers/togglers.declaration"
 import { commonCoreComponents } from "./core/core.declarations"
 import { CommonDialogsService } from "./dialogs/dialogs.service"
+import { commonChatComponents } from "./chat/chat-component.declaration"
 
 const passThroughModules = [
   MaterialModule,
@@ -34,7 +35,8 @@ const passThroughComponents = [
   commonExpanderComponents,
   commonCardsComponents,
   commonButtonsComponents,
-  commonTogglersComponents
+  commonTogglersComponents,
+  commonChatComponents
 ]
 
 @NgModule({
