@@ -9,6 +9,7 @@ import { UserAbilities } from "src/app/features/users/users-abilities.service"
 import { User } from "src/app/features/users/users.interface"
 import { EditUserDialogsService } from "./edit-user-dialogs.service"
 import { UpdateUserInput } from "src/generated-gql-types"
+import { CurrentUserState } from "src/app/state/current-user.state"
 
 @Component({
   templateUrl: "./edit-user.page.html",
@@ -22,6 +23,7 @@ export class EditUserPage implements OnInit {
   user!: User
 
   constructor(
+    private userState: CurrentUserState,
     private usersLoader: UsersLoaderService,
     private usersUpdater: UsersUpdaterService,
     private currentRoute: ActivatedRoute,
@@ -67,6 +69,7 @@ export class EditUserPage implements OnInit {
   private async updateUser({ fieldsUpdate }: { fieldsUpdate: UpdateUserInput }) {
     await this.updateUserFields(fieldsUpdate)
     await this.handlerAvatarChange()
+    await this.userState.fetchState()
   }
 
   private async handlerAvatarChange() {
