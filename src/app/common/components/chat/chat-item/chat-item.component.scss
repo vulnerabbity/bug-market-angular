@@ -23,7 +23,7 @@ p {
     flex-direction: column;
     justify-content: space-between;
 
-    padding: 0.5rem 0;
+    padding: 1rem 0;
 
     width: calc(100% - 9rem);
     margin: 0 auto;
@@ -34,6 +34,10 @@ p {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    font-weight: 400;
+    font-size: 2.4rem;
+    line-height: 3rem;
   }
 
   &__image-wrapper {
@@ -51,6 +55,7 @@ p {
 
     border-radius: 50%;
 
+    object-fit: cover;
     height: 100%;
     width: 100%;
   }
