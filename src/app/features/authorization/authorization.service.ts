@@ -5,16 +5,27 @@ import {
   AppAbilitySubject
 } from "./authorization.interface"
 import { Ability, AbilityBuilder, AbilityClass, ExtractSubjectType } from "@casl/ability"
-import { Injectable } from "@angular/core"
-import { UserStatusService } from "../users/user-status.service"
+import { Injectable, OnDestroy } from "@angular/core"
 import { Product } from "../products/products.interface"
 import { AccessTokensService } from "../tokens/access/access-token.service"
 import { User } from "../users/users.interface"
+import { CurrentUserState } from "src/app/state/current-user.state"
 
 @Injectable()
-export class AuthorizationService {
+export class AuthorizationService implements OnDestroy {
   private accessTokenService = new AccessTokensService()
-  private userStatusService = new UserStatusService()
+
+  private currentUser!: User | null
+
+  private currentUserSubscription = this.userState.item$.subscribe(
+    currentUser => (this.currentUser = currentUser)
+  )
+
+  constructor(private userState: CurrentUserState) {}
+
+  ngOnDestroy(): void {
+    this.currentUserSubscription.unsubscribe()
+  }
 
   isAllowed(action: AppAbilityAction, subject: AppAbilitySubject): boolean {
     const ability = this.defineAbilities()
@@ -22,7 +33,7 @@ export class AuthorizationService {
   }
 
   defineAbilities() {
-    const user: AbilityUser = this.parseAbilityUserFromStorage()
+    const user: AbilityUser = this.getAbilityUser()
     const { roles, userId } = user
 
     const { can, rules, build } = new AbilityBuilder<AppAbility>(
@@ -49,10 +60,10 @@ export class AuthorizationService {
     })
   }
 
-  private parseAbilityUserFromStorage(): AbilityUser {
-    const isUserLoggedIn = this.userStatusService.isAuthenticated()
+  private getAbilityUser(): AbilityUser {
+    const currentUser = this.currentUser
 
-    if (isUserLoggedIn === false) {
+    if (!currentUser) {
       return { roles: [], userId: "none" }
     }
 
