@@ -9,7 +9,7 @@ import { UserAbilities } from "src/app/features/users/users-abilities.service"
 import { User } from "src/app/features/users/users.interface"
 import { EditUserDialogsService } from "./edit-user-dialogs.service"
 import { UpdateUserInput } from "src/generated-gql-types"
-import { CurrentUserState } from "src/app/state/current-user.state"
+import { CurrentUserState } from "src/app/features/users/current-user.state"
 
 @Component({
   templateUrl: "./edit-user.page.html",
