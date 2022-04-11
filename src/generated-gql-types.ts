@@ -198,6 +198,7 @@ export type Query = {
   city: City;
   countries: PaginatedCountries;
   country: Country;
+  lastMessage?: Maybe<ChatMessage>;
   loginWithUsername: LoginResponse;
   messages: PaginatedChatMessages;
   product: Product;
@@ -229,6 +230,11 @@ export type QueryCountriesArgs = {
 
 export type QueryCountryArgs = {
   query: SearchSingleQuery;
+};
+
+
+export type QueryLastMessageArgs = {
+  chatId: Scalars['String'];
 };
 
 
@@ -593,6 +599,28 @@ export type GetChatsPaginatedQueryVariables = Exact<{
 
 export type GetChatsPaginatedQuery = { __typename?: 'Query', chats: { __typename?: 'PaginatedChats', totalResultsCount: number, data: Array<{ __typename?: 'Chat', id: string, peersIds: Array<string>, createdAt: any, updatedAt: any }> } };
 
+export type GetMessagesQueryVariables = Exact<{
+  chatId: Scalars['String'];
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+
+export type GetMessagesQuery = { __typename?: 'Query', messages: { __typename?: 'PaginatedChatMessages', totalResultsCount: number, data: Array<{ __typename?: 'ChatMessage', id: string, chatId: string, userId: string, text: string, createdAt: any, updatedAt: any }> } };
+
+export type LastMessageQueryVariables = Exact<{
+  chatId: Scalars['String'];
+}>;
+
+
+export type LastMessageQuery = { __typename?: 'Query', lastMessage?: { __typename?: 'ChatMessage', id: string, chatId: string, userId: string, text: string, createdAt: any, updatedAt: any } | null };
+
+export type SendMessageMutationVariables = Exact<{
+  input: SendChatMessageInput;
+}>;
+
+
+export type SendMessageMutation = { __typename?: 'Mutation', sendMessage: { __typename?: 'ChatMessage', id: string, chatId: string, userId: string, text: string, createdAt: any, updatedAt: any } };
+
 export type ShortProductsQueryVariables = Exact<{
   fuzzy?: InputMaybe<Scalars['String']>;
   pagination?: InputMaybe<Pagination>;
@@ -707,6 +735,78 @@ export const GetChatsPaginatedDocument = gql`
   })
   export class GetChatsPaginatedGQL extends Apollo.Query<GetChatsPaginatedQuery, GetChatsPaginatedQueryVariables> {
     document = GetChatsPaginatedDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetMessagesDocument = gql`
+    query GetMessages($chatId: String!, $pagination: Pagination) {
+  messages(chatId: $chatId, pagination: $pagination) {
+    totalResultsCount
+    data {
+      id
+      chatId
+      userId
+      text
+      createdAt
+      updatedAt
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetMessagesGQL extends Apollo.Query<GetMessagesQuery, GetMessagesQueryVariables> {
+    document = GetMessagesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const LastMessageDocument = gql`
+    query LastMessage($chatId: String!) {
+  lastMessage(chatId: $chatId) {
+    id
+    chatId
+    userId
+    text
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class LastMessageGQL extends Apollo.Query<LastMessageQuery, LastMessageQueryVariables> {
+    document = LastMessageDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const SendMessageDocument = gql`
+    mutation SendMessage($input: SendChatMessageInput!) {
+  sendMessage(SendMessageInput: $input) {
+    id
+    chatId
+    userId
+    text
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SendMessageGQL extends Apollo.Mutation<SendMessageMutation, SendMessageMutationVariables> {
+    document = SendMessageDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

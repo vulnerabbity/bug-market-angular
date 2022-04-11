@@ -1,0 +1,35 @@
+query GetMessages($chatId: String!, $pagination: Pagination) {
+  messages(chatId: $chatId, pagination: $pagination) {
+    totalResultsCount
+    data {
+      id
+      chatId
+      userId
+      text
+      createdAt
+      updatedAt
+    }
+  }
+}
+
+query LastMessage($chatId: String!) {
+  lastMessage(chatId: $chatId) {
+    id
+    chatId
+    userId
+    text
+    createdAt
+    updatedAt
+  }
+}
+
+mutation SendMessage($input: SendChatMessageInput!) {
+  sendMessage(SendMessageInput: $input) {
+    id
+    chatId
+    userId
+    text
+    createdAt
+    updatedAt
+  }
+}
