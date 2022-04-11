@@ -9,7 +9,7 @@ import { Injectable, OnDestroy } from "@angular/core"
 import { Product } from "../products/products.interface"
 import { AccessTokensService } from "../tokens/access/access-token.service"
 import { User } from "../users/users.interface"
-import { CurrentUserState } from "src/app/state/current-user.state"
+import { CurrentUserState } from "../users/current-user.state"
 
 @Injectable()
 export class AuthorizationService implements OnDestroy {

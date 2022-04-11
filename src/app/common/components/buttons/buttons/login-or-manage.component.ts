@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from "@angular/core"
+import { CurrentUserState } from "src/app/features/users/current-user.state"
 import { User } from "src/app/features/users/users.interface"
-import { CurrentUserState } from "src/app/state/current-user.state"
 
 @Component({
   selector: "common-login-or-manage-button",
