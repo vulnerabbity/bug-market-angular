@@ -4,6 +4,7 @@ import { UsersUpdaterService } from "./users-updater.service"
 import { UsersLoaderService } from "./users-loader.service"
 import { UserAbilities } from "./users-abilities.service"
 import { UsersCreatorService } from "./users-creator.service"
+import { CurrentUserState } from "./current-user.state"
 
 @NgModule({
   providers: [
@@ -11,7 +12,8 @@ import { UsersCreatorService } from "./users-creator.service"
     UsersLoaderService,
     UsersUpdaterService,
     LocalUserService,
-    UserAbilities
+    UserAbilities,
+    CurrentUserState
   ]
 })
 export class UsersModule {}
