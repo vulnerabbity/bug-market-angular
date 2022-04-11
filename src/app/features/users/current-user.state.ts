@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core"
 import { BehaviorSubject, from, Observable } from "rxjs"
-import { LocalUserService } from "../features/users/local-user.service"
-import { UsersLoaderService } from "../features/users/users-loader.service"
-import { User } from "../features/users/users.interface"
-import { ReactiveState } from "./state.interface"
+import { ReactiveState } from "src/app/common/interfaces/state.interface"
+import { LocalUserService } from "./local-user.service"
+import { UsersLoaderService } from "./users-loader.service"
+import { User } from "./users.interface"
 
 @Injectable({
   providedIn: "root"
 })
-export class CurrentUserState implements ReactiveState<User> {
+export class CurrentUserState implements ReactiveState<User | null> {
   subject$ = new BehaviorSubject<null | User>(null)
 
   item$: Observable<User | null> = from(this.subject$)
