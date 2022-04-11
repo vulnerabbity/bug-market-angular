@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core"
-import { Chat } from "src/app/features/chat/chats/chat.interface"
+import { AppPathsEnum } from "src/app/app/app-routing.module"
+import { ExtendedChat } from "src/app/features/chat/chats/chat.interface"
 
 @Component({
   selector: "common-chats-container",
@@ -8,5 +9,9 @@ import { Chat } from "src/app/features/chat/chats/chat.interface"
 })
 export class CommonChatContainerComponent {
   @Input()
-  chats: Chat[] = []
+  chats: ExtendedChat[] = []
+
+  getChatReference(chatId: string): string {
+    return `/${AppPathsEnum.ConcreteChat}/${chatId}`
+  }
 }
