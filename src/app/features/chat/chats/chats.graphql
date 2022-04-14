@@ -9,3 +9,12 @@ query GetChatsPaginated($pagination: Pagination) {
     }
   }
 }
+
+query GetConcreteChat($chatId: String!) {
+  chat(chatId: $chatId) {
+    id
+    peersIds
+    createdAt
+    updatedAt
+  }
+}
