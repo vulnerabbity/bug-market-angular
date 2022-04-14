@@ -193,6 +193,7 @@ export type ProductSorting = {
 export type Query = {
   __typename?: 'Query';
   categories: Categories;
+  chat: Chat;
   chats: PaginatedChats;
   cities: PaginatedCities;
   city: City;
@@ -205,6 +206,11 @@ export type Query = {
   products: PaginatedProducts;
   refreshAccessToken: LoginResponse;
   user: User;
+};
+
+
+export type QueryChatArgs = {
+  chatId: Scalars['String'];
 };
 
 
@@ -599,6 +605,13 @@ export type GetChatsPaginatedQueryVariables = Exact<{
 
 export type GetChatsPaginatedQuery = { __typename?: 'Query', chats: { __typename?: 'PaginatedChats', totalResultsCount: number, data: Array<{ __typename?: 'Chat', id: string, peersIds: Array<string>, createdAt: any, updatedAt: any }> } };
 
+export type GetConcreteChatQueryVariables = Exact<{
+  chatId: Scalars['String'];
+}>;
+
+
+export type GetConcreteChatQuery = { __typename?: 'Query', chat: { __typename?: 'Chat', id: string, peersIds: Array<string>, createdAt: any, updatedAt: any } };
+
 export type GetMessagesQueryVariables = Exact<{
   chatId: Scalars['String'];
   pagination?: InputMaybe<Pagination>;
@@ -735,6 +748,27 @@ export const GetChatsPaginatedDocument = gql`
   })
   export class GetChatsPaginatedGQL extends Apollo.Query<GetChatsPaginatedQuery, GetChatsPaginatedQueryVariables> {
     document = GetChatsPaginatedDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetConcreteChatDocument = gql`
+    query GetConcreteChat($chatId: String!) {
+  chat(chatId: $chatId) {
+    id
+    peersIds
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetConcreteChatGQL extends Apollo.Query<GetConcreteChatQuery, GetConcreteChatQueryVariables> {
+    document = GetConcreteChatDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
