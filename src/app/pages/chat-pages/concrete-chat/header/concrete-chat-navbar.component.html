@@ -1,0 +1,13 @@
+<div class="container">
+  <mat-toolbar class="navbar" color="accent">
+    <button mat-icon-button (click)="onBackClick()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <img
+      class="navbar__image"
+      [src]="this.chat.chatImage"
+      [alt]="'avatar of ' + this.chat.chatName"
+    />
+    <h3 class="navbar__chat-name">{{ chat.chatName }}</h3>
+  </mat-toolbar>
+</div>
