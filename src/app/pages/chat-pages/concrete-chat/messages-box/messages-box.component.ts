@@ -1,6 +1,6 @@
 import { AfterViewChecked, Component, ElementRef, OnDestroy, ViewChild } from "@angular/core"
-import { CurrentChatState } from "src/app/features/chat/current-chat.state"
 import { MessageTypeService } from "src/app/features/chat/messages/message-type.service"
+import { CurrentChatMessagesState } from "src/app/features/chat/messages/messages.state"
 import { ChatMessage } from "src/generated-gql-types"
 
 export type MessageClass = "message__incoming" | "message__outgoing"
@@ -16,12 +16,12 @@ export class MessagesBoxComponent implements OnDestroy, AfterViewChecked {
 
   messages: ChatMessage[] = []
 
-  messagesSubscription = this.chatState.messages$.subscribe(messages => {
+  messagesSubscription = this.messagesState.messages$.subscribe(messages => {
     this.messages = messages
   })
 
   constructor(
-    private chatState: CurrentChatState,
+    private messagesState: CurrentChatMessagesState,
     private messageTypeService: MessageTypeService
   ) {}
 

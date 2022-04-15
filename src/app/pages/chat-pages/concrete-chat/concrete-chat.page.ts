@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { firstValueFrom, map } from "rxjs"
-import { CurrentChatState } from "src/app/features/chat/current-chat.state"
+import { CurrentChatState } from "src/app/features/chat/chats/current-chat.state"
 
 @Component({
   templateUrl: "./concrete-chat.page.html",

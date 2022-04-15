@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core"
 import { ExtendedChat } from "src/app/features/chat/chats/chat.interface"
-import { CurrentChatState } from "src/app/features/chat/current-chat.state"
+import { CurrentChatState } from "src/app/features/chat/chats/current-chat.state"
 
 @Component({
   selector: "concrete-chat__top-navbar",

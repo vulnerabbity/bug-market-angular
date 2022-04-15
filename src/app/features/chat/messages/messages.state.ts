@@ -1,48 +1,29 @@
 import { Injectable } from "@angular/core"
 import { BehaviorSubject, Subject } from "rxjs"
 import { makeDeepCopy } from "src/app/common/services/deepcopy.service"
-import { AppRouterService } from "src/app/common/services/router.service"
 import { ChatMessage, Pagination } from "src/generated-gql-types"
-import { ExtendedChat } from "./chats/chat.interface"
-import { ConcreteExtendedChatLoader } from "./chats/concrete-extended-chat-loader.service"
-import { MessagesLoader } from "./messages/messages-loader.service"
+import { ExtendedChat } from "../chats/chat.interface"
+import { CurrentChatState } from "../chats/current-chat.state"
+import { MessagesLoader } from "./messages-loader.service"
 
 @Injectable({ providedIn: "root" })
-export class CurrentChatState {
+export class CurrentChatMessagesState {
   messages: ChatMessage[] = []
 
   chat: ExtendedChat | null = null
-
-  chat$ = new BehaviorSubject<ExtendedChat | null>(null)
 
   messages$ = new BehaviorSubject<ChatMessage[]>([])
 
   messageSended$ = new Subject<void>()
 
-  private messagesSub = this.messages$.subscribe(messages => (this.messages = messages))
-  private chatSub = this.chat$.subscribe(chat => (this.chat = chat))
+  private chatSub = this.subscribeToChat()
+  private messagesSub = this.subscribeToMessages()
   private messageSendSub = this.messageSended$.subscribe(() => this.syncLastMessages())
 
-  constructor(
-    private appRouter: AppRouterService,
-    private chatLoader: ConcreteExtendedChatLoader,
-    private messagesLoader: MessagesLoader
-  ) {}
+  constructor(private messagesLoader: MessagesLoader, private currentChatState: CurrentChatState) {}
 
   init(chatId: string) {
-    this.initChat(chatId)
     this.initMessages(chatId)
-  }
-
-  quit() {
-    this.appRouter.redirectToChats()
-    this.chat$.next(null)
-  }
-
-  private async initChat(chatId: string) {
-    const chat = await this.chatLoader.loadExtendedChatOrRedirect(chatId)
-
-    this.chat$.next(chat)
   }
 
   private async initMessages(chatId: string) {
@@ -72,5 +53,20 @@ export class CurrentChatState {
 
     messages.splice(0, amount, ...newMessages)
     this.messages$.next(messages)
+  }
+
+  private subscribeToChat() {
+    return this.currentChatState.chat$.subscribe(chat => {
+      this.chat = chat
+      if (chat) {
+        this.init(chat.id)
+      }
+    })
+  }
+
+  private subscribeToMessages() {
+    return this.messages$.subscribe(messages => {
+      this.messages = messages
+    })
   }
 }
