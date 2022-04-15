@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef } from "@angular/material/dialog"
 import { CommonRegisterDialogComponent } from "../register/register-dialog.component"
 import { FormFieldModel } from "../../form-fields/components/abstract-form-field"
 import { AuthenticationService } from "src/app/features/authentication/authentication.service"
+import { CurrentUserState } from "src/app/features/users/current-user.state"
 
 @Component({
   templateUrl: "./login-dialog.component.html",
@@ -26,7 +27,8 @@ export class CommonLoginDialogComponent implements OnInit {
   constructor(
     private authentication: AuthenticationService,
     private dialog: MatDialog,
-    private currentDialog: MatDialogRef<CommonLoginDialogComponent>
+    private currentDialog: MatDialogRef<CommonLoginDialogComponent>,
+    private userState: CurrentUserState
   ) {}
 
   isFormValid(): boolean {
@@ -50,6 +52,7 @@ export class CommonLoginDialogComponent implements OnInit {
 
     if (status === "success") {
       this.currentDialog.close()
+      this.userState.fetchState()
     }
 
     if (status === "not-found") {
