@@ -25,6 +25,8 @@
 .messages-wrapper {
   position: absolute;
 
+  padding: 0 1rem;
+
   width: 100%;
 }
 
@@ -35,6 +37,7 @@
 
 .message {
   padding: 0.5rem 0;
+  max-width: 80%;
 
   &__outgoing {
     margin-left: auto;
