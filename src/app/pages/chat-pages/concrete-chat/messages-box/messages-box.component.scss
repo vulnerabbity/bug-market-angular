@@ -1,10 +1,26 @@
 :host {
   display: flex;
   flex-direction: column;
-
-  height: 100%;
 }
 
 .component-root {
+  overflow: auto;
   flex-grow: 1;
+}
+
+.messages-wrapper {
+  position: absolute;
+}
+
+.messages-inner {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.message {
+  padding: 0.5rem 0;
+
+  &__outgoing {
+    margin-left: auto;
+  }
 }
