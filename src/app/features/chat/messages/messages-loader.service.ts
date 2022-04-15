@@ -32,13 +32,13 @@ export class MessagesLoader {
     return parsedResponse$
   }
 
-  async getMessagesResponse(chatId: string, pagination: Pagination) {
+  async getMessagesResponse(chatId: string, pagination?: Pagination) {
     const response$ = this.getMessagesResponse$(chatId, pagination)
 
     return await firstValueFrom(response$)
   }
 
-  getMessagesResponse$(chatId: string, pagination: Pagination) {
+  getMessagesResponse$(chatId: string, pagination?: Pagination) {
     const response$ = this.getMessagesQuery.fetch({ chatId, pagination })
     const parsedResponse$ = response$.pipe(
       map(response => this.gqlParser.parse<PaginatedChatMessages>(response))
