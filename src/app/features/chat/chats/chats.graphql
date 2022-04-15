@@ -1,0 +1,20 @@
+query GetChatsPaginated($pagination: Pagination) {
+  chats(pagination: $pagination) {
+    totalResultsCount
+    data {
+      id
+      peersIds
+      createdAt
+      updatedAt
+    }
+  }
+}
+
+query GetConcreteChat($chatId: String!) {
+  chat(chatId: $chatId) {
+    id
+    peersIds
+    createdAt
+    updatedAt
+  }
+}

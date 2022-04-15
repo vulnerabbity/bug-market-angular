@@ -1,0 +1,24 @@
+:host {
+  display: block;
+}
+
+.navbar {
+  // top radius
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+
+  &__image {
+    display: block;
+    height: 90%;
+
+    margin: 0 1rem;
+
+    border-radius: 50%;
+
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+  &__chat-name {
+    font-size: 2.5rem;
+  }
+}

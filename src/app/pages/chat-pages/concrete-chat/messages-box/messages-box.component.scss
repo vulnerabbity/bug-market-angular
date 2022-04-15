@@ -1,0 +1,45 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.component-root {
+  display: flex;
+  flex-direction: column;
+
+  padding: 0;
+
+  // take available height
+  flex-grow: 1;
+}
+
+.messages-container {
+  position: relative;
+
+  // vertical scroll
+  overflow-y: auto;
+
+  flex-grow: 1;
+}
+
+.messages-wrapper {
+  position: absolute;
+
+  padding: 0 1rem;
+
+  width: 100%;
+}
+
+.messages-inner {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.message {
+  padding: 0.5rem 0;
+  max-width: 80%;
+
+  &__outgoing {
+    margin-left: auto;
+  }
+}

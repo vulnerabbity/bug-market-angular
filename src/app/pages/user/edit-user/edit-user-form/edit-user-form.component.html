@@ -1,0 +1,13 @@
+<form>
+  <common-user-name-form-field [(model)]="nameModel"></common-user-name-form-field>
+  <common-multiline-field
+    [(model)]="aboutModel"
+    label="Tell about you"
+    [maxLength]="500"
+  ></common-multiline-field>
+
+  <div class="form-actions">
+    <button (click)="onDiscard()" mat-raised-button color="accent" type="button">Discard</button>
+    <button (click)="onApply()" mat-raised-button color="primary" type="submit">Apply</button>
+  </div>
+</form>

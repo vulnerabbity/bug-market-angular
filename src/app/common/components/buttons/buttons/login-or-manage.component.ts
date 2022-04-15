@@ -1,21 +1,28 @@
-import { Component } from "@angular/core"
-import { UserStatusService } from "src/app/features/users/user-status.service"
+import { Component, OnDestroy } from "@angular/core"
+import { CurrentUserState } from "src/app/features/users/current-user.state"
+import { User } from "src/app/features/users/users.interface"
 
 @Component({
   selector: "common-login-or-manage-button",
   template: `
     <common-manage-account-button
-      *ngIf="this.isAuthenticated(); else login"
+      *ngIf="this.currentUser; else login"
     ></common-manage-account-button>
     <ng-template #login>
       <common-login-button></common-login-button>
     </ng-template>
   `
 })
-export class CommonLoginOrManageButtonComponent {
-  constructor(private userStatus: UserStatusService) {}
+export class CommonLoginOrManageButtonComponent implements OnDestroy {
+  currentUser!: User | null
 
-  isAuthenticated(): boolean {
-    return this.userStatus.isAuthenticated()
+  currentUserSubscription = this.userState.item$.subscribe(
+    currentUser => (this.currentUser = currentUser)
+  )
+
+  constructor(private userState: CurrentUserState) {}
+
+  ngOnDestroy(): void {
+    this.currentUserSubscription.unsubscribe()
   }
 }

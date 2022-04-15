@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core"
 import { ApolloQueryResult } from "@apollo/client/core"
+import { MutationResult } from "apollo-angular"
 import { HttpResponse, HttpStatuses } from "../interfaces/responses.interface"
 import { StatusCodes } from "../interfaces/status-codes.interface"
 
 @Injectable({ providedIn: "root" })
 export class GraphqlParserService {
-  parse<T>(response: ApolloQueryResult<any>): HttpResponse<T> {
+  parse<T>(response: ApolloQueryResult<any> | MutationResult<any>): HttpResponse<T> {
     const data = response.data
     if (data) {
       const queryName = Object.keys(data)[0]
@@ -13,7 +14,7 @@ export class GraphqlParserService {
       return { data: data[queryName], status: HttpStatuses.Success }
     }
 
-    const statusCode = this.parseStatusCode(response)
+    const statusCode = this.parseStatusCode(response as ApolloQueryResult<any>)
 
     if (statusCode === StatusCodes.NotFound) {
       return { status: HttpStatuses.NotFound }

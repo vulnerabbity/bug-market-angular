@@ -1,6 +1,5 @@
-import { Component, OnInit } from "@angular/core"
-import { LocalUserService } from "src/app/features/users/local-user.service"
-import { UsersLoaderService } from "src/app/features/users/users-loader.service"
+import { Component, OnDestroy } from "@angular/core"
+import { CurrentUserState } from "src/app/features/users/current-user.state"
 import { User } from "src/app/features/users/users.interface"
 import { assetsPaths } from "src/assets/assets.paths"
 
@@ -9,18 +8,19 @@ import { assetsPaths } from "src/assets/assets.paths"
   templateUrl: "./account-actions.component.html",
   styleUrls: ["./account-actions.component.scss"]
 })
-export class CommonManageAccountButtonComponent implements OnInit {
-  private user?: User
-  private userId: string | null = this.localUser.getUserIdOrNull()
+export class CommonManageAccountButtonComponent implements OnDestroy {
+  user?: User
 
-  constructor(private usersLoader: UsersLoaderService, private localUser: LocalUserService) {}
+  userSubscription = this.userState.item$.subscribe(userOrNull => {
+    if (userOrNull) {
+      this.user = userOrNull
+    }
+  })
 
-  ngOnInit(): void {
-    this.loadUserIfAuthenticated()
-  }
+  constructor(private userState: CurrentUserState) {}
 
-  onLogoutClick() {
-    this.onLogout()
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe()
   }
 
   getAvatarSource(): string {
@@ -30,18 +30,5 @@ export class CommonManageAccountButtonComponent implements OnInit {
       return this.user?.avatarUrl ?? defaultAvatar
     }
     return defaultAvatar
-  }
-
-  private onLogout() {
-    this.user = undefined
-  }
-
-  private async loadUserIfAuthenticated() {
-    if (!this.userId) {
-      return
-    }
-
-    const userResponse = await this.usersLoader.loadUserResponse({ id: this.userId })
-    this.user = userResponse.data
   }
 }

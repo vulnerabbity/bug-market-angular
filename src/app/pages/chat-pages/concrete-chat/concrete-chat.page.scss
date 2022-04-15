@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  flex-grow: 1;
+  width: 100%;
+}
+
+.top-navbar {
+  margin-top: 0.5rem;
+}
+
+.messages-box {
+  flex-grow: 1;
+}

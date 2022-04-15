@@ -14,35 +14,9 @@
     </ng-container>
     <ng-template #mainLoaded>
       <main>
-        <section class="user-profile">
-          <h2 class="visually-hidden">Profile data</h2>
-          <div class="avatar-wrapper">
-            <common-edit-user-icon
-              *ngIf="isUpdateAllowed()"
-              class="edit-user-under-avatar"
-              [userId]="this.user.id"
-            ></common-edit-user-icon>
-            <img class="avatar" [src]="this.avatarUrlOrDefault" />
-          </div>
-          <div class="user-specs">
-            <common-data-field
-              class="data-item"
-              *ngFor="let property of this.keyValueProperties"
-              [key]="property.key"
-              [value]="property.value"
-            ></common-data-field>
-          </div>
-        </section>
         <section>
-          <h2 class="visually-hidden">Description</h2>
-          <ng-template [ngIf]="this.user.about">
-            <common-title-text-card
-              class="about"
-              [title]="'About ' + this.userNameOrDefault + ':'"
-              [text]="this.user.about"
-            >
-            </common-title-text-card>
-          </ng-template>
+          <h2 class="visually-hidden">User profile</h2>
+          <view-user-page__profile [user]="this.user"></view-user-page__profile>
         </section>
         <section *ngIf="this.user.products.length">
           <h2 class="products-header">Products of {{ this.userNameOrDefault }}:</h2>

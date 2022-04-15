@@ -1,0 +1,29 @@
+:host {
+  display: block;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+.message-body {
+  border-radius: 0.6rem;
+  overflow: hidden;
+  max-width: fit-content;
+}
+
+.inner-content {
+  padding: 0.5rem;
+}
+
+.text {
+  font-size: 1.8rem;
+}
+
+.time {
+  margin-left: 1rem;
+
+  opacity: 0.6;
+
+  font-size: 1.2rem;
+}

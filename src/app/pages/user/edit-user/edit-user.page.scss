@@ -3,23 +3,3 @@
 .section-logo {
   @include section-logo();
 }
-
-.form-actions {
-  width: 80%;
-  margin: 0 auto;
-
-  display: grid;
-  grid-gap: 2vw;
-}
-
-.form-actions {
-  grid-template-columns: 1fr 1fr;
-  height: 8rem;
-
-  @media screen and (max-width: 40rem) {
-    grid-template-columns: 1fr;
-    height: 16rem;
-  }
-
-  margin-bottom: 2rem;
-}

@@ -8,48 +8,6 @@
   font-size: 2rem;
 }
 
-.avatar {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1;
-  height: auto;
-
-  object-fit: cover;
-
-  border-radius: 50%;
-  box-shadow: 0 0 10px rgba(black, 0.5);
-}
-
-.avatar-wrapper {
-  position: relative;
-
-  padding: 1rem;
-  margin: 0 auto;
-
-  max-height: 50rem;
-  max-width: 50rem;
-}
-
-.edit-user-under-avatar {
-  position: absolute;
-  top: 3%;
-  right: 15%;
-}
-
-.user-profile {
-  margin-top: 2rem;
-  display: grid;
-  grid-template-columns: 1fr;
-
-  @media (min-width: 60rem) {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 .main-spinner {
   margin: 0 auto;
-}
-
-.about {
-  margin-top: 1rem;
 }

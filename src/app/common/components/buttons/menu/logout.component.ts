@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from "@angular/core"
 import { MatDialog } from "@angular/material/dialog"
 import { firstValueFrom } from "rxjs"
 import { AuthenticationService } from "src/app/features/authentication/authentication.service"
+import { CurrentUserState } from "src/app/features/users/current-user.state"
 import { CommonConfirmDialogComponent } from "../../dialogs/confirm/confirm-dialog.component"
 
 @Component({
@@ -15,29 +16,22 @@ import { CommonConfirmDialogComponent } from "../../dialogs/confirm/confirm-dial
   `
 })
 export class CommonLogoutMenuButtonComponent {
-  constructor(
-    private authenticationService: AuthenticationService,
-    private dialogsManager: MatDialog
-  ) {}
-
-  @Output()
-  onLogout = new EventEmitter()
+  constructor(private dialogsManager: MatDialog, private userState: CurrentUserState) {}
 
   async onLogoutClick() {
     const needLogout = await this.showConfirmationDialog()
     if (needLogout) {
       this.logout()
-      this.onLogout.emit()
     }
   }
 
   private logout() {
-    this.authenticationService.logout()
+    this.userState.logout()
   }
 
   private async showConfirmationDialog(): Promise<boolean> {
     const confirmDialogRef = this.dialogsManager.open(CommonConfirmDialogComponent)
-    confirmDialogRef.componentInstance.confirmationText = "You sure you want logout?"
+    confirmDialogRef.componentInstance.confirmationText = "You sure you want to logout?"
 
     return await firstValueFrom<boolean>(confirmDialogRef.afterClosed())
   }
