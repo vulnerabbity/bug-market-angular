@@ -18,7 +18,7 @@ export class GlobalErrorHandler implements ErrorHandler {
       return this.errorsRouter.redirectToUnavailable()
     }
 
-    throw error
+    console.error(error)
   }
 
   private isRedirectionError(error: any): boolean {
