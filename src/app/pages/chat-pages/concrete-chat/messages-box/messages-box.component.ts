@@ -1,9 +1,7 @@
-import { Component, Input, OnDestroy } from "@angular/core"
+import { AfterViewChecked, Component, ElementRef, OnDestroy, ViewChild } from "@angular/core"
 import { CurrentChatState } from "src/app/features/chat/current-chat.state"
 import { MessageTypeService } from "src/app/features/chat/messages/message-type.service"
-import { CurrentUserState } from "src/app/features/users/current-user.state"
-import { User } from "src/app/features/users/users.interface"
-import { Chat, ChatMessage } from "src/generated-gql-types"
+import { ChatMessage } from "src/generated-gql-types"
 
 export type MessageClass = "message__incoming" | "message__outgoing"
 
@@ -12,7 +10,10 @@ export type MessageClass = "message__incoming" | "message__outgoing"
   templateUrl: "./messages-box.component.html",
   styleUrls: ["./messages-box.component.scss"]
 })
-export class MessagesBoxComponent implements OnDestroy {
+export class MessagesBoxComponent implements OnDestroy, AfterViewChecked {
+  @ViewChild("scrollContainer")
+  scrollContainer!: ElementRef
+
   messages: ChatMessage[] = []
 
   messagesSubscription = this.chatState.messages$.subscribe(messages => {
@@ -23,6 +24,10 @@ export class MessagesBoxComponent implements OnDestroy {
     private chatState: CurrentChatState,
     private messageTypeService: MessageTypeService
   ) {}
+
+  ngAfterViewChecked(): void {
+    this.scrollBottom()
+  }
 
   getMessageClass(message: ChatMessage): MessageClass {
     const isIncoming = this.isIncomingMessage(message)
@@ -36,6 +41,13 @@ export class MessagesBoxComponent implements OnDestroy {
 
   private isIncomingMessage(message: ChatMessage): boolean {
     return this.messageTypeService.isIncomingMessage(message)
+  }
+
+  private scrollBottom() {
+    const height = this.scrollContainer.nativeElement.scrollHeight
+    this.scrollContainer.nativeElement.scroll({
+      top: height
+    })
   }
 
   ngOnDestroy(): void {

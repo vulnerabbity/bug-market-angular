@@ -4,12 +4,28 @@
 }
 
 .component-root {
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+
+  padding: 0;
+
+  // take available height
+  flex-grow: 1;
+}
+
+.messages-container {
+  position: relative;
+
+  // vertical scroll
+  overflow-y: auto;
+
   flex-grow: 1;
 }
 
 .messages-wrapper {
   position: absolute;
+
+  width: 100%;
 }
 
 .messages-inner {
