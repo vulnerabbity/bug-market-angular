@@ -3,6 +3,7 @@ import { BehaviorSubject, from, Observable } from "rxjs"
 import { ReactiveState } from "src/app/common/interfaces/state.interface"
 import { AppRouterService } from "src/app/common/services/router.service"
 import { AuthenticationService } from "../authentication/authentication.service"
+import { ChatNotificationsService } from "../chat/notifications/chat-notifications.service"
 import { LocalUserService } from "./local-user.service"
 import { UsersLoaderService } from "./users-loader.service"
 import { User } from "./users.interface"
@@ -15,13 +16,17 @@ export class CurrentUserState implements ReactiveState<User | null> {
 
   item$: Observable<User | null> = from(this.subject$)
 
+  item: User | null = null
+
   constructor(
     private usersLoader: UsersLoaderService,
     private localUserService: LocalUserService,
     private authenticationService: AuthenticationService,
-    private appRouter: AppRouterService
+    private appRouter: AppRouterService,
+    private notifications: ChatNotificationsService
   ) {
     this.initState()
+    this.item$.subscribe(user => (this.item = user))
   }
 
   setItem(input: User | null) {
@@ -46,5 +51,8 @@ export class CurrentUserState implements ReactiveState<User | null> {
 
   private async initState() {
     await this.fetchState()
+    if (this.item) {
+      this.notifications.listen()
+    }
   }
 }
