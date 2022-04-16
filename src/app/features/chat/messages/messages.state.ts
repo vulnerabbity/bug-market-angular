@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core"
 import { BehaviorSubject, Subject } from "rxjs"
 import { makeDeepCopy } from "src/app/common/services/deepcopy.service"
-import { ChatMessage, Pagination } from "src/generated-gql-types"
+import { ChatMessage } from "src/generated-gql-types"
 import { ExtendedChat } from "../chats/chat.interface"
 import { CurrentChatState } from "../chats/current-chat.state"
+import { ChatEvents } from "../notifications/chat.events"
 import { MessagesLoader } from "./messages-loader.service"
 
 @Injectable({ providedIn: "root" })
@@ -16,11 +17,15 @@ export class CurrentChatMessagesState {
 
   messageSended$ = new Subject<void>()
 
-  private chatSub = this.subscribeToChat()
-  private messagesSub = this.subscribeToMessages()
-  private messageSendSub = this.messageSended$.subscribe(() => this.syncLastMessages())
-
-  constructor(private messagesLoader: MessagesLoader, private currentChatState: CurrentChatState) {}
+  constructor(
+    private messagesLoader: MessagesLoader,
+    private currentChatState: CurrentChatState,
+    private chatEvents: ChatEvents
+  ) {
+    this.subscribeToChat()
+    this.subscribeToMessages()
+    this.handleReceiveMessage()
+  }
 
   init(chatId: string) {
     this.initMessages(chatId)
@@ -33,25 +38,20 @@ export class CurrentChatMessagesState {
     this.messages$.next(messages)
   }
 
-  private async syncLastMessages(amount = 10) {
-    const chat = this.chat!
-    const pagination: Pagination = { offset: 0, limit: amount }
-
-    const { data: paginatedMessages } = await this.messagesLoader.getMessagesResponse(
-      chat.id,
-      pagination
-    )
-    if (paginatedMessages) {
-      const { data: newMessages } = paginatedMessages
-      this.replaceLastMessages(newMessages)
-    }
+  private handleReceiveMessage() {
+    this.chatEvents.messageReceived$.subscribe(newMessage => {
+      this.addMessage(newMessage)
+    })
   }
 
-  private replaceLastMessages(newMessages: ChatMessage[]) {
+  private addMessage(newMessage: ChatMessage) {
+    const isMessageForThisChat = this.chat?.id === newMessage.chatId
+    if (isMessageForThisChat === false) {
+      return
+    }
     const messages = makeDeepCopy(this.messages)
-    const amount = newMessages.length
+    messages.unshift(newMessage)
 
-    messages.splice(0, amount, ...newMessages)
     this.messages$.next(messages)
   }
 
