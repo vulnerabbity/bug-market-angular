@@ -23,7 +23,7 @@ export class CurrentUserState implements ReactiveState<User | null> {
     private localUserService: LocalUserService,
     private authenticationService: AuthenticationService,
     private appRouter: AppRouterService,
-    private notifications: ChatNotificationsService
+    private chatNotifications: ChatNotificationsService
   ) {
     this.initState()
     this.item$.subscribe(user => (this.item = user))
@@ -52,7 +52,7 @@ export class CurrentUserState implements ReactiveState<User | null> {
   private async initState() {
     await this.fetchState()
     if (this.item) {
-      this.notifications.listen()
+      this.chatNotifications.listen()
     }
   }
 }
