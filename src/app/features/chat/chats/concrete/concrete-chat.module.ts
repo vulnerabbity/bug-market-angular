@@ -6,16 +6,9 @@ import { ConcreteExtendedChatLoader } from "./concrete-extended-chat-loader.serv
 import { CurrentChatState } from "./current-chat.state"
 
 @NgModule({
-  providers: [
-    ConcreteChatLoader,
-    ConcreteExtendedChatLoader,
-    ConcreteChatsUpdaterService,
-    CurrentChatState,
-    ConcreteChatEventsHandler
-  ]
+  providers: [ConcreteChatLoader, ConcreteExtendedChatLoader, ConcreteChatsUpdaterService]
 })
 export class ConcreteChatModule {
-  constructor(private concreteChatEventHandler: ConcreteChatEventsHandler) {
-    this.concreteChatEventHandler.startHandling()
-  }
+  // instantiate on module load
+  constructor(chatState: CurrentChatState, chatEventsHandler: ConcreteChatEventsHandler) {}
 }
