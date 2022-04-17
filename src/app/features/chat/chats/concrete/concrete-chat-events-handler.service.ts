@@ -8,23 +8,17 @@ import { CurrentChatState } from "./current-chat.state"
 @Injectable({ providedIn: "root" })
 export class ConcreteChatEventsHandler {
   private currentChat: ExtendedChat | null = null
-  private started = false
 
   constructor(
     private chatUpdater: ConcreteChatsUpdaterService,
     private chatEvents: ChatEvents,
     private currentChatState: CurrentChatState
-  ) {}
+  ) {
+    this.startHandling()
+  }
 
-  startHandling() {
-    if (this.started) {
-      return
-    }
-
-    this.currentChatState.chat$.subscribe(chat => {
-      this.currentChat = chat
-    })
-
+  private startHandling() {
+    this.subscribeToChat()
     this.viewMessagesOnOpen()
     this.viewMessagesOnReceive()
   }
@@ -36,12 +30,17 @@ export class ConcreteChatEventsHandler {
   private viewMessagesOnReceive() {
     this.chatEvents.messageReceived$.subscribe(newMessage => {
       const isMessageForCurrentChat = this.isMessageForCurrentChat(newMessage)
+      console.log(isMessageForCurrentChat)
       if (isMessageForCurrentChat) {
         this.chatUpdater.viewMessages(this.currentChat!.id)
       }
     })
   }
-
+  private subscribeToChat() {
+    return this.currentChatState.chat$.subscribe(chat => {
+      this.currentChat = chat
+    })
+  }
   private isMessageForCurrentChat(newMessage: ChatMessage) {
     return this.currentChat?.id === newMessage.chatId
   }
