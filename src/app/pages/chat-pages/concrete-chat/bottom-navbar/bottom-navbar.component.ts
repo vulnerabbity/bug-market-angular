@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
-import { CurrentChatState } from "src/app/features/chat/chats/current-chat.state"
+import { CurrentChatState } from "src/app/features/chat/chats/concrete/current-chat.state"
 import { MessagesSenderService } from "src/app/features/chat/messages/messages-sender.service"
 import { CurrentUserState } from "src/app/features/users/current-user.state"
 import { User } from "src/app/features/users/users.interface"

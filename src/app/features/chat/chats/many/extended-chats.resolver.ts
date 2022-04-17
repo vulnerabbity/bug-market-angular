@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core"
+import { CurrentUserState } from "src/app/features/users/current-user.state"
+import { userDefaults } from "src/app/features/users/user.defaults"
+import { UsersLoaderService } from "src/app/features/users/users-loader.service"
+import { User } from "src/app/features/users/users.interface"
 import { Chat } from "src/generated-gql-types"
-import { CurrentUserState } from "../../users/current-user.state"
-import { userDefaults } from "../../users/user.defaults"
-import { UsersLoaderService } from "../../users/users-loader.service"
-import { User } from "../../users/users.interface"
-import { MessagesLoader } from "../messages/messages-loader.service"
+import { MessagesLoader } from "../../messages/messages-loader.service"
 import { ExtendedChat } from "./chat.interface"
 
 @Injectable({

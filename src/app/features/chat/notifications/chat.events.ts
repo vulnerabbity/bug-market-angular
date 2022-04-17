@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core"
 import { Subject } from "rxjs"
 import { ChatMessage } from "src/generated-gql-types"
-import { ExtendedChat } from "../chats/chat.interface"
+import { ExtendedChat } from "../chats/many/chat.interface"
 
 @Injectable({ providedIn: "root" })
 export class ChatEvents {

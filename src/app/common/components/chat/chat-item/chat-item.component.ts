@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core"
-import { ExtendedChat } from "src/app/features/chat/chats/chat.interface"
+import { ExtendedChat } from "src/app/features/chat/chats/many/chat.interface"
 import { assetsPaths } from "src/assets/assets.paths"
 
 @Component({

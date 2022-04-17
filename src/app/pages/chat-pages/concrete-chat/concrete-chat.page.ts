@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { filter, firstValueFrom, map } from "rxjs"
-import { ExtendedChat } from "src/app/features/chat/chats/chat.interface"
-import { CurrentChatState } from "src/app/features/chat/chats/current-chat.state"
+import { CurrentChatState } from "src/app/features/chat/chats/concrete/current-chat.state"
+import { ExtendedChat } from "src/app/features/chat/chats/many/chat.interface"
 import { ChatEvents } from "src/app/features/chat/notifications/chat.events"
 
 @Component({

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core"
 import { BehaviorSubject, Subject } from "rxjs"
 import { AppRouterService } from "src/app/common/services/router.service"
 import { ChatMessage, Pagination } from "src/generated-gql-types"
-import { ExtendedChat } from "./chat.interface"
+import { ExtendedChat } from "../many/chat.interface"
 import { ConcreteExtendedChatLoader } from "./concrete-extended-chat-loader.service"
 
 @Injectable({ providedIn: "root" })

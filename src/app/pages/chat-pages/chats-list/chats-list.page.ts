@@ -1,6 +1,9 @@
 import { Component } from "@angular/core"
-import { ExtendedChat, PaginatedExtendedChats } from "src/app/features/chat/chats/chat.interface"
-import { ChatsState } from "src/app/features/chat/chats/chats.state"
+import {
+  ExtendedChat,
+  PaginatedExtendedChats
+} from "src/app/features/chat/chats/many/chat.interface"
+import { ChatsState } from "src/app/features/chat/chats/many/chats.state"
 
 @Component({
   templateUrl: "./chats-list.page.html",

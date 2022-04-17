@@ -1,5 +1,5 @@
+import { PaginatedFeature } from "src/app/features/features.interfaces"
 import { Chat as ApiChat } from "src/generated-gql-types"
-import { PaginatedFeature } from "../../features.interfaces"
 
 export class ExtendedChat implements Partial<ApiChat> {
   id!: string

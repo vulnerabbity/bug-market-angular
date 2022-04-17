@@ -6,6 +6,6 @@ import { ExtendedChatsLoader } from "./extended-chats-loader.service"
 @NgModule({
   providers: [ChatsLoaderService, ExtendedChatsLoader, ChatsState]
 })
-export class ChatsModule {
+export class ManyChatsModule {
   constructor() {}
 }
