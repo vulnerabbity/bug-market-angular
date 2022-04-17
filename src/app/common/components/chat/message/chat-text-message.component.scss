@@ -18,6 +18,9 @@ p {
 
 .text {
   font-size: 1.8rem;
+
+  // display \n
+  white-space: pre-line;
 }
 
 .time {
