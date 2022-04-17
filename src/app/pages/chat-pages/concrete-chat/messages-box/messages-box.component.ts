@@ -16,7 +16,7 @@ export class MessagesBoxComponent implements OnDestroy, AfterViewChecked {
 
   messages: ChatMessage[] = []
 
-  messagesSubscription = this.messagesState.messages$.subscribe(messages => {
+  private messagesSubscription = this.messagesState.messages$.subscribe(messages => {
     this.messages = messages
   })
 
