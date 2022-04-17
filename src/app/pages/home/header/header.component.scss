@@ -1,4 +1,7 @@
-$inner-shadow-top: 0 8px 10px -6px rgba(black, 0.3) inset;
+:host {
+  position: relative;
+  display: block;
+}
 
 .header-wrapper {
   height: 60rem;
@@ -13,8 +16,6 @@ $inner-shadow-top: 0 8px 10px -6px rgba(black, 0.3) inset;
 
   justify-content: center;
   align-items: center;
-
-  box-shadow: $inner-shadow-top;
 
   &__inner {
     z-index: 1;
