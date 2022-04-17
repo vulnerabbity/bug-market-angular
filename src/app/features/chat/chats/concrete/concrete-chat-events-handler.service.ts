@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core"
 import { ChatMessage } from "src/generated-gql-types"
-import { ChatEvents } from "../notifications/chat.events"
-import { ExtendedChat } from "./chat.interface"
+import { ChatEvents } from "../../notifications/chat.events"
+import { ExtendedChat } from "../many/chat.interface"
 import { ConcreteChatsUpdaterService } from "./concrete-chat-updater.service"
 import { CurrentChatState } from "./current-chat.state"
 

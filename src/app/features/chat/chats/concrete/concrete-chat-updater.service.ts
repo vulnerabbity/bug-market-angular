@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core"
-import { WebsocketsService } from "../../websockets/ws.service"
+import { WebsocketsService } from "src/app/features/websockets/ws.service"
 
 @Injectable({ providedIn: "root" })
 export class ConcreteChatsUpdaterService {
@@ -8,7 +8,6 @@ export class ConcreteChatsUpdaterService {
   constructor(private ws: WebsocketsService) {}
 
   viewMessages(chatId: string) {
-    console.log("viewed")
     this.socket.emit("markChatViewed", { chatId })
   }
 }
