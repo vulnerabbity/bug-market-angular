@@ -82,7 +82,6 @@ export type Mutation = {
   createProduct: Product;
   createSeller: User;
   deleteProduct: Product;
-  sendMessage: ChatMessage;
   updateProduct: Product;
   updateUser: User;
 };
@@ -100,11 +99,6 @@ export type MutationCreateSellerArgs = {
 
 export type MutationDeleteProductArgs = {
   id: Scalars['String'];
-};
-
-
-export type MutationSendMessageArgs = {
-  SendMessageInput: SendChatMessageInput;
 };
 
 
@@ -294,11 +288,6 @@ export type SearchManyQuery = {
 export type SearchSingleQuery = {
   id: Scalars['Int'];
   languageCode?: InputMaybe<Scalars['String']>;
-};
-
-export type SendChatMessageInput = {
-  text: Scalars['String'];
-  userId: Scalars['String'];
 };
 
 export enum SortingOrder {
@@ -627,13 +616,6 @@ export type LastMessageQueryVariables = Exact<{
 
 export type LastMessageQuery = { __typename?: 'Query', lastMessage?: { __typename?: 'ChatMessage', id: string, chatId: string, userId: string, text: string, createdAt: any, updatedAt: any } | null };
 
-export type SendMessageMutationVariables = Exact<{
-  input: SendChatMessageInput;
-}>;
-
-
-export type SendMessageMutation = { __typename?: 'Mutation', sendMessage: { __typename?: 'ChatMessage', id: string, chatId: string, userId: string, text: string, createdAt: any, updatedAt: any } };
-
 export type ShortProductsQueryVariables = Exact<{
   fuzzy?: InputMaybe<Scalars['String']>;
   pagination?: InputMaybe<Pagination>;
@@ -818,29 +800,6 @@ export const LastMessageDocument = gql`
   })
   export class LastMessageGQL extends Apollo.Query<LastMessageQuery, LastMessageQueryVariables> {
     document = LastMessageDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const SendMessageDocument = gql`
-    mutation SendMessage($input: SendChatMessageInput!) {
-  sendMessage(SendMessageInput: $input) {
-    id
-    chatId
-    userId
-    text
-    createdAt
-    updatedAt
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class SendMessageGQL extends Apollo.Mutation<SendMessageMutation, SendMessageMutationVariables> {
-    document = SendMessageDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

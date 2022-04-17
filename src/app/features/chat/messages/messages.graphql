@@ -22,14 +22,3 @@ query LastMessage($chatId: String!) {
     updatedAt
   }
 }
-
-mutation SendMessage($input: SendChatMessageInput!) {
-  sendMessage(SendMessageInput: $input) {
-    id
-    chatId
-    userId
-    text
-    createdAt
-    updatedAt
-  }
-}
