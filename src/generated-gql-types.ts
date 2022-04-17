@@ -38,6 +38,7 @@ export type ChatMessage = {
   text: Scalars['String'];
   updatedAt: Scalars['DateTime'];
   userId: Scalars['String'];
+  viewedBy: Array<Scalars['String']>;
 };
 
 export type City = {
@@ -607,14 +608,14 @@ export type GetMessagesQueryVariables = Exact<{
 }>;
 
 
-export type GetMessagesQuery = { __typename?: 'Query', messages: { __typename?: 'PaginatedChatMessages', totalResultsCount: number, data: Array<{ __typename?: 'ChatMessage', id: string, chatId: string, userId: string, text: string, createdAt: any, updatedAt: any }> } };
+export type GetMessagesQuery = { __typename?: 'Query', messages: { __typename?: 'PaginatedChatMessages', totalResultsCount: number, data: Array<{ __typename?: 'ChatMessage', id: string, chatId: string, userId: string, text: string, viewedBy: Array<string>, createdAt: any, updatedAt: any }> } };
 
 export type LastMessageQueryVariables = Exact<{
   chatId: Scalars['String'];
 }>;
 
 
-export type LastMessageQuery = { __typename?: 'Query', lastMessage?: { __typename?: 'ChatMessage', id: string, chatId: string, userId: string, text: string, createdAt: any, updatedAt: any } | null };
+export type LastMessageQuery = { __typename?: 'Query', lastMessage?: { __typename?: 'ChatMessage', id: string, chatId: string, userId: string, text: string, viewedBy: Array<string>, createdAt: any, updatedAt: any } | null };
 
 export type ShortProductsQueryVariables = Exact<{
   fuzzy?: InputMaybe<Scalars['String']>;
@@ -765,6 +766,7 @@ export const GetMessagesDocument = gql`
       chatId
       userId
       text
+      viewedBy
       createdAt
       updatedAt
     }
@@ -789,6 +791,7 @@ export const LastMessageDocument = gql`
     chatId
     userId
     text
+    viewedBy
     createdAt
     updatedAt
   }
