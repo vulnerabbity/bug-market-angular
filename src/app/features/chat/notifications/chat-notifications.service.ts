@@ -1,21 +1,18 @@
 import { Injectable } from "@angular/core"
-import { io, Socket } from "socket.io-client"
-import { environment } from "src/environments/environment"
-import { AccessTokenLocalStorageService } from "../../local-storage/access-token.service"
+import { Socket } from "socket.io-client"
+import { WebsocketsService } from "../../websockets/ws.service"
 import { ChatEvents } from "./chat.events"
 
 @Injectable({
   providedIn: "root"
 })
 export class ChatNotificationsService {
-  constructor(private chatEvents: ChatEvents) {}
-
-  private accessTokenStorage = new AccessTokenLocalStorageService()
+  constructor(private chatEvents: ChatEvents, private ws: WebsocketsService) {}
 
   private socket!: Socket
 
   async listen() {
-    this.socket = this.createSocket()
+    this.socket = this.ws.getSocket()
 
     this.socket.emit("listenToChatsNotifications")
 
@@ -30,16 +27,5 @@ export class ChatNotificationsService {
     this.socket.on("messageReceived", message => {
       this.chatEvents.messageReceived$.next(message)
     })
-  }
-
-  private createSocket() {
-    return io(environment.websocketsUrl, {
-      extraHeaders: this.getSocketHeaders()
-    })
-  }
-
-  private getSocketHeaders() {
-    const accessToken = `bearer ${this.accessTokenStorage.tryToGetRecord()}`
-    return { Authorization: accessToken }
   }
 }
