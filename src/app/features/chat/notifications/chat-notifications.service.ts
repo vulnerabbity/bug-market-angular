@@ -16,16 +16,23 @@ export class ChatNotificationsService {
 
     this.socket.emit("listenToChatsNotifications")
 
-    this.receiveMessages()
+    this.listenToMessageReceived()
+    this.listenToMessageUpdated()
   }
 
   stopListening() {
     this.socket?.close()
   }
 
-  private receiveMessages() {
+  private listenToMessageReceived() {
     this.socket.on("messageReceived", message => {
       this.chatEvents.messageReceived$.next(message)
+    })
+  }
+
+  private listenToMessageUpdated() {
+    this.socket.on("messageUpdated", message => {
+      this.chatEvents.messageUpdated$.next(message)
     })
   }
 }

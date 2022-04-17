@@ -6,5 +6,7 @@ import { ExtendedChat } from "../chats/many/chat.interface"
 @Injectable({ providedIn: "root" })
 export class ChatEvents {
   messageReceived$ = new Subject<ChatMessage>()
+  messageUpdated$ = new Subject<ChatMessage>()
+
   chatOpened$ = new Subject<ExtendedChat>()
 }
