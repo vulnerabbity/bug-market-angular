@@ -6,6 +6,7 @@ query GetMessages($chatId: String!, $pagination: Pagination) {
       chatId
       userId
       text
+      viewedBy
       createdAt
       updatedAt
     }
@@ -18,6 +19,7 @@ query LastMessage($chatId: String!) {
     chatId
     userId
     text
+    viewedBy
     createdAt
     updatedAt
   }
