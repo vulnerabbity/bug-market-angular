@@ -46,13 +46,11 @@ export class BottomNavbarComponent implements OnDestroy {
     const currentUser = this.currentUser!
 
     const receiverId = chat.peersIds.filter(peerId => peerId !== currentUser.id)[0]
-    const { data } = await this.messagesSender.sendMessageResponse({
+    console.log("send")
+    await this.messagesSender.sendMessage({
       text: this.messageInputText,
       userId: receiverId
     })
-    if (data) {
-      this.triggerMessageSended()
-    }
   }
 
   private clearMessage() {
@@ -62,9 +60,5 @@ export class BottomNavbarComponent implements OnDestroy {
   private isEmptyMessage() {
     const message = this.messageInputText.trim()
     return message.length === 0
-  }
-
-  private triggerMessageSended() {
-    this.messagesState.messageSended$.next()
   }
 }
