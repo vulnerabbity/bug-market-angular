@@ -30,7 +30,6 @@ export class ConcreteChatEventsHandler {
   private viewMessagesOnReceive() {
     this.chatEvents.messageReceived$.subscribe(newMessage => {
       const isMessageForCurrentChat = this.isMessageForCurrentChat(newMessage)
-      console.log(isMessageForCurrentChat)
       if (isMessageForCurrentChat) {
         this.chatUpdater.viewMessages(this.currentChat!.id)
       }
