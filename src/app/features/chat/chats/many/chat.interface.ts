@@ -10,6 +10,7 @@ export class ExtendedChat implements Partial<ApiChat> {
   chatName!: string
   lastMessage?: string
   chatImage?: string
+  notViewedMessages?: number
 }
 
 export class PaginatedExtendedChats implements PaginatedFeature<ExtendedChat> {
