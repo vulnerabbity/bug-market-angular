@@ -24,3 +24,11 @@ query LastMessage($chatId: String!) {
     updatedAt
   }
 }
+
+query NotViewedMessagesNumberPerChat($chatId: String!) {
+  notViewedMessagesPerChat(chatId: $chatId)
+}
+
+query NotViewedMessagesNumberTotal {
+  notViewedMessagesTotal
+}
