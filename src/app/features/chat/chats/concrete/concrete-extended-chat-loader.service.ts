@@ -1,4 +1,5 @@
 import { Injectable, OnDestroy } from "@angular/core"
+import { ExtendedChat } from "../many/chat.interface"
 import { ExtendedChatsFieldsResolver } from "../many/extended-chats.resolver"
 import { ConcreteChatLoader } from "./concrete-chat-loader.service"
 
@@ -9,12 +10,12 @@ export class ConcreteExtendedChatLoader {
     private extendedChatsResolver: ExtendedChatsFieldsResolver
   ) {}
 
-  async loadExtendedChatOrRedirect(chatId: string) {
+  async loadExtendedChatOrRedirect(chatId: string): Promise<ExtendedChat> {
     const basicChat = await this.chatLoader.loadOwnChatOrRedirect(chatId)
 
-    let extendedChat = await this.extendedChatsResolver.resolveChatNameAndAvatar(basicChat)
-    extendedChat = await this.extendedChatsResolver.resolveLastMessage(extendedChat)
+    const nameAndImage = await this.extendedChatsResolver.getChatNameAndImage(basicChat)
+    const lastMessage = await this.extendedChatsResolver.getLastMessage(basicChat)
 
-    return extendedChat
+    return { ...basicChat, ...nameAndImage, lastMessage }
   }
 }
