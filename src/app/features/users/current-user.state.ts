@@ -25,17 +25,24 @@ export class CurrentUserState implements ReactiveState<User | null> {
     private appRouter: AppRouterService,
     private chatNotifications: ChatNotificationsService
   ) {
+    this.item$.subscribe(user => {
+      this.item = user
+    })
     this.initState()
-    this.item$.subscribe(user => (this.item = user))
   }
 
   setItem(input: User | null) {
     this.subject$.next(input)
   }
 
+  async login() {
+    await this.initState()
+  }
+
   async logout() {
     this.appRouter.redirectHome()
     this.authenticationService.logout()
+    this.chatNotifications.stopListening()
     this.setItem(null)
   }
 
@@ -55,6 +62,7 @@ export class CurrentUserState implements ReactiveState<User | null> {
 
   private async initState() {
     await this.fetchState()
+
     if (this.item) {
       this.chatNotifications.listen()
     }
