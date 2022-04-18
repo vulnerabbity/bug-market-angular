@@ -1,5 +1,5 @@
-import { Injectable, OnDestroy } from "@angular/core"
-import { Chat, GetChatsPaginatedGQL, PaginatedChats, Pagination } from "src/generated-gql-types"
+import { Injectable } from "@angular/core"
+import { Chat, Pagination } from "src/generated-gql-types"
 import { ExtendedChat, PaginatedExtendedChats } from "./chat.interface"
 import { ChatsLoaderService } from "./chats-loader.service"
 import { ExtendedChatsFieldsResolver } from "./extended-chats.resolver"
@@ -17,11 +17,28 @@ export class ExtendedChatsLoader {
 
     const extendedChats: ExtendedChat[] = []
     for (let basicChat of basicChats) {
-      let chat = await this.extendedChatResolver.resolveChatNameAndAvatar(basicChat)
-      chat = await this.extendedChatResolver.resolveLastMessage(chat)
-      extendedChats.push(chat)
+      const resolvedFields = await this.resolveParallel(basicChat)
+
+      extendedChats.push({ ...basicChat, ...resolvedFields })
     }
 
     return { totalResultsCount, data: extendedChats }
+  }
+
+  private async resolveParallel(basicChat: Chat) {
+    // make requests at same time and await all results later
+    const nameAndImagePromise = this.extendedChatResolver.getChatNameAndImage(basicChat)
+    const lastMessagePromise = this.extendedChatResolver.getLastMessage(basicChat)
+    const notViewedMessagesPromise = this.extendedChatResolver.getNotViewedMessagesNumber(basicChat)
+
+    const result = await Promise.all([
+      nameAndImagePromise,
+      lastMessagePromise,
+      notViewedMessagesPromise
+    ])
+
+    const { "0": nameAndImage, "1": lastMessage, "2": notViewedMessages } = result
+
+    return { ...nameAndImage, lastMessage, notViewedMessages }
   }
 }
