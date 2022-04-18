@@ -11,6 +11,9 @@ export class ChatNotificationsService {
 
   private socket!: Socket
 
+  private messageReceivedEvent = "messageReceived"
+  private messageUpdatedEvent = "messageUpdated"
+
   async listen() {
     this.socket = this.ws.getSocket()
 
@@ -21,17 +24,18 @@ export class ChatNotificationsService {
   }
 
   stopListening() {
-    this.socket?.close()
+    this.socket.off(this.messageReceivedEvent)
+    this.socket.off(this.messageUpdatedEvent)
   }
 
   private listenToMessageReceived() {
-    this.socket.on("messageReceived", message => {
+    this.socket.on(this.messageReceivedEvent, message => {
       this.chatEvents.messageReceived$.next(message)
     })
   }
 
   private listenToMessageUpdated() {
-    this.socket.on("messageUpdated", message => {
+    this.socket.on(this.messageUpdatedEvent, message => {
       this.chatEvents.messageUpdated$.next(message)
     })
   }
