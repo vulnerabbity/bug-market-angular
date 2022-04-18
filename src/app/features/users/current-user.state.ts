@@ -40,13 +40,17 @@ export class CurrentUserState implements ReactiveState<User | null> {
   }
 
   async fetchState() {
-    const userIdOrNull = this.localUserService.getUserIdOrNull()
+    const userIdOrNull = this.getUserIdOrNul()
     if (userIdOrNull) {
       const userId = userIdOrNull
 
       const currentUser = await this.usersLoader.loadUserOrRedirect({ id: userId })
       this.setItem(currentUser)
     }
+  }
+
+  getUserIdOrNul() {
+    return this.localUserService.getUserIdOrNull()
   }
 
   private async initState() {
