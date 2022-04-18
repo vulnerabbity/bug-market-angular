@@ -11,21 +11,13 @@ import { ExtendedChat } from "./chat.interface"
   providedIn: "root"
 })
 export class ExtendedChatsFieldsResolver {
-  private currentUser!: User | null
-
-  private currentUserSubscription = this.currentUserState.item$.subscribe(
-    currentUser => (this.currentUser = currentUser)
-  )
+  private currentUserId: string | null = this.currentUserState.getUserIdOrNul()
 
   constructor(
     private usersLoader: UsersLoaderService,
     private messagesLoader: MessagesLoader,
     private currentUserState: CurrentUserState
   ) {}
-
-  ngOnDestroy(): void {
-    this.currentUserSubscription.unsubscribe()
-  }
 
   async resolveChatNameAndAvatar(chat: Chat): Promise<ExtendedChat> {
     const peerId = this.getChatPeerId(chat)
@@ -47,7 +39,8 @@ export class ExtendedChatsFieldsResolver {
   }
 
   getChatPeerId(chat: Chat): string {
-    const currentUserId = this.currentUser!.id
+    const currentUserId = this.currentUserId!
+
     const otherPeers = chat.peersIds.filter(peerId => peerId !== currentUserId)
     const peerId = otherPeers[0] ?? currentUserId
 
