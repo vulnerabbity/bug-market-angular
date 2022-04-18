@@ -5,6 +5,7 @@ import { UsersLoaderService } from "src/app/features/users/users-loader.service"
 import { User } from "src/app/features/users/users.interface"
 import { Chat } from "src/generated-gql-types"
 import { MessagesLoader } from "../../messages/messages-loader.service"
+import { ChatMessagesNumberLoader } from "../../messages/messages-number-loader"
 import { ExtendedChat } from "./chat.interface"
 
 @Injectable({
@@ -16,10 +17,11 @@ export class ExtendedChatsFieldsResolver {
   constructor(
     private usersLoader: UsersLoaderService,
     private messagesLoader: MessagesLoader,
+    private messagesNumberLoader: ChatMessagesNumberLoader,
     private currentUserState: CurrentUserState
   ) {}
 
-  async resolveChatNameAndAvatar(chat: Chat): Promise<ExtendedChat> {
+  async getChatNameAndImage(chat: Chat) {
     const peerId = this.getChatPeerId(chat)
 
     const { data: peer } = await this.usersLoader.loadUserResponse({ id: peerId })
@@ -27,15 +29,21 @@ export class ExtendedChatsFieldsResolver {
     const chatName = peer?.name ?? userDefaults.name
     const chatImage = peer?.avatarUrl as string | undefined
 
-    return { ...chat, chatName, chatImage }
+    return { chatName, chatImage }
   }
 
-  async resolveLastMessage(chat: ExtendedChat): Promise<ExtendedChat> {
+  async getLastMessage(chat: Chat | ExtendedChat): Promise<string | undefined> {
     const { data: lastMessage } = await this.messagesLoader.getLastMessageResponse(chat.id)
 
     const lastText = lastMessage?.text
 
-    return { ...chat, lastMessage: lastText }
+    return lastText
+  }
+
+  async getNotViewedMessagesNumber(chat: Chat | ExtendedChat): Promise<number> {
+    const notViewed = await this.messagesNumberLoader.getPerChat(chat.id)
+
+    return notViewed
   }
 
   getChatPeerId(chat: Chat): string {
