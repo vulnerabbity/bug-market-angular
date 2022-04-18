@@ -1,11 +1,18 @@
-<mat-card class="chat__card">
-  <div class="chat__image-wrapper">
-    <img class="chat__image" [src]="getChatImage()" />
+<mat-card class="card">
+  <div class="image-wrapper">
+    <img class="image" [src]="getChatImage()" />
   </div>
-  <div class="chat__info">
-    <p else withLastMessage class="chat__name">
+  <div class="info">
+    <p else withLastMessage class="name">
       {{ chat.chatName }}
     </p>
-    <p *ngIf="chat.lastMessage" class="chat__last-message">{{ chat.lastMessage }}</p>
+    <p *ngIf="chat.lastMessage" class="last-message">{{ chat.lastMessage }}</p>
+    <common-themed-div
+      *ngIf="chat.notViewedMessages"
+      class="not-viewed-messages-badge"
+      color="accent"
+    >
+      <div class="not-viewed-messages-text">{{ chat.notViewedMessages }}</div>
+    </common-themed-div>
   </div>
 </mat-card>
