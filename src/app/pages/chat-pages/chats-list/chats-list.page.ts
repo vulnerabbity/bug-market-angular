@@ -12,7 +12,7 @@ import { ChatsState } from "src/app/features/chat/chats/many/chats.state"
 export class ChatsListPage {
   paginatedChats: PaginatedExtendedChats = { data: [], totalResultsCount: 0 }
 
-  chatsSubscription = this.chatsState.item$.subscribe(paginatedChats => {
+  chatsSubscription = this.chatsState.chats$.subscribe(paginatedChats => {
     this.paginatedChats = paginatedChats
   })
 
