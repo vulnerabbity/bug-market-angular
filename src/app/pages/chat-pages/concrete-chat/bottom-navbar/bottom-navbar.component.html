@@ -2,6 +2,7 @@
   <div class="message-container">
     <textarea
       [(ngModel)]="messageInputText"
+      [maxlength]="500"
       (keydown.control.enter)="onSendMessage()"
       placeholder="Message"
       class="message-input"
