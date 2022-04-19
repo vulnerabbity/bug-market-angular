@@ -1,4 +1,13 @@
-import { AfterViewChecked, Component, ElementRef, OnDestroy, ViewChild } from "@angular/core"
+import {
+  AfterContentChecked,
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from "@angular/core"
 import { MessageTypeService } from "src/app/features/chat/messages/message-type.service"
 import { CurrentChatMessagesState } from "src/app/features/chat/messages/messages.state"
 import { ChatMessage } from "src/generated-gql-types"
@@ -16,6 +25,8 @@ export class MessagesBoxComponent implements OnDestroy, AfterViewChecked {
 
   messages: ChatMessage[] = []
 
+  private isScrolledToBottom = false
+
   private messagesSubscription = this.messagesState.messages$.subscribe(messages => {
     this.messages = messages
   })
@@ -26,7 +37,21 @@ export class MessagesBoxComponent implements OnDestroy, AfterViewChecked {
   ) {}
 
   ngAfterViewChecked(): void {
-    this.scrollBottom()
+    if (this.isScrolledToBottom === false) {
+      const height = this.getScrollTotalHeight()
+      this.scrollBottom(height)
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.messagesSubscription.unsubscribe()
+  }
+
+  async loadMore() {
+    await this.messagesState.loadMore()
+
+    // preventing sticking scrollbar to the end of scroll container
+    this.scrollBottom(1)
   }
 
   getMessageClass(message: ChatMessage): MessageClass {
@@ -39,18 +64,21 @@ export class MessagesBoxComponent implements OnDestroy, AfterViewChecked {
     return isIncoming ? "accent" : "primary"
   }
 
+  private getScrollTotalHeight(): number {
+    return this.scrollContainer?.nativeElement.scrollHeight ?? 0
+  }
+
   private isIncomingMessage(message: ChatMessage): boolean {
     return this.messageTypeService.isIncomingMessage(message)
   }
 
-  private scrollBottom() {
-    const height = this.scrollContainer.nativeElement.scrollHeight
-    this.scrollContainer.nativeElement.scroll({
-      top: height
-    })
-  }
-
-  ngOnDestroy(): void {
-    this.messagesSubscription.unsubscribe()
+  private scrollBottom(height: number) {
+    if (height > 0) {
+      this.isScrolledToBottom = true
+      console.log("scroll bottom")
+      this.scrollContainer.nativeElement.scroll({
+        top: height
+      })
+    }
   }
 }
