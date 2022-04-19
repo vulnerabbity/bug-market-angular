@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core"
-import { Subject } from "rxjs"
+import { BehaviorSubject, Subject } from "rxjs"
 import { ChatMessage } from "src/generated-gql-types"
 import { ExtendedChat } from "../chats/many/chat.interface"
 
@@ -7,6 +7,7 @@ import { ExtendedChat } from "../chats/many/chat.interface"
 export class ChatEvents {
   messageReceived$ = new Subject<ChatMessage>()
   messageUpdated$ = new Subject<ChatMessage>()
+  notViewedMessagesTotalChanged$ = new BehaviorSubject<number>(0)
 
   chatOpened$ = new Subject<ExtendedChat>()
 }
