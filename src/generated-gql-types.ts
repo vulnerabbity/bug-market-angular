@@ -38,6 +38,7 @@ export type ChatMessage = {
   text: Scalars['String'];
   updatedAt: Scalars['DateTime'];
   userId: Scalars['String'];
+  viewedBy: Array<Scalars['String']>;
 };
 
 export type City = {
@@ -82,7 +83,6 @@ export type Mutation = {
   createProduct: Product;
   createSeller: User;
   deleteProduct: Product;
-  sendMessage: ChatMessage;
   updateProduct: Product;
   updateUser: User;
 };
@@ -100,11 +100,6 @@ export type MutationCreateSellerArgs = {
 
 export type MutationDeleteProductArgs = {
   id: Scalars['String'];
-};
-
-
-export type MutationSendMessageArgs = {
-  SendMessageInput: SendChatMessageInput;
 };
 
 
@@ -202,6 +197,8 @@ export type Query = {
   lastMessage?: Maybe<ChatMessage>;
   loginWithUsername: LoginResponse;
   messages: PaginatedChatMessages;
+  notViewedMessagesPerChat: Scalars['Int'];
+  notViewedMessagesTotal: Scalars['Int'];
   product: Product;
   products: PaginatedProducts;
   refreshAccessToken: LoginResponse;
@@ -256,6 +253,11 @@ export type QueryMessagesArgs = {
 };
 
 
+export type QueryNotViewedMessagesPerChatArgs = {
+  chatId: Scalars['String'];
+};
+
+
 export type QueryProductArgs = {
   id: Scalars['String'];
 };
@@ -294,11 +296,6 @@ export type SearchManyQuery = {
 export type SearchSingleQuery = {
   id: Scalars['Int'];
   languageCode?: InputMaybe<Scalars['String']>;
-};
-
-export type SendChatMessageInput = {
-  text: Scalars['String'];
-  userId: Scalars['String'];
 };
 
 export enum SortingOrder {
@@ -598,13 +595,6 @@ export type LoginWithUsernameQueryVariables = Exact<{
 
 export type LoginWithUsernameQuery = { __typename?: 'Query', loginWithUsername: { __typename?: 'LoginResponse', access_token: string, refresh_token: string } };
 
-export type GetChatsPaginatedQueryVariables = Exact<{
-  pagination?: InputMaybe<Pagination>;
-}>;
-
-
-export type GetChatsPaginatedQuery = { __typename?: 'Query', chats: { __typename?: 'PaginatedChats', totalResultsCount: number, data: Array<{ __typename?: 'Chat', id: string, peersIds: Array<string>, createdAt: any, updatedAt: any }> } };
-
 export type GetConcreteChatQueryVariables = Exact<{
   chatId: Scalars['String'];
 }>;
@@ -612,27 +602,39 @@ export type GetConcreteChatQueryVariables = Exact<{
 
 export type GetConcreteChatQuery = { __typename?: 'Query', chat: { __typename?: 'Chat', id: string, peersIds: Array<string>, createdAt: any, updatedAt: any } };
 
+export type GetChatsPaginatedQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+
+export type GetChatsPaginatedQuery = { __typename?: 'Query', chats: { __typename?: 'PaginatedChats', totalResultsCount: number, data: Array<{ __typename?: 'Chat', id: string, peersIds: Array<string>, createdAt: any, updatedAt: any }> } };
+
 export type GetMessagesQueryVariables = Exact<{
   chatId: Scalars['String'];
   pagination?: InputMaybe<Pagination>;
 }>;
 
 
-export type GetMessagesQuery = { __typename?: 'Query', messages: { __typename?: 'PaginatedChatMessages', totalResultsCount: number, data: Array<{ __typename?: 'ChatMessage', id: string, chatId: string, userId: string, text: string, createdAt: any, updatedAt: any }> } };
+export type GetMessagesQuery = { __typename?: 'Query', messages: { __typename?: 'PaginatedChatMessages', totalResultsCount: number, data: Array<{ __typename?: 'ChatMessage', id: string, chatId: string, userId: string, text: string, viewedBy: Array<string>, createdAt: any, updatedAt: any }> } };
 
 export type LastMessageQueryVariables = Exact<{
   chatId: Scalars['String'];
 }>;
 
 
-export type LastMessageQuery = { __typename?: 'Query', lastMessage?: { __typename?: 'ChatMessage', id: string, chatId: string, userId: string, text: string, createdAt: any, updatedAt: any } | null };
+export type LastMessageQuery = { __typename?: 'Query', lastMessage?: { __typename?: 'ChatMessage', id: string, chatId: string, userId: string, text: string, viewedBy: Array<string>, createdAt: any, updatedAt: any } | null };
 
-export type SendMessageMutationVariables = Exact<{
-  input: SendChatMessageInput;
+export type NotViewedMessagesNumberPerChatQueryVariables = Exact<{
+  chatId: Scalars['String'];
 }>;
 
 
-export type SendMessageMutation = { __typename?: 'Mutation', sendMessage: { __typename?: 'ChatMessage', id: string, chatId: string, userId: string, text: string, createdAt: any, updatedAt: any } };
+export type NotViewedMessagesNumberPerChatQuery = { __typename?: 'Query', notViewedMessagesPerChat: number };
+
+export type NotViewedMessagesNumberTotalQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NotViewedMessagesNumberTotalQuery = { __typename?: 'Query', notViewedMessagesTotal: number };
 
 export type ShortProductsQueryVariables = Exact<{
   fuzzy?: InputMaybe<Scalars['String']>;
@@ -729,6 +731,27 @@ export const LoginWithUsernameDocument = gql`
       super(apollo);
     }
   }
+export const GetConcreteChatDocument = gql`
+    query GetConcreteChat($chatId: String!) {
+  chat(chatId: $chatId) {
+    id
+    peersIds
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetConcreteChatGQL extends Apollo.Query<GetConcreteChatQuery, GetConcreteChatQueryVariables> {
+    document = GetConcreteChatDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const GetChatsPaginatedDocument = gql`
     query GetChatsPaginated($pagination: Pagination) {
   chats(pagination: $pagination) {
@@ -753,27 +776,6 @@ export const GetChatsPaginatedDocument = gql`
       super(apollo);
     }
   }
-export const GetConcreteChatDocument = gql`
-    query GetConcreteChat($chatId: String!) {
-  chat(chatId: $chatId) {
-    id
-    peersIds
-    createdAt
-    updatedAt
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetConcreteChatGQL extends Apollo.Query<GetConcreteChatQuery, GetConcreteChatQueryVariables> {
-    document = GetConcreteChatDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const GetMessagesDocument = gql`
     query GetMessages($chatId: String!, $pagination: Pagination) {
   messages(chatId: $chatId, pagination: $pagination) {
@@ -783,6 +785,7 @@ export const GetMessagesDocument = gql`
       chatId
       userId
       text
+      viewedBy
       createdAt
       updatedAt
     }
@@ -807,6 +810,7 @@ export const LastMessageDocument = gql`
     chatId
     userId
     text
+    viewedBy
     createdAt
     updatedAt
   }
@@ -823,24 +827,33 @@ export const LastMessageDocument = gql`
       super(apollo);
     }
   }
-export const SendMessageDocument = gql`
-    mutation SendMessage($input: SendChatMessageInput!) {
-  sendMessage(SendMessageInput: $input) {
-    id
-    chatId
-    userId
-    text
-    createdAt
-    updatedAt
-  }
+export const NotViewedMessagesNumberPerChatDocument = gql`
+    query NotViewedMessagesNumberPerChat($chatId: String!) {
+  notViewedMessagesPerChat(chatId: $chatId)
 }
     `;
 
   @Injectable({
     providedIn: 'root'
   })
-  export class SendMessageGQL extends Apollo.Mutation<SendMessageMutation, SendMessageMutationVariables> {
-    document = SendMessageDocument;
+  export class NotViewedMessagesNumberPerChatGQL extends Apollo.Query<NotViewedMessagesNumberPerChatQuery, NotViewedMessagesNumberPerChatQueryVariables> {
+    document = NotViewedMessagesNumberPerChatDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const NotViewedMessagesNumberTotalDocument = gql`
+    query NotViewedMessagesNumberTotal {
+  notViewedMessagesTotal
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class NotViewedMessagesNumberTotalGQL extends Apollo.Query<NotViewedMessagesNumberTotalQuery, NotViewedMessagesNumberTotalQueryVariables> {
+    document = NotViewedMessagesNumberTotalDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

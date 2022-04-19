@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core"
 import { AppPathsEnum } from "src/app/app/app-routing.module"
-import { ExtendedChat } from "src/app/features/chat/chats/chat.interface"
+import { ExtendedChat } from "src/app/features/chat/chats/many/chat.interface"
 
 @Component({
   selector: "common-chats-container",

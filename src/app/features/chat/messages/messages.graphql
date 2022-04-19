@@ -6,6 +6,7 @@ query GetMessages($chatId: String!, $pagination: Pagination) {
       chatId
       userId
       text
+      viewedBy
       createdAt
       updatedAt
     }
@@ -18,18 +19,16 @@ query LastMessage($chatId: String!) {
     chatId
     userId
     text
+    viewedBy
     createdAt
     updatedAt
   }
 }
 
-mutation SendMessage($input: SendChatMessageInput!) {
-  sendMessage(SendMessageInput: $input) {
-    id
-    chatId
-    userId
-    text
-    createdAt
-    updatedAt
-  }
+query NotViewedMessagesNumberPerChat($chatId: String!) {
+  notViewedMessagesPerChat(chatId: $chatId)
+}
+
+query NotViewedMessagesNumberTotal {
+  notViewedMessagesTotal
 }

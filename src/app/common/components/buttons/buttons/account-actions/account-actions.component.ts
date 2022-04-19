@@ -1,4 +1,6 @@
 import { Component, OnDestroy } from "@angular/core"
+import { distinctUntilChanged } from "rxjs"
+import { ChatEvents } from "src/app/features/chat/notifications/chat.events"
 import { CurrentUserState } from "src/app/features/users/current-user.state"
 import { User } from "src/app/features/users/users.interface"
 import { assetsPaths } from "src/assets/assets.paths"
@@ -9,18 +11,19 @@ import { assetsPaths } from "src/assets/assets.paths"
   styleUrls: ["./account-actions.component.scss"]
 })
 export class CommonManageAccountButtonComponent implements OnDestroy {
-  user?: User
+  user: User | null = null
 
-  userSubscription = this.userState.item$.subscribe(userOrNull => {
-    if (userOrNull) {
-      this.user = userOrNull
-    }
-  })
+  badgeValue = 0
 
-  constructor(private userState: CurrentUserState) {}
+  private totalNotViewedSub = this.subscribeToNotViewedMessages()
+
+  private userSub = this.subscribeToUser()
+
+  constructor(private userState: CurrentUserState, private chatEvents: ChatEvents) {}
 
   ngOnDestroy(): void {
-    this.userSubscription.unsubscribe()
+    this.userSub.unsubscribe()
+    this.totalNotViewedSub.unsubscribe()
   }
 
   getAvatarSource(): string {
@@ -30,5 +33,21 @@ export class CommonManageAccountButtonComponent implements OnDestroy {
       return this.user?.avatarUrl ?? defaultAvatar
     }
     return defaultAvatar
+  }
+
+  private subscribeToNotViewedMessages() {
+    return this.chatEvents.notViewedMessagesTotalChanged$
+      .pipe(distinctUntilChanged())
+      .subscribe(number => {
+        this.badgeValue = number
+      })
+  }
+
+  private subscribeToUser() {
+    return this.userState.item$.subscribe(userOrNull => {
+      if (userOrNull) {
+        this.user = userOrNull
+      }
+    })
   }
 }

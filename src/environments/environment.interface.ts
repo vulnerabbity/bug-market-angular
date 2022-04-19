@@ -3,4 +3,5 @@ export interface AppEnvironment {
   publicFilesUrl: string
   hostsForTokenUsage: string[]
   backendUrl: string
+  websocketsUrl: string
 }

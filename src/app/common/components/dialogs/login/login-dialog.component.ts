@@ -52,7 +52,7 @@ export class CommonLoginDialogComponent implements OnInit {
 
     if (status === "success") {
       this.currentDialog.close()
-      this.userState.fetchState()
+      this.userState.login()
     }
 
     if (status === "not-found") {

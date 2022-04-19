@@ -26,6 +26,7 @@ import { assetsPaths } from "src/assets/assets.paths"
         </div>
       </header>
     </common-themed-div>
+    <div class="inner-shadow-top"></div>
   `
 })
 export class HomepageHeaderComponent {

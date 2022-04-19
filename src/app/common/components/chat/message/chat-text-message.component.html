@@ -1,8 +1,23 @@
 <common-themed-div class="message-body" [color]="color">
   <div class="inner-content">
     <p class="text wrap-text">
-      {{ text }}
-      <span class="time">{{ time | date: "MMM d hh:mm" }}</span>
+      {{ message.text }}
+      <span class="message-end">
+        <span class="viewed-by-wrapper">
+          <span class="viewed-by-inner">
+            <mat-icon class="view-status-icon" [ngClass]="{ viewed: this.isViewedBySender() }">
+              done
+            </mat-icon>
+            <mat-icon
+              class="view-status-icon view-status-icon--others"
+              [ngClass]="{ viewed: this.isViewedByOthers() }"
+            >
+              done
+            </mat-icon>
+          </span>
+        </span>
+        <span class="time">{{ message.createdAt | date: "MMM d hh:mm" }}</span>
+      </span>
     </p>
   </div>
 </common-themed-div>

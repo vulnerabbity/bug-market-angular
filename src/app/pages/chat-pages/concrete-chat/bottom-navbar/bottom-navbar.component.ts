@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
-import { CurrentChatState } from "src/app/features/chat/chats/current-chat.state"
+import { CurrentChatState } from "src/app/features/chat/chats/concrete/current-chat.state"
 import { MessagesSenderService } from "src/app/features/chat/messages/messages-sender.service"
-import { CurrentChatMessagesState } from "src/app/features/chat/messages/messages.state"
 import { CurrentUserState } from "src/app/features/users/current-user.state"
 import { User } from "src/app/features/users/users.interface"
 import { Chat } from "src/generated-gql-types"
@@ -23,7 +22,6 @@ export class BottomNavbarComponent implements OnDestroy {
   constructor(
     private chatState: CurrentChatState,
     private userState: CurrentUserState,
-    private messagesState: CurrentChatMessagesState,
     private messagesSender: MessagesSenderService
   ) {}
 
@@ -33,6 +31,9 @@ export class BottomNavbarComponent implements OnDestroy {
   }
 
   onSendMessage() {
+    if (this.cantSendMessage()) {
+      return
+    }
     this.sendMessage()
     this.clearMessage()
   }
@@ -46,13 +47,10 @@ export class BottomNavbarComponent implements OnDestroy {
     const currentUser = this.currentUser!
 
     const receiverId = chat.peersIds.filter(peerId => peerId !== currentUser.id)[0]
-    const { data } = await this.messagesSender.sendMessageResponse({
+    await this.messagesSender.sendMessage({
       text: this.messageInputText,
       userId: receiverId
     })
-    if (data) {
-      this.triggerMessageSended()
-    }
   }
 
   private clearMessage() {
@@ -62,9 +60,5 @@ export class BottomNavbarComponent implements OnDestroy {
   private isEmptyMessage() {
     const message = this.messageInputText.trim()
     return message.length === 0
-  }
-
-  private triggerMessageSended() {
-    this.messagesState.messageSended$.next()
   }
 }
