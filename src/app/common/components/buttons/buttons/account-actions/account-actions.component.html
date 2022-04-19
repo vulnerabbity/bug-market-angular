@@ -5,9 +5,25 @@
   aria-label="Open user actions"
 >
   <img class="menu-toggler__image" [src]="this.getAvatarSource()" />
+  <common-themed-div
+    class="menu-toggler__badge-wrapper badge-wrapper--at-toggler"
+    *ngIf="badgeValue"
+    color="accent"
+  >
+    <span class="menu-toggler__badge-inner">{{ badgeValue }}</span>
+  </common-themed-div>
 </button>
 <mat-menu #menu="matMenu">
   <common-go-to-profile-menu-link></common-go-to-profile-menu-link>
-  <common-go-to-chats-menu-link></common-go-to-chats-menu-link>
+  <div class="chats-menu-link-container">
+    <common-go-to-chats-menu-link></common-go-to-chats-menu-link>
+    <common-themed-div
+      class="menu-toggler__badge-wrapper badge-wrapper--at-menu"
+      *ngIf="badgeValue"
+      color="primary"
+    >
+      <span class="menu-toggler__badge-inner">{{ badgeValue }}</span>
+    </common-themed-div>
+  </div>
   <common-logout-menu-button></common-logout-menu-button>
 </mat-menu>
