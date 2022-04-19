@@ -23,7 +23,6 @@ export class ManyChatsEventsHandler {
 
   private handleUpdateNotViewedMessages() {
     this.chatsEvents.concreteChatNotViewedMessagesChanged$.subscribe(response => {
-      console.log(response)
       const { chatId, number } = response
       this.updateNotViewedNumber(chatId, number)
     })
