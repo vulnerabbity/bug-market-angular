@@ -9,13 +9,13 @@
 
   &__image {
     display: block;
-    height: 90%;
-
+    
     margin: 0 1rem;
-
+    
+    // round
     border-radius: 50%;
-
-    aspect-ratio: 1;
+    height: 5rem;
+    width: 5rem;
     object-fit: cover;
   }
   &__chat-name {
