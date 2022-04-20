@@ -7,3 +7,16 @@
   flex-shrink: 1;
   flex-basis: auto;
 }
+
+.hide-on-small {
+  @media screen and (max-width: 25rem) {
+    display: none;
+  }
+}
+.icon-button {
+  width: fit-content;
+}
+
+.text-before-icon {
+  margin-right: 1vw;
+}

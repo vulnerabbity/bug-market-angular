@@ -1,6 +1,16 @@
 <common-themed-div color="primary" class="component-root">
   <common-titled-page-header title="Products">
     <span class="spacer" role="none"></span>
-    <common-create-product-link></common-create-product-link>
+    <button
+      class="icon-button"
+      (click)="onCreateProduct()"
+      mat-button
+      matTooltip="Create product"
+      matTooltipClass="tooltip"
+      aria-label="Create product"
+    >
+      <span class="hide-on-small text-before-icon">Add new product</span>
+      <mat-icon>add_box</mat-icon>
+    </button>
   </common-titled-page-header>
 </common-themed-div>
