@@ -6,3 +6,12 @@ query GetConcreteChat($chatId: String!) {
     updatedAt
   }
 }
+
+mutation InitChatIfNotExists($otherPeerId: String!) {
+  initChatIfNotExists(otherUserId: $otherPeerId) {
+    id
+    peersIds
+    createdAt
+    updatedAt
+  }
+}

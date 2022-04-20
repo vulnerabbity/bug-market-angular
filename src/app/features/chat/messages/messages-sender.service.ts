@@ -3,7 +3,7 @@ import { WebsocketsService } from "../../websockets/ws.service"
 
 export interface SendChatMessageInput {
   text: string
-  userId: string
+  chatId: string
 }
 
 @Injectable({ providedIn: "root" })

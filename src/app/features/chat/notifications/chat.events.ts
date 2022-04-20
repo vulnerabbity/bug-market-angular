@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core"
 import { BehaviorSubject, Subject } from "rxjs"
-import { ChatMessage } from "src/generated-gql-types"
+import { Chat, ChatMessage } from "src/generated-gql-types"
 import { ExtendedChat } from "../chats/many/chat.interface"
 import { ConcreteChatNotViewedChangedResponse } from "./chat-notifications.service"
 
@@ -15,4 +15,8 @@ export class ChatEvents {
   concreteChatNotViewedMessagesChanged$ = new Subject<ConcreteChatNotViewedChangedResponse>()
 
   chatOpened$ = new Subject<ExtendedChat>()
+
+  chatCreated$ = new Subject<Chat>()
+
+  chatDeleted$ = new Subject<Chat>()
 }

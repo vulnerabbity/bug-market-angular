@@ -21,6 +21,7 @@ export class ConcreteChatEventsHandler {
     this.subscribeToChat()
     this.viewMessagesOnOpen()
     this.viewMessagesOnReceive()
+    this.handleChatDeleted()
   }
 
   private viewMessagesOnOpen() {
@@ -35,6 +36,20 @@ export class ConcreteChatEventsHandler {
       }
     })
   }
+
+  private handleChatDeleted() {
+    this.chatEvents.chatDeleted$.subscribe(deletedChat => {
+      const currentChat = this.currentChat
+      if (!currentChat) {
+        return
+      }
+
+      if (currentChat.id === deletedChat.id) {
+        this.currentChatState.quit()
+      }
+    })
+  }
+
   private subscribeToChat() {
     return this.currentChatState.chat$.subscribe(chat => {
       this.currentChat = chat

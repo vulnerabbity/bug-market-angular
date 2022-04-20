@@ -1,17 +1,27 @@
 import { Injectable } from "@angular/core"
 import { ChatMessage, PaginatedChats } from "src/generated-gql-types"
 import { ChatEvents } from "../../notifications/chat.events"
+import { ConcreteExtendedChatLoader } from "../concrete/concrete-extended-chat-loader.service"
 import { ExtendedChat } from "./chat.interface"
 import { ChatsState } from "./chats.state"
+import { ExtendedChatsFieldsResolver } from "./extended-chats.resolver"
 
 @Injectable({ providedIn: "root" })
 export class ManyChatsEventsHandler {
   private chats: ExtendedChat[] = []
   private paginatedChats: PaginatedChats = { data: [], totalResultsCount: 0 }
 
-  constructor(private chatsState: ChatsState, private chatsEvents: ChatEvents) {
+  constructor(
+    private chatsState: ChatsState,
+    private chatsEvents: ChatEvents,
+    private chatLoader: ConcreteExtendedChatLoader
+  ) {
     this.handleMessageReceived()
     this.handleUpdateNotViewedMessages()
+
+    this.handleChatDeleted()
+    this.handleChatCreated()
+
     this.subscribeToChats()
   }
 
@@ -25,6 +35,21 @@ export class ManyChatsEventsHandler {
     this.chatsEvents.concreteChatNotViewedMessagesChanged$.subscribe(response => {
       const { chatId, number } = response
       this.updateNotViewedNumber(chatId, number)
+    })
+  }
+
+  private handleChatDeleted() {
+    this.chatsEvents.chatDeleted$.subscribe(deletedChat => {
+      const newChats = this.chats.filter(chat => deletedChat.id !== chat.id)
+      this.emitChats(newChats)
+    })
+  }
+
+  private handleChatCreated() {
+    this.chatsEvents.chatCreated$.subscribe(async createdChat => {
+      const createdExtendedChat = await this.chatLoader.loadExtendedChatOrRedirect(createdChat.id)
+
+      this.emitChats([...this.chats, createdExtendedChat])
     })
   }
 
