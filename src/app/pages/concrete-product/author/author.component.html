@@ -15,6 +15,7 @@
   <button
     class="author-message"
     *ngIf="canWriteMessage()"
+    (click)="onWriteMessage()"
     mat-raised-button
     color="accent"
     aria-label="Write message to author"

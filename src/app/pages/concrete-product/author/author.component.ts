@@ -4,6 +4,8 @@ import { User } from "src/app/features/users/users.interface"
 import { userDefaults } from "src/app/features/users/user.defaults"
 import { UsersLoaderService } from "src/app/features/users/users-loader.service"
 import { CurrentUserState } from "src/app/features/users/current-user.state"
+import { ConcreteChatCreatorService } from "src/app/features/chat/chats/concrete/concrete-chat-creator.service"
+import { AppRouterService } from "src/app/common/services/router.service"
 
 @Component({
   selector: "concrete-product-page-author[product]",
@@ -18,7 +20,12 @@ export class ConcreteProductPageAuthorComponent implements OnInit {
 
   private currentUserId: User["id"] | null = null
 
-  constructor(private usersLoader: UsersLoaderService, private userState: CurrentUserState) {}
+  constructor(
+    private usersLoader: UsersLoaderService,
+    private userState: CurrentUserState,
+    private chatCreator: ConcreteChatCreatorService,
+    private appRouter: AppRouterService
+  ) {}
 
   async ngOnInit() {
     this.author = await this.loadUser(this.product.userId)
@@ -41,6 +48,15 @@ export class ConcreteProductPageAuthorComponent implements OnInit {
     }
 
     return userDefaults.name
+  }
+
+  async onWriteMessage() {
+    const { data: chatCandidate } = await this.chatCreator.initIfNotExistsResponse(this.author.id)
+    console.log(chatCandidate)
+
+    if (chatCandidate) {
+      this.appRouter.redirectToConcreteChat(chatCandidate.id)
+    }
   }
 
   private isOwn() {
