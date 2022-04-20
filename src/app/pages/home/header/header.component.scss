@@ -68,10 +68,3 @@
   font-size: min(5rem, 5vw);
 }
 
-// hide on small screens
-.display-background {
-  display: none;
-  @media screen and (min-width: 30rem) {
-    display: block;
-  }
-}
