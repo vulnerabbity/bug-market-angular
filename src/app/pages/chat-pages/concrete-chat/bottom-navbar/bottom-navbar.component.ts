@@ -43,13 +43,14 @@ export class BottomNavbarComponent implements OnDestroy {
   }
 
   private async sendMessage() {
-    const chat = this.currentChat!
-    const currentUser = this.currentUser!
+    const chat = this.currentChat
+    if (!chat) {
+      return
+    }
 
-    const receiverId = chat.peersIds.filter(peerId => peerId !== currentUser.id)[0]
     await this.messagesSender.sendMessage({
       text: this.messageInputText,
-      userId: receiverId
+      chatId: chat.id
     })
   }
 
