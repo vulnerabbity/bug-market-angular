@@ -47,7 +47,7 @@ export class CurrentUserState implements ReactiveState<User | null> {
   }
 
   async fetchState() {
-    const userIdOrNull = this.getUserIdOrNul()
+    const userIdOrNull = this.getUserIdOrNull()
     if (userIdOrNull) {
       const userId = userIdOrNull
 
@@ -56,7 +56,7 @@ export class CurrentUserState implements ReactiveState<User | null> {
     }
   }
 
-  getUserIdOrNul() {
+  getUserIdOrNull() {
     return this.localUserService.getUserIdOrNull()
   }
 
