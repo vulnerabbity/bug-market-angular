@@ -23,6 +23,11 @@ export class AppRouterService {
     this.redirect(concreteProductPath)
   }
 
+  redirectCreateProduct() {
+    const path = `/${AppPathsEnum.CreateProduct}`
+    this.redirect(path)
+  }
+
   redirectToChats() {
     const path = `/${AppPathsEnum.ChatsList}`
     this.redirect(path)
