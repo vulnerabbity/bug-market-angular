@@ -11,8 +11,7 @@
 .avatar {
   display: block;
   width: 100%;
-  aspect-ratio: 1;
-  height: auto;
+  height: 100%;
 
   object-fit: cover;
 
@@ -28,6 +27,13 @@
 
   max-height: 50rem;
   max-width: 50rem;
+
+  // square
+  &::after {
+    padding-bottom: 100%;
+    content: "";
+    display: block;
+  }
 }
 
 .edit-user-under-avatar {
