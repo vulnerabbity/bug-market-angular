@@ -82,7 +82,9 @@ export type Mutation = {
   __typename?: 'Mutation';
   createProduct: Product;
   createSeller: User;
+  deleteChat: Chat;
   deleteProduct: Product;
+  initChatIfNotExists: Chat;
   updateProduct: Product;
   updateUser: User;
 };
@@ -98,8 +100,18 @@ export type MutationCreateSellerArgs = {
 };
 
 
+export type MutationDeleteChatArgs = {
+  chatId: Scalars['String'];
+};
+
+
 export type MutationDeleteProductArgs = {
   id: Scalars['String'];
+};
+
+
+export type MutationInitChatIfNotExistsArgs = {
+  otherUserId: Scalars['String'];
 };
 
 
@@ -602,6 +614,13 @@ export type GetConcreteChatQueryVariables = Exact<{
 
 export type GetConcreteChatQuery = { __typename?: 'Query', chat: { __typename?: 'Chat', id: string, peersIds: Array<string>, createdAt: any, updatedAt: any } };
 
+export type InitChatIfNotExistsMutationVariables = Exact<{
+  otherPeerId: Scalars['String'];
+}>;
+
+
+export type InitChatIfNotExistsMutation = { __typename?: 'Mutation', initChatIfNotExists: { __typename?: 'Chat', id: string, peersIds: Array<string>, createdAt: any, updatedAt: any } };
+
 export type GetChatsPaginatedQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
 }>;
@@ -747,6 +766,27 @@ export const GetConcreteChatDocument = gql`
   })
   export class GetConcreteChatGQL extends Apollo.Query<GetConcreteChatQuery, GetConcreteChatQueryVariables> {
     document = GetConcreteChatDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const InitChatIfNotExistsDocument = gql`
+    mutation InitChatIfNotExists($otherPeerId: String!) {
+  initChatIfNotExists(otherUserId: $otherPeerId) {
+    id
+    peersIds
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class InitChatIfNotExistsGQL extends Apollo.Mutation<InitChatIfNotExistsMutation, InitChatIfNotExistsMutationVariables> {
+    document = InitChatIfNotExistsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
