@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core"
 import { BehaviorSubject, Subject } from "rxjs"
-import { ChatMessage } from "src/generated-gql-types"
+import { ChatMessage, Pagination } from "src/generated-gql-types"
 import { CurrentChatState } from "../chats/concrete/current-chat.state"
 import { ExtendedChat } from "../chats/many/chat.interface"
 import { MessagesLoader } from "./messages-loader.service"
@@ -13,20 +13,44 @@ export class CurrentChatMessagesState {
 
   messages$ = new BehaviorSubject<ChatMessage[]>([])
 
+  private totalMessages = 0
+
   constructor(private messagesLoader: MessagesLoader, private currentChatState: CurrentChatState) {
     this.subscribeToChat()
     this.subscribeToMessages()
   }
 
   init(chatId: string) {
+    this.messages$.next([])
     this.initMessages(chatId)
   }
 
-  private async initMessages(chatId: string) {
-    const { data: paginatedMessages } = await this.messagesLoader.getMessagesResponse(chatId)
-    const { data: messages } = paginatedMessages!
+  async loadMore() {
+    const chat = this.chat
+    const currentMessagesLength = this.messages.length
+    const reachedEnd = currentMessagesLength === this.totalMessages
 
-    this.messages$.next(messages)
+    if (!chat || reachedEnd) {
+      return
+    }
+
+    this.loadMessages(chat.id, { offset: currentMessagesLength, limit: 25 })
+  }
+
+  private async initMessages(chatId: string) {
+    this.loadMessages(chatId)
+  }
+
+  private async loadMessages(chatId: string, pagination?: Pagination) {
+    const { data: paginatedMessages } = await this.messagesLoader.getMessagesResponse(
+      chatId,
+      pagination
+    )
+    const { data: newMessages, totalResultsCount } = paginatedMessages!
+
+    this.totalMessages = totalResultsCount
+    this.messages.push(...newMessages)
+    this.messages$.next(this.messages)
   }
 
   private subscribeToChat() {

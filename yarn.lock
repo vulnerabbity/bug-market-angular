@@ -5967,6 +5967,13 @@ ngx-filepond@^6.0.1:
   dependencies:
     tslib "^1.10.0"
 
+ngx-infinite-scroll@^13.0.1:
+  version "13.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-infinite-scroll/-/ngx-infinite-scroll-13.0.1.tgz#2368335875568b71fd2c6331978a5f741d595f56"
+  integrity sha512-B0E5gxnM/ljM76ap/cb9SYI7RUDBK3bNRPY3W+j+ynkrDtJWzyVgVp0Diit4HqnTUskOYmRctwfP/CVznH4v9A==
+  dependencies:
+    tslib "^2.3.0"
+
 ngx-owl-carousel-o@^7.0.2:
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/ngx-owl-carousel-o/-/ngx-owl-carousel-o-7.0.2.tgz#477b492a57daf0b535f9f873733b0dc630697c9d"

@@ -1,5 +1,13 @@
 <mat-card class="component-root">
-  <div class="messages-container" #scrollContainer>
+  <div
+    class="messages-container"
+    #scrollContainer
+    infiniteScroll
+    [infiniteScrollThrottle]="100"
+    [infiniteScrollUpDistance]="1"
+    [scrollWindow]="false"
+    (scrolledUp)="loadMore()"
+  >
     <div class="messages-wrapper">
       <ng-template ngFor [ngForOf]="messages" let-message>
         <common-chat-text-message

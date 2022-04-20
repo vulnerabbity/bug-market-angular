@@ -12,7 +12,7 @@ import { ExtendedChat } from "./chat.interface"
   providedIn: "root"
 })
 export class ExtendedChatsFieldsResolver {
-  private currentUserId: string | null = this.currentUserState.getUserIdOrNul()
+  private currentUserId: string | null = this.currentUserState.getUserIdOrNull()
 
   constructor(
     private usersLoader: UsersLoaderService,
