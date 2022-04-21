@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core"
+import { Component, OnDestroy, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { filter, firstValueFrom, map } from "rxjs"
 import { CurrentChatState } from "src/app/features/chat/chats/concrete/current-chat.state"
@@ -9,7 +9,7 @@ import { ChatEvents } from "src/app/features/chat/notifications/chat.events"
   templateUrl: "./concrete-chat.page.html",
   styleUrls: ["./concrete-chat.page.scss"]
 })
-export class ConcreteChatPage implements OnInit {
+export class ConcreteChatPage implements OnInit, OnDestroy {
   constructor(
     private chatState: CurrentChatState,
     private currentRoute: ActivatedRoute,
@@ -20,9 +20,13 @@ export class ConcreteChatPage implements OnInit {
     this.initChat()
   }
 
+  ngOnDestroy(): void {
+    this.chatState.quit()
+  }
+
   private async initChat() {
     const chatId = await this.getChatId()
-    this.chatState.init(chatId)
+    await this.chatState.init(chatId)
 
     const fetchedChat$ = this.chatState.chat$.pipe(
       filter(chat => chat !== null),

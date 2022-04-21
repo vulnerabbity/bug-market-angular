@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core"
 import { Socket } from "socket.io-client"
+import { Chat } from "src/generated-gql-types"
 import { WebsocketsService } from "../../websockets/ws.service"
 import { ChatMessagesNumberLoader } from "../messages/messages-number-loader"
 import { ChatEvents } from "./chat.events"
@@ -26,6 +27,9 @@ export class ChatNotificationsService {
   private totalNotViewedMessagesChangedEvent = "totalNotViewedMessagesChanged"
   private concreteChatNotViewedMessagesChangedEvent = "concreteChatNotViewedMessagesChanged"
 
+  private chatCreatedEvent = "chatCreated"
+  private chatDeletedEvent = "chatDeleted"
+
   async listen() {
     this.socket = this.ws.getSocket()
 
@@ -35,13 +39,14 @@ export class ChatNotificationsService {
     this.listenToMessageUpdated()
     this.listenToTotalNotViewedMessages()
     this.listenToNotViewedMessagesPerChat()
+
+    this.listenToChatCreated()
+    this.listenToChatDeleted()
   }
 
   stopListening() {
-    this.socket.off(this.messageReceivedEvent)
-    this.socket.off(this.messageUpdatedEvent)
-    this.socket.off(this.totalNotViewedMessagesChangedEvent)
-    this.socket.off(this.concreteChatNotViewedMessagesChangedEvent)
+    const events = this.getAllEvents()
+    events.forEach(event => this.socket.off(event))
   }
 
   private listenToMessageReceived() {
@@ -72,8 +77,32 @@ export class ChatNotificationsService {
     )
   }
 
+  private listenToChatCreated() {
+    this.socket.on(this.chatCreatedEvent, (chat: Chat) => {
+      this.chatEvents.chatCreated$.next(chat)
+    })
+  }
+
+  private listenToChatDeleted() {
+    this.socket.on(this.chatDeletedEvent, (chat: Chat) => {
+      this.chatEvents.chatDeleted$.next(chat)
+    })
+  }
   private async initTotalNotViewedMessages() {
     const number = await this.messagesNumbersLoader.getTotal()
     this.chatEvents.notViewedMessagesTotalChanged$.next(number)
+  }
+
+  private getAllEvents(): string[] {
+    const events: string[] = [
+      this.messageReceivedEvent,
+      this.messageUpdatedEvent,
+      this.totalNotViewedMessagesChangedEvent,
+      this.concreteChatNotViewedMessagesChangedEvent,
+      this.chatCreatedEvent,
+      this.chatDeletedEvent
+    ]
+
+    return events
   }
 }

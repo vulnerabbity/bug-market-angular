@@ -33,6 +33,11 @@ export class AppRouterService {
     this.redirect(path)
   }
 
+  redirectToConcreteChat(chatId: string) {
+    const path = `/${AppPathsEnum.ConcreteChat}/${chatId}`
+    this.redirect(path)
+  }
+
   redirectHome() {
     this.redirect("/")
   }

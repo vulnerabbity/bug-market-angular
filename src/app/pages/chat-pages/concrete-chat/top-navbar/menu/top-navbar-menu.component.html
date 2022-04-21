@@ -1,0 +1,9 @@
+<button mat-icon-button [mat-menu-trigger-for]="menu" aria-label="open chat menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu>
+  <button class="menu-item" (click)="onDeleteClick()" mat-menu-item>
+    <mat-icon>delete</mat-icon>
+    <span>Delete chat</span>
+  </button>
+</mat-menu>
