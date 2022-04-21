@@ -16,17 +16,23 @@ export class MessagesBoxComponent implements OnDestroy {
 
   messages: ChatMessage[] = []
 
-  private isScrolled = false
+  private isInitiallyScrolled = false
 
   private messagesSubscription = this.messagesState.messages$.subscribe(messages => {
+    // scroll at new messages
+    if (this.isScrollAtBottom()) {
+      setTimeout(() => this.scrollEnd())
+    }
+
     this.messages = messages
 
-    const needScroll = this.isScrolled === false && messages.length > 0
-    console.log(messages.length)
-    if (needScroll) {
+    const hasMessages = messages.length > 0
+    const notInitiallyScrolled = this.isInitiallyScrolled === false
+    const needScrollInitially = notInitiallyScrolled && hasMessages
+    if (needScrollInitially) {
       setTimeout(() => {
         this.scrollEnd()
-        this.isScrolled = true
+        this.isInitiallyScrolled = true
       })
     }
   })
@@ -65,11 +71,21 @@ export class MessagesBoxComponent implements OnDestroy {
   }
 
   scrollEnd() {
-    this.scrollEndForce()
+    this.scrollBottom(9999)
   }
 
-  private scrollEndForce() {
-    this.scrollBottom(9999)
+  private isScrollAtBottom() {
+    const scrollFromBottom = this.getScrollPositionRelativeBottom()
+    return scrollFromBottom <= 0
+  }
+
+  private getScrollPositionRelativeBottom() {
+    const positionRelativeTop = this.scrollContainer?.nativeElement.scrollTop ?? 0
+    const height = this.scrollContainer?.nativeElement.scrollHeight ?? 0
+    const viewHeight = this.scrollContainer?.nativeElement.offsetHeight ?? 0
+
+    const position = height - positionRelativeTop - viewHeight
+    return position
   }
 
   private isIncomingMessage(message: ChatMessage): boolean {
@@ -77,6 +93,8 @@ export class MessagesBoxComponent implements OnDestroy {
   }
 
   private scrollBottom(height: number) {
-    this.scrollContainer.nativeElement.scrollTop = height
+    if (this.scrollContainer) {
+      this.scrollContainer.nativeElement.scrollTop = height
+    }
   }
 }
