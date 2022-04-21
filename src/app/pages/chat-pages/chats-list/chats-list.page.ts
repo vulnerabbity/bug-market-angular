@@ -18,6 +18,10 @@ export class ChatsListPage {
 
   constructor(private chatsState: ChatsState) {}
 
+  getChatsNumber() {
+    return this.getChats().length
+  }
+
   getChats(): ExtendedChat[] {
     return this.paginatedChats.data
   }

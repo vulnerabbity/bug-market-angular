@@ -1,4 +1,21 @@
+@import "src/styles/mixins.scss";
+
 .container {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.no-chats {
+  width: fit-content;
+  margin: 0 auto;
+  &__text {
+    text-align: center;
+
+    font-size: min(2.5rem, 3vw);
+    line-height: min(2.5rem, 3vw);
+  }
+}
+
+.section-logo {
+  @include section-logo();
 }
