@@ -5,10 +5,17 @@ import { ChatFeatureModule } from "src/app/features/chat/chat.feature.module"
 import { BottomNavbarComponent } from "./bottom-navbar/bottom-navbar.component"
 import { ConcreteChatPage } from "./concrete-chat.page"
 import { MessagesBoxComponent } from "./messages-box/messages-box.component"
+import { ConcreteChatPageTopNavbarMenuComponent } from "./top-navbar/menu/top-navbar-menu.component"
 import { TopNavbarComponent } from "./top-navbar/top-navbar.component"
 
 @NgModule({
   imports: [AppCommonModule, ChatFeatureModule, InfiniteScrollModule],
-  declarations: [ConcreteChatPage, TopNavbarComponent, MessagesBoxComponent, BottomNavbarComponent]
+  declarations: [
+    ConcreteChatPage,
+    TopNavbarComponent,
+    MessagesBoxComponent,
+    BottomNavbarComponent,
+    ConcreteChatPageTopNavbarMenuComponent
+  ]
 })
 export class ConcreteChatModule {}

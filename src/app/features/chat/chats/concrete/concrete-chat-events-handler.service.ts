@@ -40,11 +40,15 @@ export class ConcreteChatEventsHandler {
   private handleChatDeleted() {
     this.chatEvents.chatDeleted$.subscribe(deletedChat => {
       const currentChat = this.currentChat
-      if (!currentChat) {
+
+      const hasNoCurrentChat = !currentChat
+      if (hasNoCurrentChat) {
         return
       }
 
-      if (currentChat.id === deletedChat.id) {
+      const isCurrentChat = currentChat.id === deletedChat.id
+
+      if (isCurrentChat) {
         this.currentChatState.quit()
       }
     })

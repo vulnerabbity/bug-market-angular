@@ -9,9 +9,9 @@
 
   &__image {
     display: block;
-    
+
     margin: 0 1rem;
-    
+
     // round
     border-radius: 50%;
     height: 5rem;
@@ -21,4 +21,8 @@
   &__chat-name {
     font-size: 2.5rem;
   }
+}
+
+.navbar-spacer {
+  flex: 1 1;
 }

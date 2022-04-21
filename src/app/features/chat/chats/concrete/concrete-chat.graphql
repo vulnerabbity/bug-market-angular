@@ -15,3 +15,12 @@ mutation InitChatIfNotExists($otherPeerId: String!) {
     updatedAt
   }
 }
+
+mutation DeleteChat($chatId: String!) {
+  deleteChat(chatId: $chatId) {
+    id
+    peersIds
+    createdAt
+    updatedAt
+  }
+}

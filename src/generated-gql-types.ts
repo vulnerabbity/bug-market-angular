@@ -621,6 +621,13 @@ export type InitChatIfNotExistsMutationVariables = Exact<{
 
 export type InitChatIfNotExistsMutation = { __typename?: 'Mutation', initChatIfNotExists: { __typename?: 'Chat', id: string, peersIds: Array<string>, createdAt: any, updatedAt: any } };
 
+export type DeleteChatMutationVariables = Exact<{
+  chatId: Scalars['String'];
+}>;
+
+
+export type DeleteChatMutation = { __typename?: 'Mutation', deleteChat: { __typename?: 'Chat', id: string, peersIds: Array<string>, createdAt: any, updatedAt: any } };
+
 export type GetChatsPaginatedQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
 }>;
@@ -787,6 +794,27 @@ export const InitChatIfNotExistsDocument = gql`
   })
   export class InitChatIfNotExistsGQL extends Apollo.Mutation<InitChatIfNotExistsMutation, InitChatIfNotExistsMutationVariables> {
     document = InitChatIfNotExistsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteChatDocument = gql`
+    mutation DeleteChat($chatId: String!) {
+  deleteChat(chatId: $chatId) {
+    id
+    peersIds
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteChatGQL extends Apollo.Mutation<DeleteChatMutation, DeleteChatMutationVariables> {
+    document = DeleteChatDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
