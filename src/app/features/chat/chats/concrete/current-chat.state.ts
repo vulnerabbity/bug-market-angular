@@ -34,6 +34,7 @@ export class CurrentChatState {
     if (hasNoChat) {
       return
     }
+    this.quit()
     await this.chatDeleter.deleteChatResponse(chat.id)
   }
 

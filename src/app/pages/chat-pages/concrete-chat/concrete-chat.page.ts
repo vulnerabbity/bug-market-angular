@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { filter, firstValueFrom, map } from "rxjs"
+import { AppRouterService } from "src/app/common/services/router.service"
 import { CurrentChatState } from "src/app/features/chat/chats/concrete/current-chat.state"
 import { ExtendedChat } from "src/app/features/chat/chats/many/chat.interface"
 import { ChatEvents } from "src/app/features/chat/notifications/chat.events"
@@ -10,10 +11,13 @@ import { ChatEvents } from "src/app/features/chat/notifications/chat.events"
   styleUrls: ["./concrete-chat.page.scss"]
 })
 export class ConcreteChatPage implements OnInit, OnDestroy {
+  private onDeleteSub = this.handleDelete()
+
   constructor(
     private chatState: CurrentChatState,
     private currentRoute: ActivatedRoute,
-    private chatEvents: ChatEvents
+    private chatEvents: ChatEvents,
+    private appRouter: AppRouterService
   ) {}
 
   ngOnInit() {
@@ -22,6 +26,7 @@ export class ConcreteChatPage implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.chatState.quit()
+    this.onDeleteSub.unsubscribe()
   }
 
   private async initChat() {
@@ -45,5 +50,11 @@ export class ConcreteChatPage implements OnInit, OnDestroy {
 
   private async emitChatOpened(chat: ExtendedChat) {
     this.chatEvents.chatOpened$.next(chat)
+  }
+
+  private handleDelete() {
+    return this.chatEvents.chatDeleted$.subscribe(() => {
+      this.appRouter.redirectToChats()
+    })
   }
 }
