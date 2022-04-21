@@ -1,3 +1,5 @@
+@import "src/styles/mixins.scss";
+
 :host {
   position: relative;
   display: flex;
@@ -43,5 +45,33 @@
 
   &__outgoing {
     margin-left: auto;
+  }
+}
+
+.no-messages {
+  &__wrapper {
+    position: relative;
+    overflow: hidden;
+
+    // content at center
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    // take all space
+    flex-grow: 1;
+    width: 100%;
+  }
+
+  &__banner {
+    position: absolute;
+    width: fit-content;
+  }
+
+  &__icon {
+    @include section-logo();
+  }
+  &__text {
+    text-align: center;
   }
 }

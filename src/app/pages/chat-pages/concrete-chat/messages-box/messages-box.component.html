@@ -8,7 +8,7 @@
     [scrollWindow]="false"
     (scrolledUp)="loadMore()"
   >
-    <div class="messages-wrapper">
+    <div *ngIf="messages.length > 0" class="messages-wrapper">
       <ng-template ngFor [ngForOf]="messages" let-message>
         <common-chat-text-message
           class="message"
@@ -18,6 +18,12 @@
         >
         </common-chat-text-message>
       </ng-template>
+    </div>
+  </div>
+  <div class="no-messages__wrapper" *ngIf="messages.length === 0">
+    <div class="no-messages__banner">
+      <mat-icon at-icon class="no-messages__icon">forum</mat-icon>
+      <div class="no-messages__text">No messages yet</div>
     </div>
   </div>
 </mat-card>
