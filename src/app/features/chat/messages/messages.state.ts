@@ -18,11 +18,11 @@ export class CurrentChatMessagesState {
   constructor(private messagesLoader: MessagesLoader, private currentChatState: CurrentChatState) {
     this.subscribeToChat()
     this.subscribeToMessages()
+    this.handleQuit()
   }
 
-  init(chatId: string) {
-    this.messages$.next([])
-    this.initMessages(chatId)
+  async init(chatId: string) {
+    await this.initMessages(chatId)
   }
 
   async loadMore() {
@@ -65,6 +65,14 @@ export class CurrentChatMessagesState {
   private subscribeToMessages() {
     return this.messages$.subscribe(messages => {
       this.messages = messages
+    })
+  }
+
+  private handleQuit() {
+    return this.currentChatState.quit$.subscribe(() => {
+      this.messages$.next([])
+      this.chat = null
+      this.totalMessages = 0
     })
   }
 }

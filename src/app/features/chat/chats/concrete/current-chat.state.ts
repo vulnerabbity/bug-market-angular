@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core"
-import { BehaviorSubject } from "rxjs"
+import { BehaviorSubject, Subject } from "rxjs"
 import { AppRouterService } from "src/app/common/services/router.service"
 import { ChatMessage } from "src/generated-gql-types"
 import { ExtendedChat } from "../many/chat.interface"
@@ -8,11 +8,11 @@ import { ConcreteExtendedChatLoader } from "./concrete-extended-chat-loader.serv
 
 @Injectable({ providedIn: "root" })
 export class CurrentChatState {
-  messages: ChatMessage[] = []
-
   chat: ExtendedChat | null = null
 
   chat$ = new BehaviorSubject<ExtendedChat | null>(null)
+
+  quit$ = new Subject<void>()
 
   private chatSub = this.subscribeToChat()
 
@@ -22,13 +22,14 @@ export class CurrentChatState {
     private chatDeleter: ConcreteChatDeleterService
   ) {}
 
-  init(chatId: string) {
-    this.initChat(chatId)
+  async init(chatId: string) {
+    await this.initChat(chatId)
   }
 
   quit() {
     this.appRouter.redirectToChats()
     this.chat$.next(null)
+    this.quit$.next()
   }
 
   async delete() {
