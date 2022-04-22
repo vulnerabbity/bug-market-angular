@@ -9,12 +9,12 @@ import { ProductSidebarFilters } from "./filters/filters-sidebar.component"
   templateUrl: "./products-page.component.html",
   styleUrls: ["./product-page.component.scss"]
 })
-export class ProductsPageComponent implements OnInit, OnDestroy {
+export class ProductsPageComponent implements OnInit {
   pageIndex = 0
   pageSize = 24
   totalProducts = 0
 
-  products$ = new BehaviorSubject<ShortProduct[]>([])
+  products: ShortProduct[] = []
 
   searchText = ""
 
@@ -26,10 +26,6 @@ export class ProductsPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadProducts()
-  }
-
-  ngOnDestroy(): void {
-    this.products$.unsubscribe()
   }
 
   onSearch(searchText: string) {
@@ -66,8 +62,8 @@ export class ProductsPageComponent implements OnInit, OnDestroy {
   private loadProducts() {
     const productsRequest = this.makeProductsRequest$()
     productsRequest.subscribe(paginatedProducts => {
-      this.products$.next(paginatedProducts.data)
-      this.totalProducts = paginatedProducts.totalResultsCount
+      ;(this.products = paginatedProducts.data),
+        (this.totalProducts = paginatedProducts.totalResultsCount)
     })
   }
 
