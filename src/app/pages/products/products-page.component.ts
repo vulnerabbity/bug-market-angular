@@ -28,6 +28,10 @@ export class ProductsPageComponent implements OnInit {
     this.loadProducts()
   }
 
+  hasNextPage() {
+    return this.totalProducts > this.pageSize
+  }
+
   onSearch(searchText: string) {
     this.searchText = searchText
     this.pageIndex = 0

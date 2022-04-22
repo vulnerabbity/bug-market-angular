@@ -19,12 +19,15 @@
       class="card-container"
       [products]="products"
     ></common-products-container>
+
+    <span class="spacer"></span>
+
+    <common-paginator
+      class="paginator"
+      [totalItems]="this.totalProducts"
+      [itemsPerPage]="this.pageSize"
+      [currentPage]="this.pageIndex + 1"
+      (onPageChange)="onPaginationUpdate($event)"
+    ></common-paginator>
   </div>
-  <common-paginator
-    class="paginator"
-    [totalItems]="this.totalProducts"
-    [itemsPerPage]="this.pageSize"
-    [currentPage]="this.pageIndex + 1"
-    (onPageChange)="onPaginationUpdate($event)"
-  ></common-paginator>
 </product-page-filters-sidebar>
