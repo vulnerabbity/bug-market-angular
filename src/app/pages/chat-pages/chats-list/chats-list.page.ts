@@ -1,4 +1,4 @@
-import { Component } from "@angular/core"
+import { Component, OnDestroy, OnInit } from "@angular/core"
 import {
   ExtendedChat,
   PaginatedExtendedChats
@@ -9,14 +9,20 @@ import { ChatsState } from "src/app/features/chat/chats/many/chats.state"
   templateUrl: "./chats-list.page.html",
   styleUrls: ["./chats-list.page.scss"]
 })
-export class ChatsListPage {
+export class ChatsListPage implements OnInit, OnDestroy {
   paginatedChats: PaginatedExtendedChats = { data: [], totalResultsCount: 0 }
 
-  chatsSubscription = this.chatsState.chats$.subscribe(paginatedChats => {
-    this.paginatedChats = paginatedChats
-  })
+  chatsSub = this.subscribeToChats()
 
   constructor(private chatsState: ChatsState) {}
+
+  ngOnInit(): void {
+    this.chatsState.fetch()
+  }
+
+  ngOnDestroy(): void {
+    this.chatsState.destroy()
+  }
 
   getChatsNumber() {
     return this.getChats().length
@@ -24,5 +30,11 @@ export class ChatsListPage {
 
   getChats(): ExtendedChat[] {
     return this.paginatedChats.data
+  }
+
+  private subscribeToChats() {
+    return this.chatsState.chats$.subscribe(paginatedChats => {
+      this.paginatedChats = paginatedChats
+    })
   }
 }

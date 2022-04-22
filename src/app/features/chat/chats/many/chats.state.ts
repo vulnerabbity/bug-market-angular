@@ -8,9 +8,7 @@ import { ExtendedChatsLoader } from "./extended-chats-loader.service"
 export class ChatsState {
   chats$ = new BehaviorSubject<PaginatedExtendedChats>({ data: [], totalResultsCount: 0 })
 
-  constructor(private chatsLoader: ExtendedChatsLoader) {
-    this.fetch()
-  }
+  constructor(private chatsLoader: ExtendedChatsLoader) {}
 
   setItem(input: PaginatedExtendedChats): void {
     this.chats$.next(input)
@@ -19,5 +17,9 @@ export class ChatsState {
   async fetch(pagination?: Pagination) {
     const newChats = await this.chatsLoader.loadOwnExtendedChats(pagination)
     this.setItem(newChats)
+  }
+
+  async destroy() {
+    this.chats$.next({ data: [], totalResultsCount: 0 })
   }
 }
