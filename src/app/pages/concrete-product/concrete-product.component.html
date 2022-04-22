@@ -33,33 +33,35 @@
 </div>
 
 <mat-menu #actionsMenu>
-  <button
-    class="menu-item"
-    mat-menu-item
-    aria-label="Copy product URL"
-    (click)="this.copyUrlToClipboard()"
-  >
-    <mat-icon>share</mat-icon>
-    <span>Copy Url</span>
-  </button>
-  <button
-    class="menu-item"
-    *ngIf="this.canDeleteProduct()"
-    (click)="onDelete()"
-    mat-menu-item
-    aria-label="Delete product"
-  >
-    <mat-icon>delete_forever</mat-icon>
-    <span>Delete</span>
-  </button>
-  <a
-    class="menu-item"
-    *ngIf="this.canUpdateProduct()"
-    mat-menu-item
-    aria-label="Edit product"
-    [routerLink]="this.updateProductUrl"
-  >
-    <mat-icon>edit_note</mat-icon>
-    <span>Update</span>
-  </a>
+  <ng-template [ngIf]="product">
+    <button
+      class="menu-item"
+      mat-menu-item
+      aria-label="Copy product URL"
+      (click)="this.copyUrlToClipboard()"
+    >
+      <mat-icon>share</mat-icon>
+      <span>Copy Url</span>
+    </button>
+    <button
+      class="menu-item"
+      *ngIf="this.canDeleteProduct()"
+      (click)="onDelete()"
+      mat-menu-item
+      aria-label="Delete product"
+    >
+      <mat-icon>delete_forever</mat-icon>
+      <span>Delete</span>
+    </button>
+    <a
+      class="menu-item"
+      *ngIf="this.canUpdateProduct()"
+      mat-menu-item
+      aria-label="Edit product"
+      [routerLink]="this.updateProductUrl"
+    >
+      <mat-icon>edit_note</mat-icon>
+      <span>Update</span>
+    </a>
+  </ng-template>
 </mat-menu>
