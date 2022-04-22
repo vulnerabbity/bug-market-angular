@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angu
 import { AppRouterService } from "src/app/common/services/router.service"
 import { CurrentChatState } from "src/app/features/chat/chats/concrete/current-chat.state"
 import { ExtendedChat } from "src/app/features/chat/chats/many/chat.interface"
+import { assetsPaths } from "src/assets/assets.paths"
 
 @Component({
   selector: "concrete-chat__top-navbar",
@@ -14,6 +15,12 @@ export class TopNavbarComponent implements OnDestroy {
   chatSubscription = this.chatState.chat$.subscribe(chat => (this.chat = chat))
 
   constructor(private chatState: CurrentChatState, private appRouter: AppRouterService) {}
+
+  getChatImage() {
+    const chatImage = this.chat?.chatImage ?? assetsPaths.NoAvatar
+
+    return chatImage
+  }
 
   ngOnDestroy(): void {
     this.chatSubscription.unsubscribe()
