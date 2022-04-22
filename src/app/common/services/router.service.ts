@@ -1,15 +1,16 @@
 import { Injectable } from "@angular/core"
 import { Router } from "@angular/router"
 import { AppPathsEnum } from "src/app/app/app-routing.module"
+import { AppLinksService } from "./links.service"
 
 @Injectable({
   providedIn: "root"
 })
 export class AppRouterService {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private appLinks: AppLinksService) {}
 
   redirectToViewUser(userId: string) {
-    const viewUserPath = `/${AppPathsEnum.UserPage}/${userId}`
+    const viewUserPath = this.appLinks.getLinkToUser(userId)
     this.redirect(viewUserPath)
   }
 
@@ -29,7 +30,7 @@ export class AppRouterService {
   }
 
   redirectToChats() {
-    const path = `/${AppPathsEnum.ChatsList}`
+    const path = this.appLinks.getLinkToChats()
     this.redirect(path)
   }
 

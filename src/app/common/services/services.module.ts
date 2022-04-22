@@ -3,11 +3,13 @@ import { AppAuthorizationModule } from "src/app/features/authorization/authoriza
 import { AuthorizationService } from "src/app/features/authorization/authorization.service"
 import { GraphqlParserService } from "./graphql-parser.service"
 import { CommonImagesService } from "./images.service"
+import { AppLinksService } from "./links.service"
 import { AppRouterService } from "./router.service"
 
 const services: Provider[] = [
   AuthorizationService,
   AppRouterService,
+  AppLinksService,
   CommonImagesService,
   GraphqlParserService
 ]
