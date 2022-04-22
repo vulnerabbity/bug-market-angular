@@ -10,4 +10,8 @@ export class AppLinksService {
   getLinkToChats() {
     return `/${AppPathsEnum.ChatsList}`
   }
+
+  getLinkToProduct(productId: string) {
+    return `/${AppPathsEnum.ConcreteProduct}/${productId}`
+  }
 }
