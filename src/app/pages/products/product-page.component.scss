@@ -1,5 +1,5 @@
 @import "src/app/app/app.component.scss";
-
+@import "src/styles/mixins.scss";
 :host {
   display: block;
 }
@@ -24,7 +24,7 @@
   display: flex;
   height: 6.6rem;
 }
-.card-container {
+.products-container {
   margin-top: 1rem;
 }
 
@@ -35,4 +35,16 @@
 
 .spacer {
   flex: 1 1;
+}
+
+.no-products {
+  width: fit-content;
+  margin: 0 auto;
+
+  &__icon {
+    @include section-logo();
+  }
+  &__text {
+    text-align: center;
+  }
 }

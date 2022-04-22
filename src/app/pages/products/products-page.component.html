@@ -16,9 +16,15 @@
     </div>
 
     <common-products-container
-      class="card-container"
+      class="products-container"
       [products]="products"
     ></common-products-container>
+
+    <div class="no-products" *ngIf="products.length == 0">
+      <!-- Robot face -->
+      <mat-icon class="no-products__icon">smart_toy</mat-icon>
+      <div class="no-products__text">No products found</div>
+    </div>
 
     <span class="spacer"></span>
 
