@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core"
 import { MatDialog, MatDialogRef } from "@angular/material/dialog"
 import { AuthenticationService } from "src/app/features/authentication/authentication.service"
+import { CurrentUserState } from "src/app/features/users/current-user.state"
 import {
   CreateSellerStatus,
   UsersCreatorService
@@ -35,7 +36,8 @@ export class CommonRegisterDialogComponent implements OnInit {
     private usersCreator: UsersCreatorService,
     private authenticationService: AuthenticationService,
     private dialog: MatDialog,
-    private currentDialog: MatDialogRef<CommonRegisterDialogComponent>
+    private currentDialog: MatDialogRef<CommonRegisterDialogComponent>,
+    private currentUserState: CurrentUserState
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +57,8 @@ export class CommonRegisterDialogComponent implements OnInit {
   }
 
   private async login() {
-    return await this.authenticationService.loginWithUsername(this.credentials)
+    await this.authenticationService.loginWithUsername(this.credentials)
+    this.currentUserState.login()
   }
 
   shouldDisableSubmit(): boolean {
