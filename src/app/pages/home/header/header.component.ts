@@ -8,11 +8,11 @@ import { Product } from "src/app/features/products/products.interface"
 import { assetsPaths } from "src/assets/assets.paths"
 
 @Component({
-  selector: "home-page-header",
+  selector: "home-page__header",
   styleUrls: ["./header.component.scss"],
   template: `
     <common-themed-div class="header-wrapper" color="primary">
-      <header class="header">
+      <div class="header">
         <img class="header__background display-background" [src]="backgroundPath" role="none" />
         <div class="header__inner">
           <h1 class="header__title">Bug market</h1>
@@ -24,7 +24,7 @@ import { assetsPaths } from "src/assets/assets.paths"
             <span class="big-link__text">Sell!</span>
           </button>
         </div>
-      </header>
+      </div>
     </common-themed-div>
     <div class="inner-shadow-top"></div>
   `
