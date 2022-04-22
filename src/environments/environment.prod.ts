@@ -1,7 +1,7 @@
 import { AppEnvironment } from "./environment.interface"
 
 const backendUrl = "https://bug-market-nest.herokuapp.com"
-const websocketsUrl = "https://bug-market-nest.herokuapp.com:3003"
+const websocketsUrl = backendUrl
 
 export const environment: AppEnvironment = {
   production: false,

@@ -1,7 +1,7 @@
 import { AppEnvironment } from "./environment.interface"
 
 const backendUrl = "http://localhost:3000"
-const websocketsUrl = "http://localhost:3003"
+const websocketsUrl = "http://localhost:3000"
 
 export const environment: AppEnvironment = {
   production: false,
