@@ -1,5 +1,5 @@
 <div class="component-root">
-  <a *ngFor="let product of this.products" [routerLink]="'/product/' + product.id">
+  <a *ngFor="let product of this.products" [routerLink]="this.getProductLink(product)">
     <common-product-card
       class="product-card"
       [title]="product.name"
