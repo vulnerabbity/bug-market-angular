@@ -46,6 +46,7 @@ export class CommonRegisterDialogComponent implements OnInit {
 
   async onRegister() {
     this.isLoading = true
+    this.requestError = ""
     const createUserStatus = await this.usersCreator.createSeller(this.credentials)
     if (createUserStatus === "success") {
       await this.login()
@@ -89,8 +90,18 @@ export class CommonRegisterDialogComponent implements OnInit {
     return false
   }
 
+  needDisplayPasswordsNotMatch() {
+    return this.hasBothPasswords() && this.isPasswordsMatch() === false
+  }
+
   isPasswordsMatch() {
     return this.passwordField.value === this.repeatPasswordField.value
+  }
+
+  hasBothPasswords() {
+    const hasPassword = this.passwordField.value.length > 0
+    const hasConfirm = this.repeatPasswordField.value.length > 0
+    return hasPassword && hasConfirm
   }
 
   private displayRequestError(status: CreateSellerStatus): void {
