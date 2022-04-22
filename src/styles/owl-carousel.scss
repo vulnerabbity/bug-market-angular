@@ -90,11 +90,18 @@
   display: block;
   width: 100%;
 }
+.owl-carousel .owl-stage {
+  display: flex;
+  align-items: center;
+}
 
 // set same size for content images
 .owl-carousel .owl-item img {
   display: block;
 
+  max-height: 60rem;
   width: 100%;
   object-fit: contain;
+
+  margin: auto 0;
 }
