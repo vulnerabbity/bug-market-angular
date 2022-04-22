@@ -8,6 +8,7 @@
 }
 
 .navbar {
+  height: 6.4rem;
   &__spacer {
     flex-grow: 1;
     flex-shrink: 1;
@@ -26,6 +27,14 @@
   }
 }
 
+.showable {
+  @media screen and (min-width: 35rem) {
+    display: none;
+  }
+}
+
 .theme-toggler {
-  margin-right: 1rem;
+  &--nav {
+    margin-right: 1rem;
+  }
 }

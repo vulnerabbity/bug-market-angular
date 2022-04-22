@@ -1,5 +1,13 @@
 <mat-toolbar color="primary" class="navbar">
   <common-home-link></common-home-link>
+  <button
+    class="showable"
+    mat-icon-button
+    [matMenuTriggerFor]="actionsMenu"
+    aria-label="Navigation actions"
+  >
+    <mat-icon>more_vert</mat-icon>
+  </button>
   <nav aria-label="left navigation">
     <ul class="list list-horizontal">
       <li class="link-containter hidable">
@@ -10,7 +18,7 @@
   <span class="navbar__spacer" role="none"></span>
   <nav aria-label="right navigation">
     <ul class="list list-horizontal">
-      <li class="link-container theme-toggler">
+      <li class="link-container theme-toggler--nav">
         <common-theme-toggler></common-theme-toggler>
       </li>
       <li class="link-container">
@@ -19,3 +27,9 @@
     </ul>
   </nav>
 </mat-toolbar>
+
+<mat-menu #actionsMenu>
+  <a mat-menu-item [routerLink]="productsLink">
+    <span>Products</span>
+  </a>
+</mat-menu>
