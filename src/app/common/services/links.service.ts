@@ -14,4 +14,8 @@ export class AppLinksService {
   getLinkToProduct(productId: string) {
     return `/${AppPathsEnum.ConcreteProduct}/${productId}`
   }
+
+  getLinkToProducts() {
+    return `/${AppPathsEnum.Products}`
+  }
 }
