@@ -1,0 +1,43 @@
+<common-themed-div class="component-root" color="accent">
+  <div class="section-wrapper">
+    <div class="section-inner">
+      <h2 class="header">About</h2>
+      <p class="wrap-text">
+        This is classified advertising application <br />
+        made for portfolio by
+      </p>
+      <a href="https://github.com/vulnerabbity">
+        <common-github-link text="Vulnerabbity"></common-github-link>
+      </a>
+      <div class="tech-set">
+        <p class="wrap-text">Frontend technologies:</p>
+        <mat-chip-list class="technologies">
+          <ng-template ngFor [ngForOf]="frontEndTechs" let-tech>
+            <mat-chip selected color="primary">
+              <a class="chip-link" [href]="tech.link">
+                {{ tech.name }}
+              </a>
+            </mat-chip>
+          </ng-template>
+        </mat-chip-list>
+      </div>
+
+      <div class="tech-set">
+        <p class="wrap-text">Backend technologies:</p>
+        <mat-chip-list class="technologies">
+          <ng-template ngFor [ngForOf]="backendTechs" let-tech>
+            <mat-chip selected color="primary">
+              <a class="chip-link" [href]="tech.link">
+                {{ tech.name }}
+              </a>
+            </mat-chip>
+          </ng-template>
+        </mat-chip-list>
+      </div>
+    </div>
+  </div>
+</common-themed-div>
+
+<!-- <a href="https://github.com/vulnerabbity/bug-market-angular">
+  <common-github-link text="Source code"></common-github-link>
+</a> -->

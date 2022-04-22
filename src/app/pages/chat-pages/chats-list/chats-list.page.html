@@ -1,0 +1,13 @@
+<common-titled-page-header title="Chats"></common-titled-page-header>
+<div class="container">
+  <common-chats-container
+    *ngIf="getChatsNumber() > 0; else noChats"
+    [chats]="getChats()"
+  ></common-chats-container>
+  <ng-template #noChats>
+    <div class="no-chats">
+      <mat-icon class="section-logo" color="accent">forum</mat-icon>
+      <div class="no-chats__text">You don't have chats</div>
+    </div>
+  </ng-template>
+</div>

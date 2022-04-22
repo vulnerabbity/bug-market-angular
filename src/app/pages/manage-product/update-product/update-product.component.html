@@ -31,6 +31,7 @@
       [initialFiles]="this.imagesSnapshot"
       maxFileSize="10MB"
     ></common-image-drag-and-drop>
+    <mat-progress-bar *ngIf="loading" class="progress-bar" mode="indeterminate"></mat-progress-bar>
     <div class="form-actions">
       <button
         [disabled]="this.loading"
@@ -46,7 +47,7 @@
 
       <button
         class="big-button"
-        [disabled]="this.isUpdateLocked() || loading"
+        [disabled]="this.isUpdateLocked()"
         mat-raised-button
         color="primary"
         type="submit"

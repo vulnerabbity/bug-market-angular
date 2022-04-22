@@ -1,0 +1,23 @@
+<mat-toolbar class="navbar" color="primary">
+  <div class="message-container">
+    <textarea
+      [(ngModel)]="messageInputText"
+      [maxlength]="500"
+      (keydown.control.enter)="onSendMessage()"
+      placeholder="Message"
+      class="message-input"
+      cdkTextareaAutosize
+    ></textarea>
+  </div>
+  <!-- TODO: Add emoji selector -->
+  <button
+    (click)="onSendMessage()"
+    [disabled]="cantSendMessage()"
+    mat-icon-button
+    matTooltip="Send message (Ctrl + Enter)"
+    matTooltipClass="tooltip"
+    aria-label="sendMessage"
+  >
+    <mat-icon style="margin-top: -2px">send</mat-icon>
+  </button>
+</mat-toolbar>

@@ -8,6 +8,8 @@ import { ProductsPageComponent } from "../pages/products/products-page.component
 import { UpdateProductPageComponent } from "../pages/manage-product/update-product/update-product.component"
 import { ViewUserPage } from "../pages/user/view-user/view-user.page"
 import { EditUserPage } from "../pages/user/edit-user/edit-user.page"
+import { ChatsListPage } from "../pages/chat-pages/chats-list/chats-list.page"
+import { ConcreteChatPage } from "../pages/chat-pages/concrete-chat/concrete-chat.page"
 
 export enum AppPathsEnum {
   Products = "products",
@@ -15,7 +17,9 @@ export enum AppPathsEnum {
   UserPage = "user",
   EditUserPage = "edit-user",
   CreateProduct = "create-product",
-  UpdateProduct = "update-product"
+  UpdateProduct = "update-product",
+  ChatsList = "chats",
+  ConcreteChat = "chat"
 }
 
 const homeRoute: Route = {
@@ -74,6 +78,22 @@ const updateProductRoute: Route = {
   component: UpdateProductPageComponent
 }
 
+const chatsListRoute: Route = {
+  path: AppPathsEnum.ChatsList,
+  loadChildren: () =>
+    import("../pages/chat-pages/chats-list/chats-list.module").then(m => m.ChatsListModule),
+  component: ChatsListPage
+}
+
+const concreteChatRoute: Route = {
+  path: `${AppPathsEnum.ConcreteChat}/:id`,
+  loadChildren: () =>
+    import("../pages/chat-pages/concrete-chat/concrete-chat.module").then(
+      m => m.ConcreteChatModule
+    ),
+  component: ConcreteChatPage
+}
+
 const routes: Route[] = [
   homeRoute,
   productsRoute,
@@ -81,7 +101,9 @@ const routes: Route[] = [
   userPageRoute,
   editUserPageRoute,
   createProductRoute,
-  updateProductRoute
+  updateProductRoute,
+  chatsListRoute,
+  concreteChatRoute
 ]
 
 const imports = [RouterModule.forRoot(routes, { preloadingStrategy: PreloadModuleOnDemand })]

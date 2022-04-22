@@ -14,32 +14,31 @@ export class CreateProductPageComponent extends ManageProductComponent implement
   uploadErrorText = ""
   loading = false
 
-  get isSubmitButtonLocked(): boolean {
-    const isFormInvalid = !this.isFromValid
-    return isFormInvalid || this.loading
-  }
-
   ngOnInit(): void {}
 
   onUploadProduct() {
     this.uploadProduct()
   }
 
+  isSubmitButtonLocked(): boolean {
+    const isFormInvalid = !this.isFromValid
+    return isFormInvalid || this.loading
+  }
+
   private async uploadProduct(): Promise<void> {
     this.loading = true
     const dataToUpload = this.getDataToUpload()
 
-    const response = await this.productsService.uploadProductAsync(dataToUpload)
+    const { data: uploadedProduct } = await this.productsService.uploadProductResponse(dataToUpload)
 
-    if (response.status !== "success") {
-      this.displayUploadError(response)
+    if (!uploadedProduct) {
       return
     }
 
-    const productId = response.productId!
+    const { id: productId } = uploadedProduct
     await this.sendImages(productId)
 
-    this.router.navigate(["/product", productId])
+    await this.router.navigate(["/product", productId])
 
     this.loading = false
   }
@@ -54,11 +53,5 @@ export class CreateProductPageComponent extends ManageProductComponent implement
 
   private getImages(): Blob[] {
     return this.imagesDragAndDrop.getFiles()
-  }
-
-  private displayUploadError({ error }: UploadProductResponse) {
-    if (error === "unknownError") {
-      this.uploadErrorText = "Can't create. Reason: Unknown"
-    }
   }
 }

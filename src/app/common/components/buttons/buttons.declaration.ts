@@ -9,6 +9,8 @@ import { CommonGoToProfileMenuLinkComponent } from "./menu/to-profile.component"
 import { CommonLogoutMenuButtonComponent } from "./menu/logout.component"
 import { CommonLoginOrManageButtonComponent } from "./buttons/login-or-manage.component"
 import { CommonEditUserIconLink } from "./links/edit-user-icon.component"
+import { CommonGoToChatsMenuLinkComponent } from "./menu/to-chats.component"
+import { CommonGithubLinkComponent } from "./links/github/github.component"
 
 export const commonButtonsComponents = [
   CommonLinkComponent,
@@ -19,7 +21,9 @@ export const commonButtonsComponents = [
   CommonManageAccountButtonComponent,
   CommonHomeLinkComponent,
   CommonGoToProfileMenuLinkComponent,
+  CommonGoToChatsMenuLinkComponent,
   CommonLoginOrManageButtonComponent,
   CommonEditUserIconLink,
+  CommonGithubLinkComponent,
   ProductsLinkComponent
 ]

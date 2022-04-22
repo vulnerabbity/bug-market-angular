@@ -1,0 +1,34 @@
+:host {
+  display: block;
+}
+
+.navbar {
+  // top radius
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+
+  &__image {
+    display: block;
+
+    margin: 0 1rem;
+
+    // round
+    border-radius: 50%;
+    height: 5rem;
+    width: 5rem;
+    object-fit: cover;
+  }
+  &__chat-name {
+    font-size: 2.5rem;
+  }
+}
+
+.navbar-spacer {
+  flex: 1 1;
+}
+
+.chat-link {
+  display: flex;
+
+  align-items: center;
+}

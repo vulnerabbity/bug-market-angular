@@ -1,37 +1,10 @@
 <common-titled-page-header title="Edit account"></common-titled-page-header>
-<div class="container">
+<div class="container" *ngIf="this.user">
   <mat-icon class="section-logo" color="primary">manage_accounts</mat-icon>
-  <form *ngIf="this.user">
-    <common-avatar-drag-and-drop
-      #avatarDragAndDrop
-      [user]="this.user"
-    ></common-avatar-drag-and-drop>
-    <common-user-name-form-field [(model)]="nameModel"></common-user-name-form-field>
-    <common-multiline-field
-      [(model)]="aboutModel"
-      label="Tell about you"
-      [maxLength]="500"
-    ></common-multiline-field>
-
-    <div class="form-actions">
-      <button
-        [disabled]="this.loading"
-        (click)="onDiscard()"
-        mat-raised-button
-        color="accent"
-        type="button"
-      >
-        Discard
-      </button>
-      <button
-        [disabled]="this.loading"
-        (click)="onApply()"
-        mat-raised-button
-        color="primary"
-        type="submit"
-      >
-        Apply
-      </button>
-    </div>
-  </form>
+  <common-avatar-drag-and-drop #avatarDragAndDrop [user]="this.user"></common-avatar-drag-and-drop>
+  <edit-user-page__component
+    [user]="this.user"
+    (onApply)="this.onApply($event)"
+    (onDiscard)="this.onDiscard()"
+  ></edit-user-page__component>
 </div>

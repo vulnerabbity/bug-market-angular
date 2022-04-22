@@ -16,15 +16,24 @@
     </div>
 
     <common-products-container
-      class="card-container"
-      [products]="(this.products$ | async) ?? []"
+      class="products-container"
+      [products]="products"
     ></common-products-container>
+
+    <div class="no-products" *ngIf="products.length == 0">
+      <!-- Robot face -->
+      <mat-icon class="no-products__icon">smart_toy</mat-icon>
+      <div class="no-products__text">No products found</div>
+    </div>
+
+    <span class="spacer"></span>
+
+    <common-paginator
+      class="paginator"
+      [totalItems]="this.totalProducts"
+      [itemsPerPage]="this.pageSize"
+      [currentPage]="this.pageIndex + 1"
+      (onPageChange)="onPaginationUpdate($event)"
+    ></common-paginator>
   </div>
-  <common-paginator
-    class="paginator"
-    [totalItems]="this.totalProducts"
-    [itemsPerPage]="this.pageSize"
-    [currentPage]="this.pageIndex + 1"
-    (onPageChange)="onPaginationUpdate($event)"
-  ></common-paginator>
 </product-page-filters-sidebar>

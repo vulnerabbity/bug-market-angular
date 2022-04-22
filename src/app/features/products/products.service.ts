@@ -11,8 +11,10 @@ import {
   UploadProductResponse,
   DeleteProductStatus,
   UpdateProductStatus,
-  UpdateProductStatusesEnum
+  UpdateProductStatusesEnum,
+  Product
 } from "./products.interface"
+import { GraphqlParserService } from "src/app/common/services/graphql-parser.service"
 
 @Injectable({
   providedIn: "root"
@@ -21,23 +23,19 @@ export class ProductsService {
   constructor(
     private createProductMutation: CreateProductGQL,
     private deleteProductMutation: DeleteProductGQL,
-    private updateProductMutation: UpdateProductGQL
+    private updateProductMutation: UpdateProductGQL,
+    private gqlParser: GraphqlParserService
   ) {}
 
-  async uploadProductAsync(input: CreateProductInput): Promise<UploadProductResponse> {
-    return await firstValueFrom(this.uploadProduct$(input))
+  async uploadProductResponse(input: CreateProductInput) {
+    return await firstValueFrom(this.uploadProductResponse$(input))
   }
 
-  uploadProduct$(input: CreateProductInput): Observable<UploadProductResponse> {
-    const response = this.createProductMutation.mutate({ input })
-    return response.pipe(
-      map(response => {
-        if (response.data) {
-          return { status: "success", productId: response.data.createProduct.id }
-        }
-        return { status: "error", error: "unknownError" }
-      })
-    )
+  uploadProductResponse$(input: CreateProductInput) {
+    const response$ = this.createProductMutation.mutate({ input })
+    const parsedResponse$ = response$.pipe(map(res => this.gqlParser.parse<Product>(res)))
+
+    return parsedResponse$
   }
 
   deleteProduct$(id: string): Observable<DeleteProductStatus> {

@@ -16,6 +16,8 @@ import { MatSelectModule } from "@angular/material/select"
 import { MatExpansionModule } from "@angular/material/expansion"
 import { MatMenuModule } from "@angular/material/menu"
 import { MatSlideToggleModule } from "@angular/material/slide-toggle"
+import { MatChipsModule } from "@angular/material/chips"
+import { MatProgressBarModule } from "@angular/material/progress-bar"
 
 const materialModules = [
   MatButtonModule,
@@ -34,7 +36,9 @@ const materialModules = [
   MatSelectModule,
   MatExpansionModule,
   MatMenuModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatChipsModule,
+  MatProgressBarModule
 ]
 
 @NgModule({

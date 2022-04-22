@@ -1,0 +1,67 @@
+:host {
+  display: block;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+.message-body {
+  border-radius: 0.6rem;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.inner-content {
+  padding: 0.5rem;
+}
+
+.text {
+  font-size: 1.8rem;
+
+  // display \n
+  white-space: pre-line;
+}
+.message-end {
+  display: inline-flex;
+
+  float: right;
+}
+
+.time {
+  margin-left: 1rem;
+
+  opacity: 0.6;
+
+  font-size: 1.2rem;
+}
+.viewed-by-wrapper {
+  display: inline-block;
+  align-items: center;
+}
+
+.viewed-by-inner {
+  display: flex;
+  align-items: center;
+
+  height: 100%;
+}
+
+.view-status-icon {
+  display: inline-block;
+
+  $icon-size: 1.8rem;
+  font-size: $icon-size;
+  height: $icon-size;
+  width: $icon-size;
+
+  opacity: 0.5;
+
+  &--others {
+    margin-left: -0.8rem;
+  }
+}
+
+.viewed {
+  opacity: 1;
+}

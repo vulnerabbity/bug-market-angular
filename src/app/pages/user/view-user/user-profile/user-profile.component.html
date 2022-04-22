@@ -1,0 +1,22 @@
+<div class="avatar-container">
+  <div class="avatar-wrapper">
+    <common-edit-user-icon
+      *ngIf="isUpdateAllowed()"
+      class="edit-user-under-avatar"
+      [userId]="this.user.id"
+    ></common-edit-user-icon>
+    <img class="avatar" [src]="this.avatarUrlOrDefault" />
+  </div>
+</div>
+<div class="user-specs">
+  <common-data-field
+    class="data-item"
+    *ngFor="let property of this.keyValueProperties"
+    [key]="property.key"
+    [value]="property.value"
+  ></common-data-field>
+  <ng-template [ngIf]="this.user.about">
+    <common-title-text-card class="about" title="About:" [text]="this.user.about">
+    </common-title-text-card>
+  </ng-template>
+</div>

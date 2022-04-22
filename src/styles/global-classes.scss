@@ -1,3 +1,5 @@
+$inner-shadow-top: 0 8px 10px -6px rgba(black, 0.3) inset;
+
 .visually-hidden {
   border: 0;
   clip: rect(0 0 0 0);
@@ -19,4 +21,16 @@
   white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
   word-break: break-all;
   white-space: normal;
+}
+
+.inner-shadow-top {
+  position: absolute;
+  top: 0;
+
+  box-shadow: $inner-shadow-top;
+  height: 100%;
+  width: 100%;
+
+  // ignore layer
+  pointer-events: none;
 }

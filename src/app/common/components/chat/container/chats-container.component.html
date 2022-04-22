@@ -1,0 +1,3 @@
+<a *ngFor="let chat of this.chats" [routerLink]="getChatReference(chat.id)">
+  <common-chat-item class="item" [chat]="chat"></common-chat-item>
+</a>

@@ -1,0 +1,60 @@
+:host {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 60rem) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.avatar {
+  position: absolute;
+
+  width: 95%;
+  height: 95%;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(black, 0.5);
+}
+
+.avatar-container {
+  display: flex;
+  justify-content: center;
+  height: fit-content;
+}
+
+.avatar-wrapper {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+  width: 100%;
+
+  max-height: 50rem;
+  max-width: 50rem;
+
+  // square
+  &::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+  }
+}
+
+.edit-user-under-avatar {
+  position: absolute;
+  z-index: 1;
+
+  top: 3%;
+  right: 15%;
+}
+
+.about {
+  margin-top: 1rem;
+}

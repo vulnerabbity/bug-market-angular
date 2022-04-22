@@ -6,36 +6,11 @@
 
   <div *ngIf="this.product">
     <common-titled-page-header [title]="this.product.name | titlecase" [titleLimit]="15">
-      <button
-        class="copy-to-clipboard"
-        mat-icon-button
-        matTooltip="Copy product URL"
-        matTooltipClass="tooltip"
-        aria-label="Copy product URL"
-        (click)="this.copyUrlToClipboard()"
-      >
-        <mat-icon>content_copy</mat-icon>
+      <button mat-icon-button [matMenuTriggerFor]="actionsMenu" aria-label="Product actions">
+        <mat-icon>more_vert</mat-icon>
       </button>
-      <button
-        *ngIf="this.canDeleteProduct()"
-        (click)="onDelete()"
-        mat-icon-button
-        matTooltip="Delete product"
-        matTooltipClass="tooltip"
-        aria-label="Delete product"
-      >
-        <mat-icon>delete_forever</mat-icon>
-      </button>
-      <a
-        *ngIf="this.canUpdateProduct()"
-        mat-icon-button
-        matTooltip="Edit product"
-        matTooltipClass="tooltip"
-        [routerLink]="this.updateProductUrl"
-      >
-        <mat-icon>edit_note</mat-icon>
-      </a>
       <span class="spacer" role="none"></span>
+
       <data class="price" [value]="this.product.price">
         {{ this.productPriceString }}
       </data>
@@ -56,3 +31,37 @@
     </div>
   </div>
 </div>
+
+<mat-menu #actionsMenu>
+  <ng-template [ngIf]="product">
+    <button
+      class="menu-item"
+      mat-menu-item
+      aria-label="Copy product URL"
+      (click)="this.copyUrlToClipboard()"
+    >
+      <mat-icon>share</mat-icon>
+      <span>Copy Url</span>
+    </button>
+    <button
+      class="menu-item"
+      *ngIf="this.canDeleteProduct()"
+      (click)="onDelete()"
+      mat-menu-item
+      aria-label="Delete product"
+    >
+      <mat-icon>delete_forever</mat-icon>
+      <span>Delete</span>
+    </button>
+    <a
+      class="menu-item"
+      *ngIf="this.canUpdateProduct()"
+      mat-menu-item
+      aria-label="Edit product"
+      [routerLink]="this.updateProductUrl"
+    >
+      <mat-icon>edit_note</mat-icon>
+      <span>Update</span>
+    </a>
+  </ng-template>
+</mat-menu>

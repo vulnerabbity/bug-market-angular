@@ -23,9 +23,10 @@
         #imagesDragAndDrop
         maxFileSize="10MB"
       ></common-image-drag-and-drop>
+      <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
       <button
         class="create-product-button"
-        [disabled]="this.isSubmitButtonLocked"
+        [disabled]="this.isSubmitButtonLocked()"
         (click)="this.onUploadProduct()"
         type="submit"
         mat-raised-button

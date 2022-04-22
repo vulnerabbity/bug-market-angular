@@ -1,0 +1,26 @@
+query GetConcreteChat($chatId: String!) {
+  chat(chatId: $chatId) {
+    id
+    peersIds
+    createdAt
+    updatedAt
+  }
+}
+
+mutation InitChatIfNotExists($otherPeerId: String!) {
+  initChatIfNotExists(otherUserId: $otherPeerId) {
+    id
+    peersIds
+    createdAt
+    updatedAt
+  }
+}
+
+mutation DeleteChat($chatId: String!) {
+  deleteChat(chatId: $chatId) {
+    id
+    peersIds
+    createdAt
+    updatedAt
+  }
+}

@@ -1,0 +1,38 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  min-height: 7rem;
+  height: fit-content;
+}
+.message-container {
+  display: inline-block;
+
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+.message-input {
+  // disable default styles
+  background-color: unset;
+  border: unset;
+  outline: unset;
+  overflow: hidden;
+  background-color: unset;
+  color: unset;
+
+  font-size: 2rem;
+  width: 100%;
+  min-height: 3rem;
+}
+
+// fix placeholder chrome color
+:host ::ng-deep {
+  ::-webkit-input-placeholder,
+  ::-moz-placeholder,
+  ::-ms-placeholder,
+  ::placeholder,
+  .message-input {
+    color: white;
+    opacity: 0.7;
+  }
+}

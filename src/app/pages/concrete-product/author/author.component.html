@@ -1,5 +1,5 @@
-<p *ngIf="this.loading">loading ...</p>
-<div *ngIf="this.loading === false">
+<p *ngIf="!author">loading ...</p>
+<div *ngIf="author">
   <span class="author-description">Author: </span>
   <a
     class="author-link"
@@ -10,18 +10,18 @@
     [routerLink]="'/user/' + this.product.userId"
     aria-label="Go to author profile"
   >
-    {{ this.userNameOrDefault }}
+    {{ this.getUserName() }}
   </a>
-  <a
+  <button
     class="author-message"
-    [disabled]="true"
+    *ngIf="canWriteMessage()"
+    (click)="onWriteMessage()"
     mat-raised-button
     color="accent"
-    href="/users/mockid/write"
     aria-label="Write message to author"
     matTooltip="Write message"
     matTooltipClass="tooltip"
   >
     <mat-icon>message</mat-icon>
-  </a>
+  </button>
 </div>

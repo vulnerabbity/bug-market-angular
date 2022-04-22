@@ -1,0 +1,25 @@
+.section-wrapper {
+  // content center
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 60rem;
+  width: 100%;
+}
+
+.section-inner {
+  width: fit-content;
+  max-width: 60rem;
+  padding: 3vw;
+  text-align: center;
+}
+
+.header {
+  font-size: min(6rem, 12vw);
+  line-height: min(6rem, 12vw);
+}
+
+.tech-set {
+  margin-top: 2rem;
+}

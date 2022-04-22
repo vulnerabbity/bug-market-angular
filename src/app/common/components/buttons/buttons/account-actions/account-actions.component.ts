@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core"
-import { LocalUserService } from "src/app/features/users/local-user.service"
-import { UsersLoaderService } from "src/app/features/users/users-loader.service"
+import { Component, OnDestroy } from "@angular/core"
+import { distinctUntilChanged } from "rxjs"
+import { ChatEvents } from "src/app/features/chat/notifications/chat.events"
+import { CurrentUserState } from "src/app/features/users/current-user.state"
 import { User } from "src/app/features/users/users.interface"
 import { assetsPaths } from "src/assets/assets.paths"
 
@@ -9,18 +10,20 @@ import { assetsPaths } from "src/assets/assets.paths"
   templateUrl: "./account-actions.component.html",
   styleUrls: ["./account-actions.component.scss"]
 })
-export class CommonManageAccountButtonComponent implements OnInit {
-  private user?: User
-  private userId: string | null = this.localUser.getUserIdOrNull()
+export class CommonManageAccountButtonComponent implements OnDestroy {
+  user: User | null = null
 
-  constructor(private usersLoader: UsersLoaderService, private localUser: LocalUserService) {}
+  badgeValue = 0
 
-  ngOnInit(): void {
-    this.loadUserIfAuthenticated()
-  }
+  private totalNotViewedSub = this.subscribeToNotViewedMessages()
 
-  onLogoutClick() {
-    this.onLogout()
+  private userSub = this.subscribeToUser()
+
+  constructor(private userState: CurrentUserState, private chatEvents: ChatEvents) {}
+
+  ngOnDestroy(): void {
+    this.userSub.unsubscribe()
+    this.totalNotViewedSub.unsubscribe()
   }
 
   getAvatarSource(): string {
@@ -32,16 +35,19 @@ export class CommonManageAccountButtonComponent implements OnInit {
     return defaultAvatar
   }
 
-  private onLogout() {
-    this.user = undefined
+  private subscribeToNotViewedMessages() {
+    return this.chatEvents.notViewedMessagesTotalChanged$
+      .pipe(distinctUntilChanged())
+      .subscribe(number => {
+        this.badgeValue = number
+      })
   }
 
-  private async loadUserIfAuthenticated() {
-    if (!this.userId) {
-      return
-    }
-
-    const userResponse = await this.usersLoader.loadUserResponse({ id: this.userId })
-    this.user = userResponse.data
+  private subscribeToUser() {
+    return this.userState.item$.subscribe(userOrNull => {
+      if (userOrNull) {
+        this.user = userOrNull
+      }
+    })
   }
 }

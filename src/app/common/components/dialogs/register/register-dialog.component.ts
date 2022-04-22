@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core"
 import { MatDialog, MatDialogRef } from "@angular/material/dialog"
 import { AuthenticationService } from "src/app/features/authentication/authentication.service"
+import { CurrentUserState } from "src/app/features/users/current-user.state"
 import {
   CreateSellerStatus,
   UsersCreatorService
@@ -35,7 +36,8 @@ export class CommonRegisterDialogComponent implements OnInit {
     private usersCreator: UsersCreatorService,
     private authenticationService: AuthenticationService,
     private dialog: MatDialog,
-    private currentDialog: MatDialogRef<CommonRegisterDialogComponent>
+    private currentDialog: MatDialogRef<CommonRegisterDialogComponent>,
+    private currentUserState: CurrentUserState
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +46,7 @@ export class CommonRegisterDialogComponent implements OnInit {
 
   async onRegister() {
     this.isLoading = true
+    this.requestError = ""
     const createUserStatus = await this.usersCreator.createSeller(this.credentials)
     if (createUserStatus === "success") {
       await this.login()
@@ -55,7 +58,8 @@ export class CommonRegisterDialogComponent implements OnInit {
   }
 
   private async login() {
-    return await this.authenticationService.loginWithUsername(this.credentials)
+    await this.authenticationService.loginWithUsername(this.credentials)
+    this.currentUserState.login()
   }
 
   shouldDisableSubmit(): boolean {
@@ -86,8 +90,18 @@ export class CommonRegisterDialogComponent implements OnInit {
     return false
   }
 
+  needDisplayPasswordsNotMatch() {
+    return this.hasBothPasswords() && this.isPasswordsMatch() === false
+  }
+
   isPasswordsMatch() {
     return this.passwordField.value === this.repeatPasswordField.value
+  }
+
+  hasBothPasswords() {
+    const hasPassword = this.passwordField.value.length > 0
+    const hasConfirm = this.repeatPasswordField.value.length > 0
+    return hasPassword && hasConfirm
   }
 
   private displayRequestError(status: CreateSellerStatus): void {

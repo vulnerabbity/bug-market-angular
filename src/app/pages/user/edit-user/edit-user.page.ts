@@ -2,14 +2,14 @@ import { Component, OnInit, ViewChild } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { firstValueFrom, map } from "rxjs"
 import { CommonAvatarDragAndDropComponent } from "src/app/common/components/drag-and-drop/avatar/avatar.component"
-import { FormFieldModel } from "src/app/common/components/form-fields/components/abstract-form-field"
 import { AppRouterService } from "src/app/common/services/router.service"
 import { UsersUpdaterService } from "src/app/features/users/users-updater.service"
 import { UsersLoaderService } from "src/app/features/users/users-loader.service"
 import { UserAbilities } from "src/app/features/users/users-abilities.service"
 import { User } from "src/app/features/users/users.interface"
-import { UpdateUserInput } from "src/generated-gql-types"
 import { EditUserDialogsService } from "./edit-user-dialogs.service"
+import { UpdateUserInput } from "src/generated-gql-types"
+import { CurrentUserState } from "src/app/features/users/current-user.state"
 
 @Component({
   templateUrl: "./edit-user.page.html",
@@ -22,10 +22,8 @@ export class EditUserPage implements OnInit {
   loading = false
   user!: User
 
-  nameModel: FormFieldModel = { isValid: true, value: "" }
-  aboutModel: FormFieldModel = { isValid: true, value: "" }
-
   constructor(
+    private userState: CurrentUserState,
     private usersLoader: UsersLoaderService,
     private usersUpdater: UsersUpdaterService,
     private currentRoute: ActivatedRoute,
@@ -41,11 +39,11 @@ export class EditUserPage implements OnInit {
     }
   }
 
-  async onApply() {
+  async onApply($updateFromForm: UpdateUserInput) {
     const needApply = await this.dialogsService.showApplyConfirmDialog()
     if (needApply) {
       this.loading = true
-      await this.updateUser()
+      await this.updateUser({ fieldsUpdate: $updateFromForm })
       this.loading = false
       return await this.redirectToUser()
     }
@@ -59,7 +57,6 @@ export class EditUserPage implements OnInit {
       return this.appRouter.redirectToViewUser(this.user.id)
     }
 
-    this.fillFormFieldsWithExistingData()
     this.loading = false
   }
 
@@ -69,22 +66,10 @@ export class EditUserPage implements OnInit {
     this.user = loadedUser
   }
 
-  private fillFormFieldsWithExistingData() {
-    const user = this.user
-
-    if (!user) {
-      return
-    }
-    const nameOrDefault = user.name ?? ""
-    this.nameModel = { isValid: true, value: nameOrDefault }
-
-    const aboutOrDefault = user.about ?? ""
-    this.aboutModel = { isValid: true, value: aboutOrDefault }
-  }
-
-  private async updateUser() {
-    await this.updateUserFields()
+  private async updateUser({ fieldsUpdate }: { fieldsUpdate: UpdateUserInput }) {
+    await this.updateUserFields(fieldsUpdate)
     await this.handlerAvatarChange()
+    await this.userState.fetchState()
   }
 
   private async handlerAvatarChange() {
@@ -109,9 +94,8 @@ export class EditUserPage implements OnInit {
     }
   }
 
-  private async updateUserFields() {
+  private async updateUserFields(update: UpdateUserInput) {
     const currentUserId = await this.getUserId()
-    const update = this.getUpdate()
     await this.usersUpdater.updateUserAsync(currentUserId, update)
   }
 
@@ -123,19 +107,5 @@ export class EditUserPage implements OnInit {
   private async getUserId(): Promise<string> {
     const userId$ = this.currentRoute.params.pipe(map(params => params["id"]))
     return await firstValueFrom(userId$)
-  }
-
-  private getUpdate(): UpdateUserInput {
-    let name: string | null = this.nameModel.value
-    let about: string | null = this.aboutModel.value
-
-    if (!name) {
-      name = null
-    }
-    if (!about) {
-      about = null
-    }
-
-    return { about, name }
   }
 }

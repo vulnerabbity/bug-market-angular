@@ -1,0 +1,30 @@
+<mat-card class="component-root">
+  <div
+    class="messages-container"
+    #scrollContainer
+    infiniteScroll
+    [infiniteScrollThrottle]="100"
+    [infiniteScrollUpDistance]="1"
+    [scrollWindow]="false"
+    (scrolledUp)="loadMore()"
+  >
+    <div *ngIf="messages.length > 0" class="messages-wrapper">
+      <ng-template ngFor [ngForOf]="messages" let-message>
+        <common-chat-text-message
+          class="message"
+          [ngClass]="getMessageClass(message)"
+          [color]="getMessageColor(message)"
+          [message]="message"
+        >
+        </common-chat-text-message>
+      </ng-template>
+    </div>
+  </div>
+  <div class="no-messages__wrapper" *ngIf="messages.length === 0">
+    <div class="no-messages__banner">
+      <mat-icon at-icon class="no-messages__icon">forum</mat-icon>
+      <div class="no-messages__text">No messages yet</div>
+    </div>
+  </div>
+</mat-card>
+<div class="inner-shadow-top"></div>

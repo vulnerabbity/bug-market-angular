@@ -3,6 +3,9 @@ import { Product } from "src/app/features/products/products.interface"
 import { User } from "src/app/features/users/users.interface"
 import { userDefaults } from "src/app/features/users/user.defaults"
 import { UsersLoaderService } from "src/app/features/users/users-loader.service"
+import { CurrentUserState } from "src/app/features/users/current-user.state"
+import { ConcreteChatCreatorService } from "src/app/features/chat/chats/concrete/concrete-chat-creator.service"
+import { AppRouterService } from "src/app/common/services/router.service"
 
 @Component({
   selector: "concrete-product-page-author[product]",
@@ -13,23 +16,51 @@ export class ConcreteProductPageAuthorComponent implements OnInit {
   @Input()
   product!: Product
 
-  user!: User
+  author!: User
 
-  loading = false
+  private currentUserId: User["id"] | null = null
 
-  get userNameOrDefault(): string {
-    if (this.user.name) {
-      return this.user.name
+  constructor(
+    private usersLoader: UsersLoaderService,
+    private userState: CurrentUserState,
+    private chatCreator: ConcreteChatCreatorService,
+    private appRouter: AppRouterService
+  ) {}
+
+  async ngOnInit() {
+    this.author = await this.loadUser(this.product.userId)
+    this.currentUserId = this.userState.getUserIdOrNull()
+  }
+
+  canWriteMessage() {
+    const hasCurrentUser = !!this.currentUserId
+    const notOwn = this.isOwn() === false
+    return notOwn && hasCurrentUser
+  }
+
+  getUserName() {
+    if (this.isOwn()) {
+      return "You"
     }
+
+    if (this.author.name) {
+      return this.author.name
+    }
+
     return userDefaults.name
   }
 
-  constructor(private usersLoader: UsersLoaderService) {}
+  async onWriteMessage() {
+    const { data: chatCandidate } = await this.chatCreator.initIfNotExistsResponse(this.author.id)
+    console.log(chatCandidate)
 
-  async ngOnInit() {
-    this.loading = true
-    this.user = await this.loadUser(this.product.userId)
-    this.loading = false
+    if (chatCandidate) {
+      this.appRouter.redirectToConcreteChat(chatCandidate.id)
+    }
+  }
+
+  private isOwn() {
+    return this.author.id === this.currentUserId
   }
 
   private async loadUser(id: string): Promise<User> {
