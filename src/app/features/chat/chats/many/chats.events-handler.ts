@@ -64,12 +64,19 @@ export class ManyChatsEventsHandler {
 
   private updateLastMessage(message: ChatMessage) {
     const chatIndex = this.findChatIndexOrNull(message.chatId)
-
-    if (chatIndex !== null) {
-      this.chats[chatIndex].lastMessage = message.text
-
-      this.emitChats(this.chats)
+    const chatNotFetched = chatIndex === null
+    if (chatNotFetched) {
+      return
     }
+    let chats = this.chats
+
+    const updatedChat = chats[chatIndex]
+
+    chats = chats.filter(chat => chat.id !== message.chatId)
+
+    chats.unshift(updatedChat)
+
+    this.emitChats(chats)
   }
 
   private emitChats(chats: ExtendedChat[]) {
