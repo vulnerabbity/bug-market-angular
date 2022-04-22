@@ -14,6 +14,7 @@ import { AbstractCommonFormField } from "./abstract-form-field"
         [formControlName]="this.controlName"
         matInput
         [type]="isPasswordHidden ? 'password' : 'text'"
+        maxlength="64"
       />
       <button
         mat-icon-button
@@ -27,7 +28,6 @@ import { AbstractCommonFormField } from "./abstract-form-field"
       </button>
 
       <mat-error *ngIf="this.errorChecker.hasValidationErrors()">
-        <span *ngIf="this.errorChecker.isRequiredError()">This field is required</span>
         <span *ngIf="this.errorChecker.isMinLengthError()"> Length should 8+ </span>
       </mat-error>
     </mat-form-field>
