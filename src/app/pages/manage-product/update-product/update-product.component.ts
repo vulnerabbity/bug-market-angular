@@ -64,7 +64,7 @@ export class UpdateProductPageComponent extends ManageProductComponent implement
   }
 
   isUpdateLocked(): boolean {
-    return this.isFromValid === false
+    return this.isFromValid === false || this.loading
   }
 
   getLoaderSpinnerDiameter(): number {
@@ -84,6 +84,7 @@ export class UpdateProductPageComponent extends ManageProductComponent implement
   }
 
   async onUpdate() {
+    this.loading = true
     await this.updateProduct()
     await this.redirectToProduct()
   }
