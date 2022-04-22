@@ -71,6 +71,7 @@ export class ManyChatsEventsHandler {
     let chats = this.chats
 
     const updatedChat = chats[chatIndex]
+    updatedChat.lastMessage = message.text
 
     chats = chats.filter(chat => chat.id !== message.chatId)
 
