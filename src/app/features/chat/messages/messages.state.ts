@@ -13,6 +13,8 @@ export class CurrentChatMessagesState {
 
   messages$ = new BehaviorSubject<ChatMessage[]>([])
 
+  initialized$ = new Subject<void>()
+
   private totalMessages = 0
 
   constructor(private messagesLoader: MessagesLoader, private currentChatState: CurrentChatState) {
@@ -23,6 +25,7 @@ export class CurrentChatMessagesState {
 
   async init(chatId: string) {
     await this.initMessages(chatId)
+    this.initialized$.next()
   }
 
   async loadMore() {
@@ -38,7 +41,7 @@ export class CurrentChatMessagesState {
   }
 
   private async initMessages(chatId: string) {
-    this.loadMessages(chatId)
+    await this.loadMessages(chatId)
   }
 
   private async loadMessages(chatId: string, pagination?: Pagination) {

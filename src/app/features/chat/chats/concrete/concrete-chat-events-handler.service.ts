@@ -19,13 +19,8 @@ export class ConcreteChatEventsHandler {
 
   private startHandling() {
     this.subscribeToChat()
-    this.viewMessagesOnOpen()
     this.viewMessagesOnReceive()
     this.handleChatDeleted()
-  }
-
-  private viewMessagesOnOpen() {
-    this.chatEvents.chatOpened$.subscribe(chat => this.chatUpdater.viewMessages(chat.id))
   }
 
   private viewMessagesOnReceive() {

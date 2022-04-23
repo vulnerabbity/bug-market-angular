@@ -1,18 +1,34 @@
 import { Injectable } from "@angular/core"
 import { makeDeepCopy } from "src/app/common/services/deepcopy.service"
 import { ChatMessage } from "src/generated-gql-types"
+import { ConcreteChatsUpdaterService } from "../chats/concrete/concrete-chat-updater.service"
 import { ChatEvents } from "../notifications/chat.events"
 import { CurrentChatMessagesState } from "./messages.state"
 
 @Injectable({ providedIn: "root" })
 export class MessagesEventHandler {
-  constructor(private messagesState: CurrentChatMessagesState, private chatEvents: ChatEvents) {
+  constructor(
+    private messagesState: CurrentChatMessagesState,
+    private chatEvents: ChatEvents,
+    private chatUpdater: ConcreteChatsUpdaterService
+  ) {
     this.startHandling()
   }
 
   private startHandling() {
     this.handleReceiveMessage()
     this.handleUpdateMessage()
+    this.viewMessagesOnInit()
+  }
+
+  private viewMessagesOnInit() {
+    this.messagesState.initialized$.subscribe(() => {
+      const chat = this.messagesState.chat
+      console.log("init")
+      if (chat) {
+        this.chatUpdater.viewMessages(chat.id)
+      }
+    })
   }
 
   private handleReceiveMessage() {
