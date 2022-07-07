@@ -5,7 +5,7 @@
   </div>
 
   <div *ngIf="this.product">
-    <common-titled-page-header [title]="this.product.name | titlecase" [titleLimit]="15">
+    <common-titled-page-header [title]="this.product.name | titlecase" [titleLimit]="30">
       <button mat-icon-button [matMenuTriggerFor]="actionsMenu" aria-label="Product actions">
         <mat-icon>more_vert</mat-icon>
       </button>

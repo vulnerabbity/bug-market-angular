@@ -1,5 +1,16 @@
-.title {
+.component-root {
+  display: flex;
+  align-items: center;
+
+  flex-wrap: wrap;
+
   padding: 16px;
+}
+
+.title {
   font-size: 3rem;
   margin-bottom: 0;
+
+  max-width: fit-content;
+  display: inline;
 }
