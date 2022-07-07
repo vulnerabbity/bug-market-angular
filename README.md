@@ -1,27 +1,33 @@
-# BugMarketAngular
+# Bug Market Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
+Classified advertising built with Angular
 
-## Development server
+<br/>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+<a href="https://bug-market-angular.herokuapp.com/">Deployed heroku app<a/>
+<br/>
+(Heroku stops project if it was not used in 15 minutes. Please restart app few times to be sure that backend and frontend running)
 
-## Code scaffolding
+## Programming language:
+- Typescript (Javascript)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Frontend technologies:
+- Angular, Angular material, RxJS
+- HTML, css (scss)
+- JWT, Graphql, Websockets (Socket.io)
 
-## Build
+## Backend technologies:
+- Node.js, Nest.js, Express
+- Mongodb, Mongoose
+- JWT, Graphql, Websockets (Socket.io)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+<img src="https://raw.githubusercontent.com/vulnerabbity/bug-market-angular/master/images/1.png"/>
+<img src="https://raw.githubusercontent.com/vulnerabbity/bug-market-angular/master/images/2.png"/>
+<img src="https://raw.githubusercontent.com/vulnerabbity/bug-market-angular/master/images/3.png"/>
+<img src="https://raw.githubusercontent.com/vulnerabbity/bug-market-angular/master/images/4.png"/>
+<img src="https://raw.githubusercontent.com/vulnerabbity/bug-market-angular/master/images/5.png"/>
+<img src="https://raw.githubusercontent.com/vulnerabbity/bug-market-angular/master/images/6.png"/>
+<img src="https://raw.githubusercontent.com/vulnerabbity/bug-market-angular/master/images/7.png"/>
+<img src="https://raw.githubusercontent.com/vulnerabbity/bug-market-angular/master/images/8.png"/>
+<img src="https://raw.githubusercontent.com/vulnerabbity/bug-market-angular/master/images/9.png"/>
