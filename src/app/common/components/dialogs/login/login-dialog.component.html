@@ -1,41 +1,39 @@
-<div class="component-root">
-  <mat-icon class="big-icon">account_circle</mat-icon>
-  <h2 class="dialog-title" mat-dialog-title>Login</h2>
-  <p class="username-info">Username should be lowercase and start with letter</p>
-  <div class="forms-container">
-    <mat-error *ngIf="requestError">{{ requestError }}</mat-error>
-    <form (submit)="onLogin()">
-      <common-username-form-field [(model)]="usernameField"></common-username-form-field>
-      <common-password-form-field [(model)]="passwordField"></common-password-form-field>
+<mat-icon class="big-icon">account_circle</mat-icon>
+<h2 class="dialog-title" mat-dialog-title>Login</h2>
+<p class="username-info">Username should be lowercase and start with letter</p>
+<mat-error *ngIf="requestError">{{ requestError }}</mat-error>
+<div class="forms-container">
+  <form (submit)="onLogin()">
+    <common-username-form-field [(model)]="usernameField"></common-username-form-field>
+    <common-password-form-field [(model)]="passwordField"></common-password-form-field>
 
-      <div class="bottom-actions">
-        <button
-          class="bottom-action register-button"
-          (click)="this.showRegisterDialogInstead()"
-          mat-button
-          type="button"
-        >
-          Create account
-        </button>
-        <button
-          class="bottom-action"
-          [disabled]="this.isFormValid() === false && this.loading === false"
-          mat-raised-button
-          color="primary"
-          type="submit"
-        >
-          Login
-        </button>
-      </div>
-    </form>
-  </div>
-
-  <button
-    class="close-button close-button--top"
-    mat-icon-button
-    mat-dialog-close
-    aria-label="Close dialog"
-  >
-    <mat-icon [inline]="true" class="close-icon">close</mat-icon>
-  </button>
+    <div class="bottom-actions">
+      <button
+        class="bottom-action register-button"
+        (click)="this.showRegisterDialogInstead()"
+        mat-button
+        type="button"
+      >
+        Create account
+      </button>
+      <button
+        class="bottom-action"
+        [disabled]="this.isFormValid() === false && this.loading === false"
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >
+        Login
+      </button>
+    </div>
+  </form>
 </div>
+
+<button
+  class="close-button close-button--top"
+  mat-icon-button
+  mat-dialog-close
+  aria-label="Close dialog"
+>
+  <mat-icon [inline]="true" class="close-icon">close</mat-icon>
+</button>
