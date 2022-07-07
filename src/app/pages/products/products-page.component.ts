@@ -18,9 +18,9 @@ export class ProductsPageComponent implements OnInit {
 
   searchText = ""
 
-  sorting: ProductSorting = {}
+  sorting: ProductSorting = { createdAt: SortingOrder.Descending }
 
-  filters: ProductFilters | undefined = undefined
+  filters: ProductFilters = {}
 
   constructor(private productsLoader: ProductsLoaderService) {}
 
@@ -48,7 +48,9 @@ export class ProductsPageComponent implements OnInit {
     const { category, priceSorting, priceRange } = $productFilters
     this.filters = {}
 
-    if (priceSorting !== "NO_SORTING") {
+    if (priceSorting === "NO_SORTING") {
+      this.sorting.price = undefined
+    } else {
       this.sorting.price = priceSorting as SortingOrder
     }
 
