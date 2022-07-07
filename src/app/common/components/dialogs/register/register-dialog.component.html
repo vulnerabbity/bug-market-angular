@@ -1,45 +1,38 @@
-<div class="component-root">
-  <mat-icon class="big-icon">account_box</mat-icon>
-  <h2 class="dialog-title" mat-dialog-title>Create account</h2>
-  <p class="username-info">Username should be lowercase and start with letter</p>
-  <form class="forms-container" (submit)="this.onRegister()">
-    <mat-error class="error" *ngIf="this.requestError">{{ requestError }}</mat-error>
+<mat-icon class="big-icon">account_box</mat-icon>
+<h2 class="dialog-title" mat-dialog-title>Create account</h2>
+<p class="username-info">Username should be lowercase and start with letter</p>
+<form class="forms-container" (submit)="this.onRegister()">
+  <mat-error class="error" *ngIf="this.requestError">{{ requestError }}</mat-error>
 
-    <common-username-form-field [(model)]="usernameField"></common-username-form-field>
+  <common-username-form-field [(model)]="usernameField"></common-username-form-field>
 
-    <mat-error class="error" *ngIf="needDisplayPasswordsNotMatch()">
-      Passwords don't match
-    </mat-error>
+  <mat-error class="error" *ngIf="needDisplayPasswordsNotMatch()">
+    Passwords don't match
+  </mat-error>
 
-    <common-password-form-field [(model)]="passwordField"></common-password-form-field>
+  <common-password-form-field [(model)]="passwordField"></common-password-form-field>
 
-    <common-password-form-field
-      [(model)]="this.repeatPasswordField"
-      label="Repeat your password"
-    ></common-password-form-field>
+  <common-password-form-field
+    [(model)]="this.repeatPasswordField"
+    label="Repeat your password"
+  ></common-password-form-field>
 
-    <div class="bottom-actions">
-      <button
-        (click)="showLoginDialogInstead()"
-        [disabled]="this.isLoading"
-        mat-button
-        type="button"
-      >
-        Login instead
-      </button>
+  <div class="bottom-actions">
+    <button (click)="showLoginDialogInstead()" [disabled]="this.isLoading" mat-button type="button">
+      Login instead
+    </button>
 
-      <button [disabled]="shouldDisableSubmit()" mat-raised-button color="primary" type="submit">
-        Register
-      </button>
-    </div>
-  </form>
+    <button [disabled]="shouldDisableSubmit()" mat-raised-button color="primary" type="submit">
+      Register
+    </button>
+  </div>
+</form>
 
-  <button
-    class="close-button close-button--top"
-    mat-icon-button
-    mat-dialog-close
-    aria-label="Close dialog"
-  >
-    <mat-icon [inline]="true" class="close-icon">close</mat-icon>
-  </button>
-</div>
+<button
+  class="close-button close-button--top"
+  mat-icon-button
+  mat-dialog-close
+  aria-label="Close dialog"
+>
+  <mat-icon [inline]="true" class="close-icon">close</mat-icon>
+</button>

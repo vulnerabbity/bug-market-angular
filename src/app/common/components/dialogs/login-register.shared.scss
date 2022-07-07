@@ -17,8 +17,8 @@
 
 .forms-container {
   width: 95%;
-  margin-top: 4rem;
   margin: 0 auto;
+  margin-top: 1rem;
 }
 
 .close-button {
@@ -40,4 +40,8 @@
   display: flex;
   margin-top: 2rem;
   justify-content: space-between;
+}
+
+.error {
+  margin: 1.2rem 0;
 }
